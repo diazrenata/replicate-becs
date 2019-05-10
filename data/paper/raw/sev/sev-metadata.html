@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Data Portal - Metadata Viewer | Long Term Ecological Research Network (LTER)</title>
+
+<meta charset="UTF-8" />
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+
+<link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+
+<!-- Google Fonts CSS -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,300italic" rel="stylesheet" type="text/css">
+
+<!-- Page Layout CSS MUST LOAD BEFORE bootstap.css -->
+<link href="css/style_slate.css" media="all" rel="stylesheet" type="text/css">
+
+<!-- JS -->
+<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="bootstrap/js/bootstrap68b368b3.js?ver=1" type="text/javascript"></script>
+
+<!-- Mobile Device CSS -->
+<link href="bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+<link href="bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+
+
+
+<!-- Header -->
+
+ 
+<header role="banner">
+<div class="row-fluid ">
+	<div class="span12 page_top_header base_color_background">
+	</div>
+</div>
+<div class="container">
+	<div class="row-fluid header_container">
+		<div class="span6">
+            <div class="display-table">
+                <div class="table-row">
+                    <div class="table-cell">
+                        <a href="home.jsp"><img alt="LTER Network Data Portal logo" src="images/nis_logo.png" title="LTER : Network"></a>
+                        <br/>
+                    </div>
+                    <div class="table-cell">
+                        <span><big><strong></strong></big></span>
+                    </div>
+                </div>
+            </div>
+	    </div>
+	    
+	    
+			<div class="span6 menu">
+			<nav role="navigation">
+			<ul id="menu-nav" class="menu">
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="#">Data</a>
+				<ul class="sub-menu">
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img class="mini-arrow-margin" alt="" src="images/mini_arrow.png" title="LTER : Network"> 
+					Browse Data By:</p>
+					<li><a href="browse.jsp">Keyword or LTER Site</a> </li>
+					<li><a href="scopebrowse">Package Identifier</a> </li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					  <img class="mini-arrow-margin" alt="" src="images/mini_arrow.png" title="LTER : Network"> 
+					Search Data:</p>
+					<li><a href="advancedSearch.jsp">Advanced Search</a> </li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					  <img class="mini-arrow-margin" alt="" src="images/mini_arrow.png" title="LTER : Network"> 
+					View Your Data:</p>
+					<li><a href="savedDataServlet">Your Data Shelf</a> </li>
+				</ul>
+				</li>
+				<li><a href="#">Tools</a>
+				<ul class="sub-menu">
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Data Packages:</p>
+					<li><a href="metadataPreviewer.jsp">Preview Your Metadata</a> </li>
+					<!-- <li><a href="dataPackageEvaluate.jsp">Evaluate Data Packages</a></li> -->
+					<li><a href="harvester.jsp">Evaluate/Upload Data Packages</a></li>
+					<li><a href="harvestReport.jsp">View Evaluate/Upload Results</a></li>
+					<!--  <li><a href="dataPackageDelete.jsp">Delete Data Packages</a></li> -->
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Events:</p>
+					<li><a href="eventSubscribe.jsp">Event Subscriptions</a></li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Provenance:</p>
+					<li><a href="provenanceGenerator.jsp">Provenance Generator</a></li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Reports:</p>
+					<li><a href="auditReport.jsp">Audit Reports</a></li>
+					<li><a href="dataPackageAudit.jsp">Data Package Access Reports</a></li>
+				</ul>
+				</li>
+				<li><a href="#">Help</a>
+				<ul class="sub-menu">
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Support:</p>
+				  <!-- <li><a href="help.jsp">How Do I...</a></li> -->
+				  <li><a href="contact.jsp">Contact Us</a></li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					Resources:</p>
+				  <li><a href="resources.jsp">LTER Resources</a></li>
+					<p class="smallmenu pull-left nis-navigation-submenu">
+					<img alt="" src="images/mini_arrow.png" class="mini-arrow-margin" title="LTER : Network"> 
+					About:</p>
+				  <li><a href="about.jsp">About the LTER Network Data Portal</a></li>
+				</ul>
+				</li>
+				<li><a href='./login.jsp'>Login</a></li>
+			</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- /Header -->
+
+<!-- Divider -->
+<div class="row-fluid ">
+	<div class="span12 page_top_header line-divider">
+	</div>
+</div>
+<!-- /Divider -->
+
+<!-- Search Section -->
+<div class="row-fluid page_title">
+	<div class="container">
+		<div class="span8">
+			<h2 class="title_size"></h2>
+			<h2 class="title_desc loggedin"></h2>
+		</div>
+		<div class="span4">
+			<div class="pull-right">
+				<div id="search-3" class="widget title_widget widget_search">
+				  <form id="searchform" action="./simpleSearch" class="form-inline" method="post" >
+				    <!-- <label class="nis-search-label">Search Terms</label> -->
+					<!-- <span name='Enclose terms containing spaces within quotes, e.g., "Puerto Rico"'
+						  class="tooltip"> -->
+						<input type="search" 
+							name="terms" 
+							id="lterterms" 
+							class="span11 search-query"
+							placeholder="enter search terms" 
+							size="25" required="required">
+					<!-- </span> -->
+						<button class="search_icon" type="submit"></button>
+						<label id="advanced-search-label" class="nis-search-label">
+						  <img id="advanced-search-arrow" alt="" src="images/mini_arrow.png" title="Advanced Search">
+						  <a href="advancedSearch.jsp">ADVANCED SEARCH</a>
+						</label>
+					</form>
+					<span class="seperator extralight-border"></span></div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid divider base_color_background">
+		<div class="container">
+			<span class="bottom_arrow"></span></div>
+	</div>
+</div>
+<!-- /Search Section -->
+
+<div class="container shadow">
+	<span class="bottom_shadow_full"></span>
+</div>
+</header>
+<div class="row-fluid ">
+		<div class="container">
+			<div class="row-fluid distance_1">
+				<div class="box_shadow box_layout">
+					<div class="row-fluid">
+						<div class="row-fluid">
+							<div class="span12">
+							
+								<!-- Content -->
+                  <!DOCTYPE html>
+<div>
+   <h2>Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta
+      National Wildlife Refuge, New Mexico (1989 - present)
+   </h2>
+   <fieldset>
+      <legend>Summary Information</legend>
+      <table class="subGroup onehundred_percent">
+         <tr>
+            <th colspan="2">Data Package General Information:</th>
+         </tr>
+         <tr>
+            <td class="rowodd">Local&nbsp;Identifier:</td>
+            <td class="roweven">knb-lter-sev.8.297976</td>
+         </tr>
+         <tr>
+            <td class="rowodd">Title:</td>
+            <td class="roweven"><cite>Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta
+                  National Wildlife Refuge, New Mexico (1989 - present)</cite></td>
+         </tr>
+         <tr>
+            <td class="rowodd">Abstract:</td>
+            <td>
+               <div>
+                  
+                  <p class="eml">
+                     <pre>This file contains mark/recapture trapping data collected from 1989-2012 on permanently established web trapping arrays at 8 sites on the Sevilleta NWR. At each site 3 trapping webs are sampled for 3 consecutive nights in spring and fall. Not all sites have been trapped for the entire period. Each trapping web consists of 145 rebar stakes numbered from 1-145. There are 148 traps deployed on each web: 12 along each of 12 spokes radiating out from a central point (stake #145) plus 4 traps at the center point. The trapping sites are representative of Chihuahuan Desert Grassland, Chihuahuan Desert Shrubland, Pinyon-Juniper Woodland, Juniper Savanna, Plains-Mesa Sand Scrub and Blue Grama Grassland.</pre>
+                     </p>
+                  
+               </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="rowodd">Publication&nbsp;Date:</td>
+            <td class="roweven">2010-09-15</td>
+         </tr>
+         <tr>
+            <td class="rowodd">Language:</td>
+            <td class="roweven">English</td>
+         </tr>
+      </table>
+      <table class="subgroup onehundred_percent">
+         <tr>
+            <th colspan="2"><br>Time Period
+            </th>
+         </tr>
+         <tr>
+            <td class="rowodd">Begin:</td>
+            <td>
+               <table>
+                  <tr>
+                     <td colspan="2" class="roweven">1989-05-30</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+         <tr>
+            <td class="rowodd">End:</td>
+            <td>
+               <table>
+                  <tr>
+                     <td colspan="2" class="roweven">2016-04-20</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <table class="subgroup onehundred_percent">
+         <tr>
+            <th colspan="2"><br>People and Organizations
+            </th>
+         </tr>
+         <tr>
+            <td class="rowodd">Contact:</td>
+            <td class="roweven">Information Manager&nbsp;(LTER Network Office)&nbsp;[&nbsp;
+               <a href="mailto:tech-support@lternet.edu">email</a>&nbsp;]
+               
+            </td>
+         </tr>
+         <tr>
+            <td class="rowodd">Contact:</td>
+            <td class="roweven">Sevilleta LTER,&nbsp;Information Manager&nbsp;&nbsp;[&nbsp;
+               <a href="mailto:data-use@sevilleta.unm.edu">email</a>&nbsp;]
+               
+            </td>
+         </tr>
+         <tr>
+            <td class="rowodd">Creator:</td>
+            <td class="roweven">Newsome,&nbsp;Seth&nbsp;(University of New Mexico)</td>
+         </tr>
+         <tr>
+            <td class="rowodd">Associate:</td>
+            <td class="roweven">Friggens,&nbsp;Mike&nbsp;</td>
+         </tr>
+         <tr>
+            <td class="rowodd">Associate:</td>
+            <td class="roweven">Parmenter,&nbsp;Robert&nbsp;(Valles Caldera National Preserve)</td>
+         </tr>
+      </table>
+      <table class="subGroup onehundred_percent">
+         <tr>
+            <th colspan="2"><br>Data Entities
+            </th>
+         </tr>
+         <tr>
+            <td class="rowodd">Data Table Name:<br></td>
+            <td class="roweven"><strong>sev008_rodentpopns_20160701.csv</strong><br></td>
+         </tr>
+         <tr>
+            <td class="rowodd">Description:<br></td>
+            <td class="roweven">Rodent population data.</td>
+         </tr>
+      </table>
+   </fieldset><button id="showAll">Show Details</button><button id="hideAll">Hide Details</button><fieldset>
+      <legend>Detailed Metadata</legend>
+      <h3 id="toggleEntities" class="toggleButton"><button>+/-</button> Data Entities
+      </h3>
+      <div class="collapsible">
+         <tr>
+            <td colspan="2">
+               <hr>
+               <h2>Data Table</h2>
+               <table class="subGroup onehundred_percent">
+                  <tr>
+                     <td>
+                        <table class="subGroup onehundred_percent">
+                           <tr>
+                              <td colspan="2">
+                                 <tr>
+                                    <td class="rowodd">Data:</td>
+                                    <td class="roweven"><a href="/nis/dataviewer?packageid=knb-lter-sev.8.297976&amp;entityid=d70c7027949ca1d8ae053eb10300dc0e" target="_blank">https://pasta.lternet.edu/package/data/eml/knb-lter-sev/8/297976/d70c7027949ca1d8ae053eb10300dc0e</a></td>
+                                 </tr>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="rowodd">Name:</td>
+                              <td class="roweven"><strong>sev008_rodentpopns_20160701.csv</strong></td>
+                           </tr>
+                           <tr>
+                              <td class="rowodd">Description:</td>
+                              <td class="roweven">Rodent population data.</td>
+                           </tr>
+                           <tr>
+                              <td class="rowodd">Number of Columns:</td>
+                              <td class="roweven">12</td>
+                           </tr>
+                           <tr>
+                              <td class="tablehead" colspan="2"></td>
+                           </tr>
+                           <tr>
+                              <td colspan="2">
+                                 <table class="subgroup onehundred_percent">
+                                    <tr>
+                                       <th colspan="2"><br>Time Period
+                                       </th>
+                                    </tr>
+                                    <tr>
+                                       <td class="rowodd">Begin:</td>
+                                       <td>
+                                          <table>
+                                             <tr>
+                                                <td colspan="2" class="roweven">1989-04-01</td>
+                                             </tr>
+                                          </table>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="rowodd">End:</td>
+                                       <td>
+                                          <table>
+                                             <tr>
+                                                <td colspan="2" class="roweven">2016-04-20</td>
+                                             </tr>
+                                          </table>
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <table class="subGroup onehundred_percent">
+                           <tr>
+                              <th colspan="2"><br>Table Structure
+                              </th>
+                           </tr>
+                           <tr>
+                              <td colspan="2">
+                                 <table class="subGroup onehundred_percent">
+                                    <tr>
+                                       <td class="rowodd">Object Name:</td>
+                                       <td class="roweven">sev008_rodentpopns_20160701.csv</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="rowodd">Size:</td>
+                                       <td class="roweven">1306268 </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="rowodd">Text Format:</td>
+                                       <td>
+                                          <table class="subGroup onehundred_percent">
+                                             
+                                             <tr>
+                                                <td class="rowodd">Number of Header Lines:</td>
+                                                <td class="roweven">1</td>
+                                             </tr>
+                                             
+                                             <tr>
+                                                <td class="rowodd">Record Delimiter:</td>
+                                                <td class="roweven">\r\n</td>
+                                             </tr>
+                                             
+                                             <tr>
+                                                <td class="rowodd">Orientation:</td>
+                                                <td class="roweven">column</td>
+                                             </tr>
+                                             
+                                             <tr>
+                                                <td class="rowodd">Simple Delimited:</td>
+                                                <td>
+                                                   <table class="subGroup onehundred_percent">
+                                                      
+                                                      <td class="rowodd">Field Delimiter:</td>
+                                                      <td class="roweven">,</td>
+                                                      
+                                                   </table>
+                                                </td>
+                                             </tr>
+                                             
+                                          </table>
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+               <table class="subGroup onehundred_percent">
+                  <tr>
+                     <th colspan="2"><br>Table Column Descriptions
+                     </th>
+                  </tr>
+                  <tr>
+                     <td>
+                        <tr>
+                           <td class="tablehead" colspan="2"></td>
+                        </tr>
+                        <tr>
+                           <td colspan="2">
+                              <table class="subGroup onehundred_percent">
+                                 <tr>
+                                    <th>&nbsp;</th>
+                                    <th>year</th>
+                                    <th>location</th>
+                                    <th>season</th>
+                                    <th>night</th>
+                                    <th>web</th>
+                                    <th>trap</th>
+                                    <th>recap</th>
+                                    <th>species</th>
+                                    <th>sex</th>
+                                    <th>age</th>
+                                    <th>reprod</th>
+                                    <th>mass</th>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Column Name:</td>
+                                    <td colspan="1" align="center" class="colodd">year &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">location &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">season &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">night &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">web &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">trap &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">recap &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">species &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">sex &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">age &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">reprod &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">mass &nbsp;<br></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Definition:</td>
+                                    <td colspan="1" align="center" class="colodd">The year in which data was collected.</td>
+                                    <td colspan="1" align="center" class="coleven">site name at which trapping occurs</td>
+                                    <td colspan="1" align="center" class="colodd">Season in which trapping occurs</td>
+                                    <td colspan="1" align="center" class="coleven">The night that the trapping was done</td>
+                                    <td colspan="1" align="center" class="colodd">The number of the web being sampled, which can range from 1-5 depending on site and
+                                       project.
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">The numbered tag on rebar adjacent to the trap</td>
+                                    <td colspan="1" align="center" class="colodd">An indication if the animal was a recapture or not</td>
+                                    <td colspan="1" align="center" class="coleven">Four letter code for small mammal species.</td>
+                                    <td colspan="1" align="center" class="colodd">Gender of animal (M or F)</td>
+                                    <td colspan="1" align="center" class="coleven">Estimated from animal's weight.</td>
+                                    <td colspan="1" align="center" class="colodd">Reproductive condition of capture</td>
+                                    <td colspan="1" align="center" class="coleven">mass of captured rodent in grams</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Storage Type:</td>
+                                    <td colspan="1" align="center" class="colodd">date &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="colodd">string &nbsp;<br></td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Measurement Type:</td>
+                                    <td colspan="1" align="center" class="colodd">dateTime</td>
+                                    <td colspan="1" align="center" class="coleven">nominal</td>
+                                    <td colspan="1" align="center" class="colodd">nominal</td>
+                                    <td colspan="1" align="center" class="coleven">nominal</td>
+                                    <td colspan="1" align="center" class="colodd">nominal</td>
+                                    <td colspan="1" align="center" class="coleven">nominal</td>
+                                    <td colspan="1" align="center" class="colodd">nominal</td>
+                                    <td colspan="1" align="center" class="coleven">nominal</td>
+                                    <td colspan="1" align="center" class="colodd">nominal</td>
+                                    <td colspan="1" align="center" class="coleven">nominal</td>
+                                    <td colspan="1" align="center" class="colodd">nominal</td>
+                                    <td colspan="1" align="center" class="coleven">ratio</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Measurement Values Domain:</td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td class="innercolodd"><b>Format</b></td>
+                                             <td class="innercolodd">YYYY</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="innercolodd"><b>Precision</b></td>
+                                             <td class="innercolodd"></td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercoleven"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">two22</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">two22</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">5pgrass</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">five points grass</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">5plarrea</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">five points larrea</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">rsgrass</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">rio salado grass</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">goatdraw</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">goat draw</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">bluegram</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">blue grama</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">savanna</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">savanna</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercolodd"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">1</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Spring</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">2</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Summer</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">3</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Fall</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td class="innercoleven"><strong>Definition</strong></td>
+                                             <td class="innercoleven">The night that the trapping was done</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td class="innercolodd"><strong>Definition</strong></td>
+                                             <td class="innercolodd">The number of the web being sampled, which can range from 1-5 depending on site and
+                                                project.
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td class="innercoleven"><strong>Definition</strong></td>
+                                             <td class="innercoleven">The numbered tag on rebar adjacent to the trap</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercolodd"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">y</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">a recapture from that week only</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">n</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">not a recapture</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercoleven"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">amin</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Ammospermophilus interpres</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">amle</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Ammospermophilus leucurus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">eudo</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Eutamias dorsalis</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">euqu</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Eutamias quadrivittatus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">spsp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Spermophilus spilosoma</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">spva</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Spermophilus variegatus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">chin</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Chetodipus intermedius</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pgfl</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Perognathus flavescens</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pgfv</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Perognathus flavus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pgsp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Perognathus sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">dime</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Dipodomys merriami</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">dior</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Dipodomys ordii</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">disp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Dipodomys spectabilis</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">dipo</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Dipodomys sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">neal</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Neotoma albigula</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">nemi</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Neotoma micropus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">nesp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Neotoma sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">onar</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Onychomys arenicola</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">onle</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Onychomys leucogaster</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">onsp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Onychomys sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pebo</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus boylii</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pedi</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus difficilis</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">peer</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus eremicus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pele</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus leucopus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pema</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus maniculatus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">petr</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus truei</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">pesp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Peromyscus sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">remg</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Reithrodontomys megalotis</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">remn</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Reithrodontomys montanus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">resp</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Reithrodontomys sp.</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">sihi</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Sigmodon hispidus</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">syau</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">Sylvilagus auduboni</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">na</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">unknown genus and species</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td class="innercolodd"><strong>Definition</strong></td>
+                                             <td class="innercolodd">Gender of animal (M or F)</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercoleven"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">a</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">adult</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">j</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">juvenile</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2" align="center" class="innercolodd"><strong id="toggleNonNumericDomain" class="toggleButton"><button>+/-</button>Allowed Values and Definitions</strong><div class="collapsible">
+                                                   <table class="subGroup onehundred_percent">
+                                                      <tr>
+                                                         <td class="rowodd"><strong>Enumerated Domain</strong></td>
+                                                         <td class="roweven">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">l</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">lactating</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">v</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">vaginal</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">p</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">pregnant</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">st</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">scrotal</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td class="rowodd">Code Definition</td>
+                                                         <td>
+                                                            <table class="subGroup onehundred_percent">
+                                                               <tr>
+                                                                  <td class="rowodd">Code</td>
+                                                                  <td class="roweven">na</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Definition</td>
+                                                                  <td class="roweven">none of the former or not taken</td>
+                                                               </tr>
+                                                               <tr>
+                                                                  <td class="rowodd">Source</td>
+                                                                  <td class="roweven"></td>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td class="innercoleven"><b>Unit</b></td>
+                                             <td class="innercoleven">gram</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="innercoleven"><b>Precision</b></td>
+                                             <td class="innercoleven">0.5</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="innercoleven"><b>Type</b></td>
+                                             <td class="innercoleven">real</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Missing Value Code:</td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td class="innercoleven"><b>Code</b></td>
+                                             <td class="innercoleven">na</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="innercoleven"><b>Expl</b></td>
+                                             <td class="innercoleven">missing</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven">
+                                       <table>
+                                          <tr>
+                                             <td class="innercoleven"><b>Code</b></td>
+                                             <td class="innercoleven">.</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="innercoleven"><b>Expl</b></td>
+                                             <td class="innercoleven">missing</td>
+                                          </tr>
+                                       </table>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Accuracy Report:</td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Accuracy Assessment:</td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Coverage:</td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="rowodd">Methods:</td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="colodd"> &nbsp; </td>
+                                    <td colspan="1" align="center" class="coleven"> &nbsp; </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </div>
+      <h3 id="toggleDataSetUsageRights" class="toggleButton"><button>+/-</button> Data Package Usage Rights
+      </h3>
+      <div class="collapsible">
+         <table class="subGroup onehundred_percent">
+            <tr>
+               <td>
+                  
+                  <h4>Data Policies</h4>
+                  <p class="eml">
+                     <pre>This dataset is released to the public and may be freely downloaded. Please keep the designated contact person informed of any plans to use the dataset. Consultation or collaboration with the original investigators is strongly encouraged. Publications and data products that make use of the dataset must include proper acknowledgement of the Sevilleta LTER. A copy of any publications using these data must be supplied to the Sevilleta LTER Information Manager.</pre>
+                     </p>
+                  
+               </td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="toggleKeywords" class="toggleButton"><button>+/-</button> Keywords
+      </h3>
+      <div class="collapsible">
+         <table class="subGroup onehundred_percent">
+            <tr>
+               <th colspan="2">By Thesaurus:</th>
+            </tr>
+            <tr>
+               <td class="rowodd">Core Areas</td>
+               <td class="roweven">populations</td>
+            </tr>
+            <tr>
+               <td class="rowodd">LTER Controlled Vocabulary</td>
+               <td class="roweven">habitats,&nbsp;community structure,&nbsp;consumers,&nbsp;herbivores,&nbsp;demography,&nbsp;taxonomy,&nbsp;community dynamics,&nbsp;abundance,&nbsp;community composition,&nbsp;diversity,&nbsp;species composition,&nbsp;census,&nbsp;life history,&nbsp;trapping,&nbsp;deserts,&nbsp;grasslands,&nbsp;small mammals</td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="toggleMethods" class="toggleButton"><button>+/-</button> Methods and Protocols
+      </h3>
+      <div class="collapsible">
+         <table class="onehundred_percent">
+            <tr>
+               <td>
+                  <h4>These methods, instrumentation and/or protocols apply to all data in this dataset:</h4>
+                  <table class="subGroup onehundred_percent">
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <th colspan="2">Protocols and/or Procedures</th>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <table class="subGroup onehundred_percent">
+                                       <tr>
+                                          <td class="rowodd">Description:</td>
+                                          <td>
+                                             
+                                             <p class="eml">
+                                                <pre>Sampling Design Permanent capture-mark-release trapping webs were used to estimate density (number of animals per unit area) of each rodent species at each site. The method makes use of concepts from distance sampling, i.e., point counts or line-intercept techniques. The method makes no attempts to model capture-history data, therefore it was not necessary to follow individuals through time (between sessions). Distance sampling methods allow for sighting or detection (capture) probabilities to decrease with increasing distance from the point or line. The modeling of detection probability as a function of distance forms the basis for estimation. Trapping webs were designed to provide a gradient of capture probabilities, decreasing with distance from the web center. Density estimation from the trapping web was based on three assumptions:1. All animals located at the center of the web were caught with probability 1.0; 2. Individuals did not move preferentially toward or away from the web center; 3. Distances from the web center to each trap station were measured accurately. Each web consisted of 12 trap lines radiating around a center station, each line with 12 permanently-marked trap stations. In order to increase the odds of capturing any animals inhabiting the center of a web, the center station had four traps, each pointing in a cardinal direction, and the first four stations of each trap line were spaced only 5 m apart, providing a trap saturation effect. The remaining eight stations in a trap line were spaced at 10 m intervals. The web thus established a series of concentric rings of traps. Traps in the ring nearest the web center are close together, while the distances separating traps that form a particular ring increase with increasing distance of the ring from the web center. The idea is that the web configuration produces a gradient in trap density and, therefore, in the probability of capture. Three randomly distributed trapping webs were constructed at each site. The perimeters of webs were placed at least 100 m apart in order to minimize homerange overlap for individuals captured in the outer portion of neighboring webs. Measurement Techniques Each site containing three webs was sampled for three consecutive nights during spring (in mid May or early June) and summer (in mid July or early August for years 1989 to 1993, then mid September to early October for years 1994 through 2000). In that rodent populations were not sampled monthly over the study period, there is no certainly that either spring or summer trapping times actually captured annual population highs or lows. Based on reproductive data in the literature, an assumption was made that sampling times chosen represent periods of the year when rodents have undergone, and would register, significant seasonal change in density. During each trapping session, one Sherman live trap (model XLF15 or SFAL, H. B. Sherman Traps, Tallahassee, FL) was placed, baited with rolled oats, and set at each permanent, numbered station (four in the center) on each web, for a total 444 traps over three webs. Traps were checked at dawn each day, closed during the day, and reset just before dusk. Habitat, trap station number, species, sex, age (adult or juvenile), mass, body measurements (total length, tail length, hind foot length, ear length), and reproductive condition (males: scrotal or non-scrotal; females: lactating, vaginal or pregnant) were recorded for each initial capture of an individual. Each animal was marked on the belly with a permanent ink felt pen in order to distinguish it from other individuals during the same trapping session. The trap station number for an initial capture related to a particular trapping ring on a web and, therefore, to a particular distance from the center of the web. The area sampled by a ring of traps was computed based on circular zones whose limits are defined by points halfway between adjacent traps along trap lines; an additional 25 m radius was added to the outer ring of traps in order to account for homerange size of individuals caught on the outer ring. Analytical ProceduresArea trapped and number of individuals caught for each ring of traps was the basis for estimating the probability density function of the area sampled. The program DISTANCE produced the estimators used to calculate density. Where sample size for a particular species and web was less than an arbitrarily chosen n=10, the number of individuals captured during that session was simply divided into the area of the web plus the additional 25 m radius (4.9087 ha). This dataset includes only the raw capture data.</pre>
+                                                </p>
+                                             
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="rowodd">Instrument(s):</td>
+                                          <td class="roweven">Â&nbsp; Sherman live traps: model XLF15 or SFAL, H. B. Sherman Traps, Tallahassee, FL</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                  </table>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="togglePeople" class="toggleButton"><button>+/-</button> People and Organizations
+      </h3>
+      <div class="collapsible">
+         <table class="onehundred_percent">
+            <tr>
+               <td>
+                  <table class="subGroup onehundred_percent">
+                     <th>Publishers:</th>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Organization:</td>
+                                 <td class="roweven"><strong>Sevilleta Long Term Ecological Research (LTER) Project</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Web Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="http://sev.lternet.edu">http://sev.lternet.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <th>Creators:</th>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Individual:</td>
+                                 <td class="roweven"><strong> Seth Newsome</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Organization:</td>
+                                 <td class="roweven"><strong>University of New Mexico</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">Department of Biology, MSC03-2020, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Albuquerque, NM 87131 US</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:newsome@unm.edu">newsome@unm.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <th>Contacts:</th>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Position:</td>
+                                 <td class="roweven">Information Manager</td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Organization:</td>
+                                 <td class="roweven"><strong>LTER Network Office</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">UNM Biology Department, MSC03-2020, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">1 University of New Mexico, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Albuquerque, NM 87131-0001 USA</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">505 277-2535 (voice)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">505 277-2541 (fax)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:tech-support@lternet.edu">tech-support@lternet.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Web Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="http://www.lternet.edu">http://www.lternet.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Individual:</td>
+                                 <td class="roweven"><strong> Information Manager Sevilleta LTER</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">1 University of New Mexico, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Albuquerque,  87131 US</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">(505) 277-2109 (voice)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">(505) 277.5355 (facsimile)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:data-use@sevilleta.unm.edu">data-use@sevilleta.unm.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <th>Associated Parties:</th>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Individual:</td>
+                                 <td class="roweven"><strong> Mike Friggens</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">Sevilleta LTER, UNM Biology Department, MSC03 2020, 1 University of New Mexico, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Albuquerque, NM 87131 US</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:friggens@sevilleta.unm.edu">friggens@sevilleta.unm.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Role:</td>
+                                 <td class="roweven">associated researcher</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Individual:</td>
+                                 <td class="roweven"><strong> Robert Parmenter</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Organization:</td>
+                                 <td class="roweven"><strong>Valles Caldera National Preserve</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">P.O. Box 359, 090 Villa Louis Martin, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Jemez Springs, NM 87025 US</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:bparmenter@vallescaldera.gov">bparmenter@vallescaldera.gov</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Role:</td>
+                                 <td class="roweven">associated researcher</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <th>Metadata Providers:</th>
+                     <tr>
+                        <td>
+                           <table class="subGroup onehundred_percent">
+                              <tr>
+                                 <td class="rowodd">Individual:</td>
+                                 <td class="roweven"><strong> Information Manager Sevilleta LTER</strong></td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">1 University of New Mexico, </td>
+                                       </tr>
+                                       <tr>
+                                          <td class="roweven">Albuquerque,  87131 US</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">(505) 277-2109 (voice)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Phone:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven">(505) 277.5355 (facsimile)</td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="rowodd">Email Address:</td>
+                                 <td>
+                                    <table class="tableparty">
+                                       <tr>
+                                          <td class="roweven"><a href="mailto:data-use@sevilleta.unm.edu">data-use@sevilleta.unm.edu</a></td>
+                                       </tr>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                  </table>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="toggleCoverage" class="toggleButton"><button>+/-</button> Temporal, Geographic and Taxonomic Coverage
+      </h3>
+      <div class="collapsible">
+         <table>
+            <tr>
+               <th colspan="2">Temporal, Geographic and/or Taxonomic information that applies to all data in this
+                  dataset:
+               </th>
+            </tr>
+            <tr>
+               <td>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2"><br>Time Period
+                        </th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Begin:</td>
+                        <td>
+                           <table>
+                              <tr>
+                                 <td colspan="2" class="roweven">1989-05-30</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">End:</td>
+                        <td>
+                           <table>
+                              <tr>
+                                 <td colspan="2" class="roweven">2016-04-20</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Five Points area emcompasses both the Five Points Black Grama and Five Points
+                           Creosote study sites.&nbsp; Five Points falls along the transition between the Chihuahuan
+                           Desert Scrub and Desert Grassland habitats.&nbsp; Both core sites are subject to intensive
+                           research activities, including NPP measurements, phenology observations, pollinator
+                           diversity studies, and ground dwelling arthropod and rodent population assessments.&nbsp;
+                           There are rain-out shelters for drought studies in both the Five Points Black Grama
+                           and Five Points Creosote sites.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.736</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.3331</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1615</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">Five Points Black Grama is on the transition between Chihuahuan Desert Scrub and Desert
+                           Grassland habitat. The site is subject to intensive research activity, including assessments
+                           of net primary productivity, phenology, and pollinator diversity, amongst other projects.&nbsp;
+                           It is the site of the unburned black grama (GU) component of the Burn NPP study. On
+                           August 4, 2009, a lightning-initiated fire began on the Sevilleta National Wildlife
+                           Refuge. By August 5, 2009, the fire had reached the Five Points Black Grama site.&nbsp;
+                           Portions of this site were burned, but not the entirety.&nbsp; See individual projects
+                           for further information on the effects of the burn. &nbsp;
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.736</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.3331</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1615</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Rio Salado is an ephemeral tributary of the Rio Grande on the west side of the
+                           Sevilleta NWR, flowing west by northwest to east by southeast. Rio Salado Grassland
+                           &amp; Rio Salado Larrea are two study sites established in 1989. These sites were established&nbsp;as
+                           counterparts to sites at Five Points. Between 1989 and 1998, vegetation, litter decomposition,
+                           and ground dwelling arthropod and rodent populations were studied at both sites. Core
+                           studies at these sites were largely terminated in 1998, although rodent populations
+                           are still monitored at the Rio Salado Larrea site because the Small Mammal Exclosure
+                           Study's Larrea plots are co-located there. Rio Salado Grassland is the location Met
+                           Station 44.The Rio Salado study sites are accessed by taking the San Acacia exit,
+                           going west and then taking the frontage road back north to the Sevilleta NWR gate.&nbsp;
+                           After entering the refuge turn left after 0.2 mi and take this road 1.4 mi to a "T"
+                           in the road at the power lines.&nbsp; An earthen berm stops road travel here and the met
+                           station is located about 300 m west on the blocked road.&nbsp;
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.927</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.296</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1503</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Rio Salado is an ephemeral tributary of the Rio Grande on the west side of the
+                           Sevilleta NWR, flowing west by northwest to east by southeast. Rio Salado Grassland
+                           &amp; Rio Salado Larrea are two study sites established in 1989. These sites were established&nbsp;as
+                           counterparts to sites at Five Points. Between 1989 and 1998, vegetation, litter decomposition,
+                           and ground dwelling arthropod and rodent populations were studied at both sites. Core
+                           studies at these sites were largely terminated in 1998, although rodent populations
+                           are still monitored at the Rio Salado Larrea site as the Small Mammal Exclosure Study's
+                           Larrea plots are co-located there. Rio Salado Grassland is the location of Met Station
+                           44. The Rio Salado study sites are accessed by taking the San Acacia exit, going west
+                           and then taking the frontage road back north to the Sevilleta NWR gate.&nbsp; After entering
+                           the refuge turn left after 0.2 mi and take this road 1.4 mi to a "T" in the road at
+                           the power lines.&nbsp; An earthen berm stops road travel here and the met station is located
+                           about 300 m west on the blocked road. &nbsp;
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.927</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.269</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1503</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">Ladron Foothills sites include Red Tank and Two-22 in the foothills of the Sierra
+                           Ladrones on the West side of the refuge.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-107.03</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.418</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1766</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Cerro Montosa Pinyon-Juniper site has been the location of major Sevilleta LTER
+                           research since 1989. Meteorological trends, net primary productivity, rodent and ground-dwelling
+                           arthropod populations, mycorrhizal responses to fertilizer, pinyon-juniper fruit and
+                           nut production, and pinyon mortality are all being investigated at this site. Previous
+                           studies have included analyses of pinyon tree rings for regional climate reconstruction.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.535</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.368</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1976</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Goat Draw Juniper Savanna Core Site was established in 1998 in order to provide
+                           data at the lower end of the transition from the Pinon-Juniper Woodland habitat at
+                           the Cerro Montoso site to Juniper Savanna.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.523</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.4146</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1790</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2">Sampling Site:&nbsp;</th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Description:</td>
+                        <td class="roweven">The Blue Grama core site is one of five core SEV LTER study sites. Meteorological
+                           trends, rodent abundance, pollinator diversity, phenology, and NPP are all being investigated.
+                           Additional studies have examined the Bootleg Canyon fire of 1998 and subsequent effects
+                           on the patch dynamics of grasses.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <tr>
+                              <td class="rowodd">Site Coordinates:</td>
+                              <td>
+                                 <table>
+                                    <tr>
+                                       <td class="rowodd">Longitude (degree):&nbsp;</td>
+                                       <td>-106.631</td>
+                                       <td class="rowodd">Latitude (degree):&nbsp;</td>
+                                       <td>34.3348</td>
+                                    </tr>
+                                    <td class="rowodd">Altitude (meter):</td>
+                                    <td class="roweven">1670</td>
+                                 </table>
+                              </td>
+                           </tr>
+                        </td>
+                     </tr>
+                  </table>
+               </td>
+            </tr>
+         </table>
+         <table>
+            <tr>
+               <td>
+                  <h3>Temporal, Geographic and/or Taxonomic information that applies to Data Table: sev008_rodentpopns_20160701.csv</h3>
+                  <table class="subgroup onehundred_percent">
+                     <tr>
+                        <th colspan="2"><br>Time Period
+                        </th>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">Begin:</td>
+                        <td>
+                           <table>
+                              <tr>
+                                 <td colspan="2" class="roweven">1989-04-01</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="rowodd">End:</td>
+                        <td>
+                           <table>
+                              <tr>
+                                 <td colspan="2" class="roweven">2016-04-20</td>
+                              </tr>
+                           </table>
+                        </td>
+                     </tr>
+                  </table>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="toggleMethods" class="toggleButton"><button>+/-</button> Project
+      </h3>
+      <div class="collapsible"></div>
+      <h3 id="toggleMaintenance" class="toggleButton"><button>+/-</button> Maintenance
+      </h3>
+      <div class="collapsible">
+         <table class="subGroup onehundred_percent">
+            <tr>
+               <td>
+                  <tr>
+                     <th colspan="2">Maintenance:</th>
+                  </tr>
+                  <tr>
+                     <td class="rowodd">Description:</td>
+                     <td>
+                        
+                        <p class="eml">
+                           <pre>Trap sets require care and cleaning as well as proper storage. Otherwise, webs are made up of durable rebar and aluminum tags which only need repair if disturbed. Tools used in the field - scales and rulers, pouches, trap bags and ziplock supply must be maintained on hand at SevFS for trapping events.</pre>
+                           </p>
+                        
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="rowodd">Frequency:</td>
+                     <td class="roweven"></td>
+                  </tr>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <h3 id="toggleAdditionalInfo" class="toggleButton"><button>+/-</button> Additional Info
+      </h3>
+      <div class="collapsible">
+         <table class="subGroup onehundred_percent">
+            <tr>
+               <td>
+                  <tr>
+                     <td class="roweven" colspan="2">Additional Information:</td>
+                  </tr>
+                  <tr>
+                     <td class="roweven">&nbsp;</td>
+                     <td>
+                        
+                        <p class="eml">
+                           <pre>Additional Information on the personnel associated with the Data Collection / Data Processing Sevilleta Field Crew Employee History Chandra Tucker April 2014-present, Megan McClung, April 2013-present, Stephanie Baker, October 2010-Present, John Mulhouse, August 2009-June 2013, Amaris Swann, August 25, 2008-January 2013, Maya Kapoor, August 9, 2003-January 21, 2005 and April 2010-March 2011, Terri Koontz, February 2000-August 2003 and August 2006-August 2010, Yang Xia, January 31, 2005-April 2009, Karen Wetherill, February 7, 2000-August 2009, Michell Thomey, September 3, 2005-August 2008, Jay McLeod, January 2006-August 2006, Charity Hall, January 31, 2005-January 3, 2006, Tessa Edelen, August 15, 2004-August 15, 2005, Seth Munson, September 9, 2002-June 2004, Caleb Hickman, September 9, 2002-November 15, 2004, Heather Simpson, August 2000-August 2002, Chris Roberts, September 2001-August 2002, Mike Friggens, 1999-September 2001, Shana Penington, February 2000-August 2000. *In fall 2013, the Grassland Core site was not able to be trapped due to government shutdown.Â&nbsp;</pre>
+                           </p>
+                        
+                     </td>
+                  </tr>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </fieldset>
+   <fieldset>
+      <legend>Other Metadata</legend>
+   </fieldset><br><a target="_blank" href="./metadataviewer?packageid=knb-lter-sev.8.297976&amp;contentType=application/xml">Download as XML</a> (in Ecological Metadata Language)
+   
+</div>
+<div></div>
+
+<!-- /Content -->
+							  
+						  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!--
+  ~ Copyright 2011-2014 the University of New Mexico.
+  ~
+  ~ This work was supported by National Science Foundation Cooperative
+  ~ Agreements #DEB-0832652 and #DEB-0936498.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0.
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+  ~ either express or implied. See the License for the specific
+  ~ language governing permissions and limitations under the License.
+  -->
+
+
+
+
+
+	<!-- Divider -->
+	<div class="footers row-fluid pull-left distance_1">
+		<div class="row-fluid ">
+			<div class="span12 page_top_header line-divider">
+			</div>
+		</div>
+
+	<!-- /Footer -->
+    <footer class="row-fluid ">
+      <div class="row-fluid">
+				<div class="span12">
+					<div class="container">
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="widget widget_recent_posts">
+									<div class="footer_title">
+										<h2 class="widget-title">Recently Added</h2>
+									</div>
+									<dl>
+										<dt><a href='./mapbrowse?scope=knb-lter-hfr&identifier=320'><span class='post_icon'></span></a></dt>
+										<dd class="without_avatar">2019-05-02 09:42:25<br/><a href='./mapbrowse?scope=knb-lter-hfr&identifier=320'>Legacies of Historical Clearcutting&#x2c; Wind and Salvage Logging in Pisgah State Forest 2016</a></dd>
+									</dl>
+									<dl>
+										<dt><a href='./mapbrowse?scope=knb-lter-hfr&identifier=319'><span class='post_icon'></span></a></dt>
+										<dd class="without_avatar">2019-05-02 09:38:46<br/><a href='./mapbrowse?scope=knb-lter-hfr&identifier=319'>Impacts of Hemlock Woolly Adelgid After Preventative Treatment in Lincoln MA 2015&#x2d;2018</a></dd>
+									</dl>
+								</div>
+							</div>
+							<div class="span5">
+								<div class="widget widget_recent_posts">
+									<div class="footer_title">
+										<h2 class="widget-title">Recently Updated</h2>
+									</div>
+									<dl>
+										<dt><a href='./mapbrowse?scope=knb-lter-cap&identifier=663'><span class='post_icon'></span></a></dt>
+										<dd class="without_avatar">2019-05-03 02:10:18<a href='./mapbrowse?scope=knb-lter-cap&identifier=663'>Flashiness of urban and desert streams in semi&#x2d;arid Arizona watersheds &#x28;2003&#x2d;2016&#x29;</a></dd>
+									</dl>
+									<dl>
+										<dt><a href='./mapbrowse?scope=knb-lter-arc&identifier=20066'><span class='post_icon'></span></a></dt>
+										<dd class="without_avatar">2019-05-02 10:19:44<a href='./mapbrowse?scope=knb-lter-arc&identifier=20066'>Arctic grayling neutral genomic microsatellite loci from the Kuparuk&#x2c; the Sagavanirktok &#x28;primarily Oksrukuyik Creek&#x29; and the Itkillik &#x28;primarily the I&#x2d;Minus outlet stream&#x29; watersheds&#x2c; 2010&#x2d;2014</a></dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		  </div>
+    </footer>
+  <!-- /Footer -->
+      
+    <div class="row-fluid base_color_background footer_copyright">
+			<div class="span12">
+				<div class="container">
+					<span class="arrow row-fluid"><span class="span12"></span>
+					</span>
+					<div class="row-fluid">
+						<div class="span12 ">
+							Copyright 2009-2017 <a href="http://www.lternet.edu">Long Term Ecological Research
+							Network</a>. This material is based upon work supported 
+							by the <a href="http://www.nsf.gov/">National Science 
+							Foundation</a> under Cooperative Agreements
+							<a href="http://www.fastlane.nsf.gov/servlet/showaward?award=0832652" target="_blank">
+							#DEB-0832652</a> and
+							<a href="http://www.fastlane.nsf.gov/servlet/showaward?award=0936498" target="_blank">
+							#DEB-0936498</a>. Any opinions, findings, conclusions, 
+							or recommendations expressed in the material are those 
+							of the author(s) and do not necessarily reflect the 
+							views of the National Science Foundation. Please
+							<a href="http://www.LTERnet.edu/contact" target="_blank">
+							contact us</a> with questions, comments, or for technical 
+							assistance regarding this web site or the LTER Network.<br/><br/>
+							This website is managed by the <a href="http://environmentaldatainitiative.org/">Environmental Data Initiative</a> on behalf of LTER.<br/><br/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    	<div class="row-fluid">
+			<div class="span12">
+				<div class="container nis-logos-div">
+						LTER is proud to be affiliated with the following organizations:
+                        <a href="https://www.datacite.org/"><img id="datacite-img" class="nis-logos-img" alt="DataCite logo" src="images/DataCite-Logo.png" title="DataCite logo"></a>
+						<a href="https://www.dataone.org/"><img id="dataone-img" class="nis-logos-img" alt="DataONE logo" src="images/DataONE_LOGO.jpg" title="DataONE logo"></a>
+						<a href="http://www.esipfed.org/"><img id="esip-img" class="nis-logos-img" alt="ESIP logo" src="images/ESIP-logo.jpg" title="ESIP logo"></a>
+						<a href="https://www.re3data.org/"><img id="re3data-img" alt="re3data logo" class="nis-logos-img" src="images/re3data_Logo_CMYK_72dpi.png" title="re3data logo"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+  <!-- /Divider -->
+		</div>
+
+<script type="text/javascript">
+	jQuery("#showAll").click(function() {
+		jQuery(".collapsible").show();
+	});
+    
+	jQuery("#hideAll").click(function() {
+		jQuery(".collapsible").hide();
+	});
+
+	jQuery(".toggleButton").click(function() {
+		jQuery(this).next(".collapsible").slideToggle("fast");
+	});
+    
+	jQuery(".collapsible").hide();
+	
+	jQuery("#toggleSummary").next(".collapsible").show();
+</script>  
+
+</body>
+
+</html>

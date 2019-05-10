@@ -1,0 +1,18 @@
+Package: replicatebecs
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Renata",
+           family = "Diaz",
+           role = c("aut", "cre"),
+           email = "diaz.renata@ufl.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports:
+    dplyr,
+    here,
+    magrittr
