@@ -1,0 +1,46 @@
+---
+title: "Narrative of original analysis"
+author: "Renata Diaz"
+date: "5/14/2019"
+output: html_notebook
+---
+
+A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
+
+### Questions
+
+1. Is energy use across body size categories (regardless of species) uniform or multimodal?
+  - uniform would correspond generally to energetic equivalence/Damuth's rule.
+  - multimodal might suggest different resource availability for different body sizes.
+2. If energy use is not uniform across body size categories, does the species level body size distribution correspond to modes of energy use?
+  - i.e. are there more species with mean body sizes around the modes of the body size-energy use distribution?
+  - if so, maybe it's good to be certain sizes, and species accumulate at those optima.
+
+### Constructing distributions/metrics
+
+#### Body size-energy use distributions (BSED)
+
+- Per individual, calculate metabolic rate as metabolic rate $B \propto M^\frac{3}{4}$ where $M$ is mass in grams.
+- Sum energy use of all individuals in body size classes of .2 natural log units.
+    - Also try classes of .1 and .3 natural log units
+- Convert raw energy use values for each body size class into the proportion of all the energy used in that community used by that body size class. This allows for comparisons between communities.
+
+#### Speices-level body size distributions (BSD)
+
+- Frequency distributions of mean mass of each species in a community.
+- For plotting (but not statistics), smoothed using kernel density estimation. 
+    - Gaussian kernel to mimic the actual body size distribution in log space
+    - avg. std dev of the mean of the logged masses = smoothing parameter $h$
+    - align sampling points with the midpoint of each size class in the BSED
+    - after Manly 1996, "Are there clumps in body-size distributions?", _Ecology_
+    
+#### Energetic dominance ($D_E$)
+
+- Define "energy use modes" as contiguous body size classes where the energy use of each size class > 5% of the community total. 
+    - i.e. a little bit more than the expectation if energy use is uniform across all body sizes
+    - RMD is unsure of this. Doesn't the uniform expectation depend on the number of size classes?
+- Calculate the total energy use for each species in the mode. 
+- Calculate the "dominance" of the species with the highest energy use in that mode as $D_E = p_{max}$, where $p_max$ is the maximum proportion of energy use by any one species in a mode. 
+    - "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
+
+
