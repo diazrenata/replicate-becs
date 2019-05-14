@@ -57,6 +57,7 @@ length(communities)
 Each community should be a data table with columns for species and size for each individual, for example:
 
 ```{r inspect community data}
+names(communities)
 head(communities[[1]])
 ```
 
@@ -88,6 +89,13 @@ For each community, sum total energy use for each size class, and convert to the
 bseds <- lapply(communities_energy, FUN = make_bsed)
 
 head(bseds[[1]])
+```
+
+```{r plot bseds, echo=FALSE, fig.height=10, fig.width=10}
+
+bseds_plot <- plot_paper_bseds(bseds)
+
+invisible(bseds_plot)
 ```
 
 ### Species-level body size distributions (BSD)

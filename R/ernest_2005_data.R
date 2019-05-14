@@ -323,6 +323,8 @@ process_portal_data <- function(datapath = here::here(),
 load_paper_data <- function(datapath = here::here()){
   data_files <- list.files(path = paste0(datapath, '/data/paper/processed'), full.names = T)
   
+  community_names <- vapply(data_files, FUN = get_community_name, FUN.VALUE = "name", USE.NAMES =F)
+  
   communities <- list()
   
   for(i in 1:length(data_files)) {
@@ -331,5 +333,26 @@ load_paper_data <- function(datapath = here::here()){
 
   }
   
+  names(communities) <- community_names
+  
   return(communities)
+}
+
+
+#' Get community name from data path
+#'
+#' @param data_file data path
+#'
+#' @return community name
+#'
+get_community_name <- function(data_file) {
+  
+  this_name <-strsplit(data_file, split = 'processed/') %>%
+    unlist() %>%
+    dplyr::nth(2) %>%
+    strsplit(split = '-processed.csv') %>%
+    unlist()
+  
+  return(this_name)
+  
 }
