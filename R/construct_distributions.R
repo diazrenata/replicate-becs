@@ -11,7 +11,6 @@
 
 make_community_table <- function(community, ln_units = 0.2)
 {
-  colnames(community) <- c('individual_species_ids', 'individual_sizes')
   community_df <-community %>%
     dplyr::mutate(individual_energy = individual_sizes ^ 0.75,
                   ln_mass = log(individual_sizes), 
@@ -91,8 +90,8 @@ find_modes <- function(bsed)
 #'
 #' @description Calculate energetic dominance
 #' 
-#' @param modes_list
-#' @param community_df
+#' @param modes_list list of modes
+#' @param community_df community table
 #'
 #' @return size classes with modes and energetic dominance 
 #'
@@ -139,30 +138,18 @@ energetic_dominance <- function(community_df)
 #'
 #' @param community_table df of species ids, individual sizes, energy, and size class
 #'
-#' @return bsd of # species with mean mass in each size class
+#' @return bsd of species and mean masses in g and log(mean mass)
 #'
 #' @export
 
-make_bsd <- function(community_df, ln_units = 0.2, decimals = NULL)
+make_bsd <- function(community_df)
 {
-  
   bsd <- community_df %>%
     dplyr::select(individual_species_ids, individual_sizes) %>%
     dplyr::group_by(individual_species_ids) %>%
     dplyr::summarize(species_mean_mass = mean(individual_sizes)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(ln_mass = log(species_mean_mass), 
-    size_class = ln_units * (floor(ln_mass/ln_units)),
-    size_class_g = exp(size_class)) %>%
-  dplyr::group_by(size_class, size_class_g) %>%
-    dplyr::summarize(n_species = n()) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(n_species_proportional = n_species/sum(n_species))
-  
-  if(!is.null(decimals)) {
-    bsd <- bsd %>%
-      dplyr::mutate(size_class_g = round(size_class_g, digits = decimals))
-  }
+    dplyr::mutate(ln_mass = log(species_mean_mass))
   
   return(bsd)
 }

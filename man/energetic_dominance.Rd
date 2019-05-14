@@ -7,7 +7,9 @@
 energetic_dominance(community_df)
 }
 \arguments{
-\item{community_df}{}
+\item{community_df}{community table}
+
+\item{modes_list}{list of modes}
 }
 \value{
 size classes with modes and energetic dominance

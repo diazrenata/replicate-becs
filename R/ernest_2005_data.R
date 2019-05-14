@@ -289,7 +289,7 @@ process_sev_data <- function(datapath = here::here()){
 #'
 
 process_portal_data <- function(datapath = here::here(), 
-                             portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
+                                portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
   
   portal <- portalr::summarise_individual_rodents(path = portaldatapath, download_if_missing = F, clean = T)
   
@@ -311,4 +311,25 @@ process_portal_data <- function(datapath = here::here(),
   
   
   return(TRUE)
+}
+
+#' Load paper community data
+#'
+#' @param datapath Main working directory
+#'
+#' @return list of data frames, one for each community.
+#' @export
+#'
+load_paper_data <- function(datapath = here::here()){
+  data_files <- list.files(path = paste0(datapath, '/data/paper/processed'), full.names = T)
+  
+  communities <- list()
+  
+  for(i in 1:length(data_files)) {
+    communities[[i]] <- read.csv(data_files[[i]], stringsAsFactors = F)
+    colnames(communities[[i]]) <- c('individual_species_ids', 'individual_sizes')
+
+  }
+  
+  return(communities)
 }

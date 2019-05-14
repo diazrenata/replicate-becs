@@ -5,9 +5,14 @@ date: "5/14/2019"
 output: html_notebook
 ---
 
+```{r setup, include = F}
+library(replicatebecs)
+download_data = FALSE
+```
+
 A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
 
-### Questions
+## Questions
 
 1. Is energy use across body size categories (regardless of species) uniform or multimodal?
   - uniform would correspond generally to energetic equivalence/Damuth's rule.
@@ -16,17 +21,78 @@ A walkthrough of Ernest (2005)'s original analytical approach, from close readin
   - i.e. are there more species with mean body sizes around the modes of the body size-energy use distribution?
   - if so, maybe it's good to be certain sizes, and species accumulate at those optima.
 
-### Constructing distributions/metrics
 
-#### Body size-energy use distributions (BSED)
+## Data
+
+#### Ernest data
+Ernest drew data from the Andrews LTER, the Sevilleta, Niwot Ridge, and Portal. 
+
+The data available online do not quite match the descriptive statistics reported in Ernest (2005). 
+
+#### Translation to `replicate-becs`
+
+Download raw data. By default data will be stored in subdirectories of `replicate-becs/data/paper/raw/` for each site. 
+```{r download data if not downloaded, include = F}
+if(download_data) download_raw_paper_data()
+```
+
+```{r download raw data, eval = F}
+download_raw_paper_data()
+```
+
+Process raw data into the appropriate format. This is a data table with a record for each individual and columns for `species` and `weight` in grams. By default these tables will be stored in subdirectores of `replicate-becs/data/paper/processed`. 
+
+```{r process paper data}
+process_raw_data()
+```
+
+Load data tables for each community. There should be 9 communities.
+
+```{r load community data, echo=TRUE}
+communities <- load_paper_data()
+
+length(communities)
+```
+
+Each community should be a data table with columns for species and size for each individual, for example:
+
+```{r inspect community data}
+head(communities[[1]])
+```
+
+
+## Constructing distributions/metrics
+
+### Body size-energy use distributions (BSED)
+
+#### Ernest method
 
 - Per individual, calculate metabolic rate as metabolic rate $B \propto M^\frac{3}{4}$ where $M$ is mass in grams.
 - Sum energy use of all individuals in body size classes of .2 natural log units.
     - Also try classes of .1 and .3 natural log units
 - Convert raw energy use values for each body size class into the proportion of all the energy used in that community used by that body size class. This allows for comparisons between communities.
 
-#### Speices-level body size distributions (BSD)
+#### Translation to `replicate-becs`
 
+For every individual, calculate metabolic rate and assign to a size class. 
+
+```{r construct BSEDs}
+communities_energy <- lapply(communities, FUN = make_community_table, ln_units = 0.2)
+
+head(communities_energy[[1]])
+```
+
+For each community, sum total energy use for each size class, and convert to the proportion of total energy use for that community.
+
+```{r make bseds}
+bseds <- lapply(communities_energy, FUN = make_bsed)
+
+head(bseds[[1]])
+```
+
+### Species-level body size distributions (BSD)
+
+#### Ernest method
 - Frequency distributions of mean mass of each species in a community.
 - For plotting (but not statistics), smoothed using kernel density estimation. 
     - Gaussian kernel to mimic the actual body size distribution in log space
@@ -34,7 +100,18 @@ A walkthrough of Ernest (2005)'s original analytical approach, from close readin
     - align sampling points with the midpoint of each size class in the BSED
     - after Manly 1996, "Are there clumps in body-size distributions?", _Ecology_
     
-#### Energetic dominance ($D_E$)
+#### Translation to `replicate-becs`
+
+Calculate mean mass of each species in each community. 
+
+```{r construct bsds} 
+
+bsds <- lapply(communities, FUN = make_bsd) 
+
+head(bsds[[1]])
+```
+
+### Energetic dominance ($D_E$)
 
 - Define "energy use modes" as contiguous body size classes where the energy use of each size class > 5% of the community total. 
     - i.e. a little bit more than the expectation if energy use is uniform across all body sizes

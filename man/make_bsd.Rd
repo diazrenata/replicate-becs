@@ -4,13 +4,13 @@
 \alias{make_bsd}
 \title{Construct BSD from df with community data}
 \usage{
-make_bsd(community_df, ln_units = 0.2, decimals = NULL)
+make_bsd(community_df)
 }
 \arguments{
 \item{community_table}{df of species ids, individual sizes, energy, and size class}
 }
 \value{
-bsd of # species with mean mass in each size class
+bsd of species and mean masses in g and log(mean mass)
 }
 \description{
 species level body size distributions
