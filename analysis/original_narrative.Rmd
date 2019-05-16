@@ -93,7 +93,7 @@ head(bseds[[1]])
 
 ```{r plot bseds, echo=FALSE, fig.height=10, fig.width=10}
 
-bseds_plot <- plot_paper_bseds(bseds)
+bseds_plot <- plot_paper_dists(bseds, dist_type = 'bsed')
 
 invisible(bseds_plot)
 ```
@@ -118,6 +118,14 @@ bsds <- lapply(communities, FUN = make_bsd)
 
 head(bsds[[1]])
 ```
+
+```{r plot bsds, echo=FALSE, fig.height=10, fig.width=10}
+
+bsds_plot <- plot_paper_dists(bsds, dist_type = 'bsd')
+
+invisible(bsds_plot)
+```
+
 
 ### Energetic dominance ($D_E$)
 

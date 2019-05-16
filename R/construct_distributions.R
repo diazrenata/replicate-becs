@@ -137,19 +137,33 @@ energetic_dominance <- function(community_df)
 #' @description species level body size distributions
 #'
 #' @param community_table df of species ids, individual sizes, energy, and size class
+#' @param decimals how many decimals
+#' @param ln_units  defaults to 0.2
 #'
 #' @return bsd of species and mean masses in g and log(mean mass)
 #'
 #' @export
 
-make_bsd <- function(community_df)
+make_bsd <- function(community_df, decimals = 2, ln_units = 0.2)
 {
   bsd <- community_df %>%
     dplyr::select(individual_species_ids, individual_sizes) %>%
     dplyr::group_by(individual_species_ids) %>%
     dplyr::summarize(species_mean_mass = mean(individual_sizes)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(ln_mass = log(species_mean_mass))
+    dplyr::mutate(ln_mass = log(species_mean_mass),
+                  size_class = ln_units * (floor(ln_mass/ln_units)),
+                  size_class_g = exp(size_class), stdev = sd(ln_mass)) #%>%
+    # dplyr::group_by(size_class, size_class_g) %>%
+    # dplyr::summarize(n_species = n()) %>%
+    # dplyr::ungroup() %>%
+    # dplyr::mutate(n_species_proportional = n_species/sum(n_species))
+
+  if(!is.null(decimals)) {
+    bsd <- bsd %>%
+      dplyr::mutate(size_class_g = round(size_class_g, digits = decimals))
+  }
+
   
   return(bsd)
 }

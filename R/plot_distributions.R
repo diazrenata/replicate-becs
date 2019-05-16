@@ -33,22 +33,54 @@ plot_bsed <- function(bsed, bsed_name = NULL){
 
 #' Replicate Figure 1
 #'
-#' @param bseds list of bseds
+#' @param dists list of bseds or bsds
+#' @param dist_type 'bsed', 'bsd', 'both' ('both' not yet functional)
 #'
-#' @return 9 panel plot of bseds modeled after Ernest 2005 Figure 1
+#' @return 9 panel plot of bseds/bsds/both modeled after Ernest 2005 Figure 1
 #' @export
 #'
-plot_paper_bseds <- function(bseds){
-  bsed_plots <- list()
-  for(i in 1:length(bseds)) {
-    bsed_plots[[i]] <- plot_bsed(bseds[[i]], bsed_name = names(bseds)[i])
-    names(bsed_plots)[i] <- names(bseds)[i]
+plot_paper_dists <- function(dists, dist_type){
+  dists_plots <- list()
+  
+  if(dist_type == 'bsed') {dist_plot_fun = plot_bsed}
+  if(dist_type == 'bsd') {dist_plot_fun = plot_bsd}
+  
+  for(i in 1:length(dists)) {
+    dists_plots[[i]] <- dist_plot_fun(dists[[i]], names(dists)[i])
+    names(dists_plots)[i] <- names(dists)[i]
   }
   
-  bseds_plot <- gridExtra::grid.arrange(bsed_plots$andrews, bsed_plots$niwot,  bsed_plots$`sev-goatdraw`,
-                                        bsed_plots$`sev-5pgrass`,  bsed_plots$`sev-rsgrass`,  bsed_plots$`sev-two22`,
-                                        bsed_plots$`sev-5plarrea`,  bsed_plots$`sev-rslarrea`,  bsed_plots$portal, nrow = 3)
+  dists_plot <- gridExtra::grid.arrange(dists_plots$andrews, dists_plots$niwot,  dists_plots$`sev-goatdraw`,
+                                        dists_plots$`sev-5pgrass`,  dists_plots$`sev-rsgrass`,  dists_plots$`sev-two22`,
+                                        dists_plots$`sev-5plarrea`,  dists_plots$`sev-rslarrea`,  dists_plots$portal, nrow = 3)
   
-  return(bseds_plot)
+  return(dists_plot)
   
+}
+#' Plot a single BSD
+#'
+#' @param bsd body size distribution table
+#' @param bsd_name community name
+#'
+#' @return density plot of avg. size x nspeices
+#' @export
+plot_bsd <- function(bsd, bsd_name = NULL){
+
+  if(is.null(bsd)) {
+    bsd_title = 'BSD'
+  } else {
+    bsd_title = paste0(bsd_name, " BSD")
+  }
+
+  bsd_plot <- ggplot2::ggplot(data = bsd, ggplot2::aes(ln_mass, xmin = 0.6, xmax = 5)) +
+    ggplot2::scale_x_discrete(limits = c(0.6, 2, 3, 4, 4.8), labels = c(2.7, 7.4, 20.1, 54.6, 121.5)) +
+   ggplot2::geom_density(data = bsd, stat = "density", adjust = 0.5,
+                        position = "identity", na.rm = T, show.legend = NA,
+                        inherit.aes = TRUE) +
+    ggplot2::ggtitle(bsd_title) +
+    ggplot2::theme_bw()
+
+
+  return(bsd_plot)
+
 }
