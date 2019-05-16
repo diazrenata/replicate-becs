@@ -45,9 +45,9 @@ plot_paper_bseds <- function(bseds){
     names(bsed_plots)[i] <- names(bseds)[i]
   }
   
-  bseds_plot <- gridExtra::grid.arrange(bsed_plots$andrews, bsed_plots$niwot,  bsed_plots$`sev-5pgrass`,
-                                        bsed_plots$`sev-5plarrea`,  bsed_plots$`sev-goatdraw`,  bsed_plots$`sev-rsgrass`,
-                                        bsed_plots$`sev-rslarrea`,  bsed_plots$`sev-two22`,  bsed_plots$portal, nrow = 3)
+  bseds_plot <- gridExtra::grid.arrange(bsed_plots$andrews, bsed_plots$niwot,  bsed_plots$`sev-goatdraw`,
+                                        bsed_plots$`sev-5pgrass`,  bsed_plots$`sev-rsgrass`,  bsed_plots$`sev-two22`,
+                                        bsed_plots$`sev-5plarrea`,  bsed_plots$`sev-rslarrea`,  bsed_plots$portal, nrow = 3)
   
   return(bseds_plot)
   
