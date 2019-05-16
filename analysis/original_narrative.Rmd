@@ -194,17 +194,18 @@ e_dom_prop_plot
 
 ```{r BSED-uniform bootstrapped DOIs}
 
-bsed_uniform_bootstrap <- community_bootstrap(community_df = communities_energy[[1]], bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 100)
+bsed_uniform_bootstraps <- lapply(communities_energy, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
 
 ```
 
-    - **RMD There are two plausible interpretations of this step. If you compare the "true uniform distribution" as _energy use_ is 1/n_sizeclasses, any community of uniform _sizes_ will deviate from that and the $DOI$s will actually be more like 1 or 2. If you compare the uniform distribution as the energy use distribution if every size class has an equal amount of biomass, that'll be a little different. First I am doing the equal energy in all size classes, but if this is weird it will be good to go back here and try it with energy calculated from truly uniform biomass allocation to size classes.**
+
+_See issue #4 on github._
     
     
-```{r plot BSED-uniform bootstrap DOIs v empirical} 
+```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10} 
 
-bsed_uniform_bootstrap_plot <- plot_bsed_bootstrap_results(bsed_uniform_bootstrap, names(communities_energy)[[1]])
+bsed_uniform_bootstrap_plot <- plot_paper_dists(bsed_uniform_bootstraps, dist_type = 'bsed_bootstraps')
 
-bsed_uniform_bootstrap_plot
+invisible(bsed_uniform_bootstrap_plot)
 ```
 
