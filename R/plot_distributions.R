@@ -1,7 +1,3 @@
-# plot_bsd <- function(bsd){
-#   # will involve kernel smoothing and stuff.
-# }
-
 #' Plot a single BSED
 #'
 #' @param bsed body size energy distribution table
@@ -44,6 +40,7 @@ plot_paper_dists <- function(dists, dist_type){
   
   if(dist_type == 'bsed') {dist_plot_fun = plot_bsed}
   if(dist_type == 'bsd') {dist_plot_fun = plot_bsd}
+  if(dist_type == 'bsed_bootstraps') {dist_plot_fun = plot_bsed_bootstrap_results}
   
   for(i in 1:length(dists)) {
     dists_plots[[i]] <- dist_plot_fun(dists[[i]], names(dists)[i])

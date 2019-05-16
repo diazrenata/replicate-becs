@@ -1,3 +1,46 @@
+#' Bootstrap based on a community
+#' Wrapper for `bootstrap_unif_bsed_doi`, possibly others. 
+#' @param community_df Empirical community to base samples on
+#' @param bootstrap_function Bootstrapping function to use
+#' @param nbootstraps How many samples to draw
+#'
+#' @return vector of nbootstraps sampled test statistics
+#' @export
+
+community_bootstrap <- function(community_df, bootstrap_function, nbootstraps) {
+  
+  empirical_value = NULL
+  
+  if(as.character(bootstrap_function) == 'bootstrap_unif_bsed_doi') {
+    community_bsed = make_bsed(community_df)
+    empirical_value <- doi(community_bsed$total_energy_proportional)
+  }
+  
+  bootstrap_function <- match.fun(bootstrap_function)
+  
+  bootstrap_values = replicate(n = nbootstraps, expr = bootstrap_function(community_df))
+  
+  bootstrap_results = list(bootstrap_values, empirical_value)
+  names(bootstrap_results) = c('bootstrap_values', 'empirical_value')
+  return(bootstrap_results)
+  
+}
+
+
+
+#' Get p value of empirical value v. bootstrapped results
+#'
+#' @param bootstrap_results output of community_bootstrap
+#'
+#' @return p value of empirical value vs. sim distribution
+#' @export
+get_bootstrap_p <- function(bootstrap_results) {
+  
+  sim_ecdf = ecdf(bootstrap_results$bootstrap_values)
+  p = sim_ecdf(bootstrap_results$empirical_value)
+  
+}
+
 #' @title DOI of sampled community masses from uniform compared to uniform
 #'
 #' @description Randomly draw N masses, where N is the total number of individuals in a community, from a uniform distribution with min and max corresponding the min and max of the entire community. 
@@ -9,9 +52,8 @@
 #'
 #' @export
 
-boostrap_unif_bsed_doi <- function(community_df){
-  colnames(community_df) <- c("individual_species_ids", "individual_sizes")
-  
+bootstrap_unif_bsed_doi <- function(community_df){
+
   sampled_community <- community_df
   sampled_community$individual_sizes <- runif(n = nrow(community_df),
                                               min = min(community_df$individual_sizes),
@@ -37,7 +79,7 @@ boostrap_unif_bsed_doi <- function(community_df){
 #' 
 #' @export
 
-boostrap_crosscomm_bseds <- function(community_a,
+bootstrap_crosscomm_bseds <- function(community_a,
                                      community_b)
 {
   
