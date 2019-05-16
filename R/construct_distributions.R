@@ -55,15 +55,20 @@ make_bsed <- function(community_df, decimals = NULL)
 #' @description Find contiguous size classes with %energy > 5% of total energy 
 #'
 #' @param bsed A BSED
-#'
+#' @param mode_cutoff defaults to 0.05, can be another number or "prop" = proportional to # of size classes in community
 #' @return size classes with modes
 #'
 #' @export
 
-find_modes <- function(bsed)
+find_modes <- function(bsed, mode_cutoff = 0.05)
 {
+  
+  if(mode_cutoff == 'prop') {
+    mode_cutoff = 1/(length(unique(bsed$size_class)))
+  }
+  
   these_modes <- bsed %>%
-    dplyr::filter(total_energy_proportional > 0.05) %>%
+    dplyr::filter(total_energy_proportional > mode_cutoff) %>%
     dplyr::mutate(mode_id = NA)
   
   this_mode = 1
@@ -90,19 +95,19 @@ find_modes <- function(bsed)
 #'
 #' @description Calculate energetic dominance
 #' 
-#' @param modes_list list of modes
 #' @param community_df community table
+#' @param mode_cutoff defaults to 0.05, or "prop" = proportional to # of size classes in community
 #'
 #' @return size classes with modes and energetic dominance 
 #'
 #' @export
 
-energetic_dominance <- function(community_df)
+energetic_dominance <- function(community_df, mode_cutoff = 0.05)
 {
   
   bsed = make_bsed(community_df)
   
-  modes_list = find_modes(bsed)
+  modes_list = find_modes(bsed, mode_cutoff)
   
   modes_df <- community_df %>%
     dplyr::left_join(modes_list, by = 'size_class') %>% 
@@ -126,7 +131,12 @@ energetic_dominance <- function(community_df)
     dplyr::select(mode_id, e_dominance)
   
   modes_list <- modes_list %>%
-    dplyr::left_join(modes_df, by = 'mode_id')
+    dplyr::left_join(modes_df, by = 'mode_id') %>% 
+    dplyr::group_by(mode_id) %>%
+    dplyr::mutate(size_class_min = min(size_class), size_class_max = max(size_class)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-size_class) %>%
+    dplyr::distinct() 
   
   return(modes_list)
 }

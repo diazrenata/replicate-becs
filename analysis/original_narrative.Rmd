@@ -136,4 +136,38 @@ invisible(bsds_plot)
 - Calculate the "dominance" of the species with the highest energy use in that mode as $D_E = p_{max}$, where $p_max$ is the maximum proportion of energy use by any one species in a mode. 
     - "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
 
+#### Translation to `replicate-becs`
+
+- Find contiguous size classes where each class has >5% of total energy use
+- Calculate the total energy use for each species, and the proportion held by the species with the highest energy use ($p_{max}$)
+- Return $p_{max}$ for every mode, along with the min and max size classes in that mode for each community
+
+```{r energetic dominance}
+
+energetic_dom <- lapply(communities_energy, FUN = energetic_dominance) 
+
+head(energetic_dom[[1]])
+
+```
+
+- To plot, combine all modes from all communities and plot a histogram of $D_E$ values.
+
+```{r plot Ed, echo=FALSE, fig.height=5, fig.width=5}
+e_dom_plot <- plot_e_dom(energetic_dom)
+e_dom_plot
+```
+
+
+- Out of curiousity, what happens if we define the modes with the cutoff proportional to the number of size classes (instead of a fixed 5%?)
+
+```{r edom proportional}
+energetic_dom_prop <- lapply(communities_energy, FUN = energetic_dominance, mode_cutoff = 'prop') 
+```
+
+```{r plot edom proportional, echo=FALSE, fig.height=5, fig.width=5}
+e_dom_prop_plot <- plot_e_dom(energetic_dom_prop)
+e_dom_prop_plot
+```
+
+- RMD: They're similar. 
 

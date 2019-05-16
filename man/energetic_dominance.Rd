@@ -4,12 +4,12 @@
 \alias{energetic_dominance}
 \title{Calculate energetic dominance}
 \usage{
-energetic_dominance(community_df)
+energetic_dominance(community_df, mode_cutoff = 0.05)
 }
 \arguments{
 \item{community_df}{community table}
 
-\item{modes_list}{list of modes}
+\item{mode_cutoff}{defaults to 0.05, or "prop" = proportional to # of size classes in community}
 }
 \value{
 size classes with modes and energetic dominance
