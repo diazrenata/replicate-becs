@@ -63,7 +63,15 @@ bootstrap_unif_bsed_doi <- function(community_df){
   
   sampled_bsed <- make_bsed(sampled_community_table)
   
-  sampled_doi <- doi(sampled_bsed$total_energy_proportional)
+  true_uniform_bsed <- sampled_bsed %>%
+    dplyr::mutate(total_size_class_biomass = sum(total_energy ^ (4/3))/ nrow(sampled_bsed),
+           nind = floor(total_size_class_biomass / size_class_g), 
+           ind_energy = size_class_g ^ (3/4),
+           total_energy = ind_energy * nind,
+           total_energy_proportional = total_energy / sum(total_energy)) %>%
+    dplyr::select(size_class, size_class_g, total_energy, total_energy_proportional)
+  
+  sampled_doi <- doi(sampled_bsed$total_energy_proportional, true_uniform_bsed$total_energy_proportional)
   return(sampled_doi)
 }
 
