@@ -194,7 +194,7 @@ e_dom_prop_plot
 
 ```{r BSED-uniform bootstrapped DOIs}
 
-bsed_uniform_bootstraps <- lapply(communities_energy, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 100)
 
 ```
 

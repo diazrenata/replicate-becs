@@ -4,14 +4,14 @@
 \alias{doi}
 \title{d-Corrected Kolgomorov-Smirnov test}
 \usage{
-doi(dist_a, dist_b = NULL)
+doi(bsed_a, bsed_b = NULL)
 
-doi(dist_a, dist_b = NULL)
+doi(bsed_a, bsed_b = NULL)
 }
 \arguments{
-\item{dist_a}{First distribution}
+\item{bsed_a}{First distribution}
 
-\item{dist_b}{Second distribution, if NULL, uniform}
+\item{bsed_b}{Second distribution, if NULL, uniform}
 
 \item{dist_a}{First distribution}
 
