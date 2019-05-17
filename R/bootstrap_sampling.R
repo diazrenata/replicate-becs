@@ -56,34 +56,19 @@ get_bootstrap_p <- function(bootstrap_results) {
 bootstrap_unif_bsed_doi <- function(community_df){
 
   sampled_community <- community_df
+  
   sampled_community$individual_sizes <- runif(n = nrow(community_df),
                                               min = min(community_df$individual_sizes),
                                               max = max(community_df$individual_sizes))
-  
+
   sampled_community_table <- make_community_table(sampled_community)
-  
+
   sampled_bsed <- make_bsed(sampled_community_table)
+
   
-  # true_uniform_bsed <- sampled_bsed %>%
-  #   dplyr::mutate(total_size_class_biomass = sum(total_energy ^ (4/3))/ nrow(sampled_bsed),
-  #          nind = floor(total_size_class_biomass / size_class_g), 
-  #          ind_energy = size_class_g ^ (3/4),
-  #          total_energy = ind_energy * nind,
-  #          total_energy_proportional = total_energy / sum(total_energy)) %>%
-  #   dplyr::select(size_class, size_class_g, total_energy, total_energy_proportional)
-  
-  
-  true_uniform_bsed <- community_df %>%
-    dplyr::mutate(real_energy = community_df$individual_sizes ^ (3/4), 
-                  random_energy = runif(n = nrow(sampled_community), min= min(real_energy), max = max(real_energy)),
-                  individual_sizes = random_energy ^ (4/3),
-                  individual_species_ids = "notimpt") %>%
-    dplyr::select(individual_species_ids, 
-                  individual_sizes) %>%
-    make_community_table %>%
-    make_bsed
-  
-  
+  true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_df$individual_sizes), max(community_df$individual_sizes), by = .1), individual_species_ids = "notimpt") %>%
+    make_community_table() %>%
+    make_bsed()
   
   sampled_doi <- doi(sampled_bsed, true_uniform_bsed)
   return(sampled_doi)

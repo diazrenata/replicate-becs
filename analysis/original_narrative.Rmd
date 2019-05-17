@@ -179,11 +179,12 @@ e_dom_prop_plot
 
 - Use bootstrap sampling to compare to uniform distributions.
 - For every community, draw 10000 samples (sim communities):
-    - Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest body size of any individual in that community.
+    - Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest ~~body size~~ individual metabolic rate of any individual in that community.
 - For sim communities and the empirical community, calculate a distribution overlap index ($DOI$):
     - $DOI = \sum_k {|y_{ak} - y_{bk}|}$ where $y$ is the value for size class $k$ in communities $a$ and $b$.
     - $DOI$ values will range from 0 (complete overlap) to 2 (no overlap). 
-    - For the BSED bootstraps, community $a$ is the empirical or sim distribution, and community $b$ is a true uniform distribution (i.e. $y_{bk} = \frac{1}{\max(k)}$ for all $k$)
+    - For the BSED bootstraps, community $a$ is the empirical or sim distribution, and community $b$ is a true uniform distribution ~~(i.e. $y_{bk} = \frac{1}{\max(k)}$ for all $k$)~~
+        - "True uniform distribution": There are exactly the same number of individuals of every size. 
 - Calculate the $DOI$ for all sim communities and the empirical.
 - Find the quantile value for the empirical $DOI$ compared to the distribution of sim $DOI$s. This is the p-value; i.e. the proportion of sim uniform distributions with DOIs greater than the empirical.
 
@@ -191,10 +192,11 @@ e_dom_prop_plot
 
 - For a given empirical community, draw 10000 sim communities each with the same number of individuals $n$, with body sizes randomly drawn from a uniform distribution from the minimum to maximum body size in that community.
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution. 
+    - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
 ```{r BSED-uniform bootstrapped DOIs}
 
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 100)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
 
 ```
 
