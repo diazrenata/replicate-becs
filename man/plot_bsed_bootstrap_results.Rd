@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot_bootstrap_results.R
 \name{plot_bsed_bootstrap_results}
 \alias{plot_bsed_bootstrap_results}
-\title{Plot a single BSED}
+\title{Plot a single BSED bootstrapping result}
 \usage{
-plot_bsed_bootstrap_results(bsed_bootstrap_results, bsed_name)
+plot_bsed_bootstrap_results(bsed_bootstrap_results, bsed_name = NULL)
 }
 \arguments{
 \item{bsed_bootstrap_results}{output of `community_bootstrap(..., bootstrap_function = 'bootstrap_unif_bsed_doi', ...)`}
@@ -15,5 +15,5 @@ plot_bsed_bootstrap_results(bsed_bootstrap_results, bsed_name)
 histogram of bootstrapped DOI values, line for empirical value, and P-value.
 }
 \description{
-Plot a single BSED
+Plot a single BSED bootstrapping result
 }

@@ -1,22 +1,16 @@
 #' @title Compute distribution overlap index for BSEDs
 #'
-#' @description Calculate DOI for two distributions or one distribution compared to uniform. 
+#' @description Calculate DOI for two distributions.
 #'
 #' @param bsed_a First distribution
-#' @param bsed_b Second distribution, if NULL, uniform 
-#'
+#' @param bsed_b Second distribution
+#' 
 #' @return DOI for two distributions
 #'
 #' @export
 
-doi <- function(bsed_a, bsed_b = NULL)
+doi <- function(bsed_a, bsed_b)
 {
-
-  if(is.null(bsed_b)){
-    bsed_b = bsed_a %>%
-      dplyr::mutate(total_energy_proportional = 1 / nrow(bsed_a))
-  }
-  
   bsed_a = bsed_a %>%
     dplyr::select(size_class, total_energy_proportional)
   

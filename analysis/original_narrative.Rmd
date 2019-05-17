@@ -211,3 +211,59 @@ bsed_uniform_bootstrap_plot <- plot_paper_dists(bsed_uniform_bootstraps, dist_ty
 invisible(bsed_uniform_bootstrap_plot)
 ```
 
+### Compare BSEDs among communities
+
+#### Ernest approach
+- For every pair of communities, create a pool of masses of all individuals from both communities.
+- Draw two new communities with the same number of individuals as the empirical communities, pulling masses at random from the pool, with replacement.
+- Calculate the DOI for the BSEDs of the two sample communities.
+- Repeat 10000 for each pair.
+- The P value is the proportion of sample DOIs greater (i.e. less overlap) than the empirical value. 
+
+#### Translation to `replicate-becs`
+- For every pair of communities, pool all the masses
+- Resample two communities of the right sizes
+- Construct BSEDs for both communities
+- Calculate the DOI of the two BSEDs
+- Repeat 10000x
+
+```{r pairs for crosscommunity BSED comparisons}
+community_combination_indices = utils::combn(x = c(1:9), m = 2, simplify = TRUE) %>%
+  t() %>%
+  as.data.frame() %>%
+  dplyr::rename(community_a = V1, community_b = V2)
+
+combine_communities = function(indices, communities) {
+  community_combination = list(community_a = communities[[indices[1]]], community_b = communities[[indices[2]]], community_names = c(names(communities)[[indices[1]]], names(communities)[[indices[2]]]))
+  
+  return(community_combination)
+}
+
+community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = combine_communities, communities = communities)
+
+```
+
+```{r cross community BSED comparisons}
+
+bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
+
+
+```
+
+```{r plot cross community comparisons, echo = F, fig.height=30, fig.width=10}
+
+crosscomm_bootstrap_plot = plot_crosscomm_bseds(bsed_crosscomm_bootstraps)
+
+invisible(crosscomm_bootstrap_plot)
+
+```
+
+```{r plot cross community p values, echo = F, fig.height = 5, fig.width = 5}
+pvals_histogram = plot_pvals(bsed_crosscomm_bootstraps)
+
+pvals_histogram
+```
+
+
+See histogram of p values for comparisons to see if commuities' BSEDs are the same or different.

@@ -4,12 +4,10 @@
 \alias{bootstrap_crosscomm_bseds}
 \title{Get DOI for bootstrap sampled community masses from two communities}
 \usage{
-bootstrap_crosscomm_bseds(community_a, community_b)
+bootstrap_crosscomm_bseds(community_dfs)
 }
 \arguments{
-\item{community_df_a}{community data frame for first community}
-
-\item{community_df_b}{community data frame for second community}
+\item{community_dfs}{list of community data frames for two communities}
 }
 \value{
 doi

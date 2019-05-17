@@ -4,14 +4,14 @@
 \alias{doi}
 \title{d-Corrected Kolgomorov-Smirnov test}
 \usage{
-doi(bsed_a, bsed_b = NULL)
+doi(bsed_a, bsed_b)
 
-doi(bsed_a, bsed_b = NULL)
+doi(bsed_a, bsed_b)
 }
 \arguments{
 \item{bsed_a}{First distribution}
 
-\item{bsed_b}{Second distribution, if NULL, uniform}
+\item{bsed_b}{Second distribution}
 
 \item{dist_a}{First distribution}
 
@@ -25,5 +25,5 @@ DOI for two distributions
 \description{
 $delta$-corrected KS test
 
-Calculate DOI for two distributions or one distribution compared to uniform.
+Calculate DOI for two distributions.
 }

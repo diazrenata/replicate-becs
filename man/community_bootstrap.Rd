@@ -5,14 +5,14 @@
 \title{Bootstrap based on a community
 Wrapper for `bootstrap_unif_bsed_doi`, possibly others.}
 \usage{
-community_bootstrap(community_df, bootstrap_function, nbootstraps)
+community_bootstrap(community_dfs, bootstrap_function, nbootstraps)
 }
 \arguments{
-\item{community_df}{Empirical community to base samples on}
-
 \item{bootstrap_function}{Bootstrapping function to use}
 
 \item{nbootstraps}{How many samples to draw}
+
+\item{community_df}{Empirical community to base samples on}
 }
 \value{
 vector of nbootstraps sampled test statistics
