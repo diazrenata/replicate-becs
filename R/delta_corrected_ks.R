@@ -2,21 +2,50 @@
 #'
 #' @description $delta$-corrected KS test
 #'
-#' @param dist_a First distribution
-#' @param dist_b Second distribution, if NULL, uniform 
+#' @param dist_a distribution
 #'
-#' @return KS statistic
+#' @return list of signif to p = 0.05, d value, dcrit
 #'
 #' @export
 
-doi <- function(dist_a, dist_b = NULL)
+zar_ks_test <- function(bsd)
 {
-
-  if(is.null(dist_b)){
-    dist_b = rep(1/length(dist_a), length(dist_a))
+  x = bsd %>%
+    dplyr::select(species_mean_mass)
+  
+  rel_f = x %>%
+    dplyr::arrange(species_mean_mass) %>%
+    dplyr::group_by(species_mean_mass) %>%
+    dplyr::mutate(val_freq = dplyr::n()) %>%
+    dplyr::ungroup() %>%
+    dplyr::distinct() %>%
+    dplyr::add_rownames(var = 'i') %>%
+    dplyr::mutate(cum_freq = NA)
+  
+  # I don't know how to do this using dplyr -- RMD
+  for(i in 1:nrow(rel_f)) {
+    rel_f$cum_freq[i] <- sum(rel_f$val_freq[1:i])
   }
   
-  doi = sum(abs(dist_a - dist_b))
+  rel_f = rel_f %>%
+    dplyr::mutate(rel_freq = cum_freq / nrow(bsd),
+                  exp_cum_freq = (species_mean_mass),
+                  exp_rel_freq = exp_cum_freq / (max(species_mean_mass)))
   
-  return(doi)
+  d = abs(rel_f$rel_freq - rel_f$exp_rel_freq)
+  
+  d2 = abs(dplyr::lag(rel_f$rel_freq, n= 1, default = 0) - rel_f$exp_rel_freq)
+  
+  d = c(d,d2)
+  d = max(d)
+  
+  dcrits = read.csv('data/kstable.csv')
+  
+  dcrit = dcrits$dcrit_05[which(dcrits$n == nrow(bsd))]
+  
+  signif = (d >= dcrit)
+  
+  results = list(signif = signif, d = d, dcrit = dcrit)
+  
+  return(results)
 }

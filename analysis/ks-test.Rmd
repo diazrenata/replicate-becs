@@ -1,0 +1,22 @@
+---
+title: "KS test"
+output: html_notebook
+---
+
+#### Base K-S test
+- Take vector of measurements $X_i$. 
+- For each $X_i$ record the observed frequency $f_i$ (number of observations with that value).
+- Determine cumulative observed frequencies $F_i$ and cumulative relative frequencies $\textrm{rel}F_i$:
+    - $\textrm{rel}F_i = \frac{F_i}{n}$ where $n$ is the number of measurements taken. 
+    - $\textrm{rel}F_i$ is the proportion of the sample that is measurements $\leq X_i$. 
+- For each $X_i$, determine the cumulative *relative* expected frequency from the comparison distribution, $\textrm{rel}\hat{F_i}$.
+    - For a uniform distribution, $\textrm{rel}\hat{F_i} = \frac{X_i - \min(X)}{\max(X) - \min(X)}$
+- Determine $D_i$ and $D'_i$ as:
+    - $D_i = |{\textrm{rel}F_i - \textrm{rel}\hat{F_i}}|$
+    - $D'_i = |{\textrm{rel}F_{i-1} - \textrm{rel}\hat{F_i}}|$
+        - note $F_0 = 0$ so $D'_1 = \textrm{rel}\hat{F_i}$
+- The test statistic $D$ is:
+    - $D = \max[(\max(D_i), (\max(D'_i)]$
+- Compare to critical values from appendix.
+
+#### $\delta$-corrected KS test

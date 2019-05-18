@@ -196,7 +196,7 @@ e_dom_prop_plot
 
 ```{r BSED-uniform bootstrapped DOIs}
 
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
 
 ```
 
@@ -246,7 +246,7 @@ community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = 
 ```{r cross community BSED comparisons}
 
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
-                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10)
 
 
 ```
@@ -267,3 +267,18 @@ pvals_histogram
 
 
 See histogram of p values for comparisons to see if commuities' BSEDs are the same or different.
+
+### Testing BSDs for uniformity
+
+#### Ernest approach
+- $\delta$-corrected Kolmogorov-Smirnov test. 
+  - "The $\delta$-corrected K-S test increases the power of the test when sample sizes are small (n < 25; Zar 1999)"
+- The $\delta$-corrected test is not widely discussed online. Working from Zar 1999:
+
+> #### Base K-S test
+> - Take vector of measurements $X_i$. 
+> - For each $X_i$ record the observed frequency $f_i$ (number of observations with that value).
+> - Determine cumulative observed frequencies $F_i$ and cumulative relative frequencies $\rel F_i$
+
+
+#### Translation to `replicate-becs`:
