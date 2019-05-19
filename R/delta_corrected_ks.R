@@ -30,8 +30,8 @@ zar_ks_test <- function(bsd, delta_correction = F)
   
   rel_f = rel_f %>%
     dplyr::mutate(rel_freq = cum_freq / nrow(bsd),
-                  exp_cum_freq = (species_mean_mass),
-                  exp_rel_freq = exp_cum_freq / (max(species_mean_mass)))
+                  exp_cum_freq = (species_mean_mass - min(species_mean_mass)),
+                  exp_rel_freq = exp_cum_freq / (max(species_mean_mass) - min(species_mean_mass)))
   
   if(delta_correction) {
     
@@ -44,20 +44,22 @@ zar_ks_test <- function(bsd, delta_correction = F)
     d_1 = abs(rel_f$rel_delta_freq1 - rel_f$exp_rel_freq) %>%
       max()
     
-    if(d_1 > d_0) {
-      d = d_1
-      dsub = 1
-    } else if (d_0 > d_1) {
-      d = d_0
-      dsub = 0
-    }
-    
     dcrits = read.csv(paste0(here::here(), '/data/delta_kstable.csv'), stringsAsFactors = F)
+  
+    d_comparison = data.frame(dsubs = c(d_0, d_1), n = nrow(bsd), delta = c(0, 1)) %>%
+      dplyr::left_join(dcrits, by = c('n', 'delta')) %>%
+      dplyr::filter(dcrit < dsubs) %>%
+      dplyr::filter(alpha == min(alpha))
     
-    dcrits = dcrits %>%
-      dplyr::filter(n == nrow(bsd), delta == dsub)
-    
-    dcrit = as.numeric(dcrits$dcrit_05)
+    if(nrow(d_comparison) > 0) {
+      signif = T
+      d = d_comparison$dsubs
+      dcrit = d_comparison$dcrit
+    } else {
+      signif = F
+      d = NULL
+      dcrit = NULL
+    }
     
   } else {
   d = abs(rel_f$rel_freq - rel_f$exp_rel_freq)
@@ -70,12 +72,12 @@ zar_ks_test <- function(bsd, delta_correction = F)
   dcrits = read.csv(paste0(here::here(), '/data/kstable.csv'))
   
   dcrit = dcrits$dcrit_05[which(dcrits$n == nrow(bsd))]
+  signif = (d >= dcrit)
   
   }
   
-  signif = (d >= dcrit)
-  
   results = list(signif = signif, d = d, dcrit = dcrit)
+  
   
   return(results)
 }
