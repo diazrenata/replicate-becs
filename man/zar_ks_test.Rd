@@ -4,14 +4,16 @@
 \alias{zar_ks_test}
 \title{d-Corrected Kolgomorov-Smirnov test}
 \usage{
-zar_ks_test(bsd)
+zar_ks_test(bsd, delta_correction = F)
 }
 \arguments{
-\item{dist_a}{distribution}
+\item{bsd}{distribution}
+
+\item{delta_correction}{T/F use delta correction for small sample sizes}
 }
 \value{
 list of signif to p = 0.05, d value, dcrit
 }
 \description{
-$delta$-corrected KS test
+delta-corrected KS test
 }

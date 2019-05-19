@@ -15,4 +15,5 @@ RoxygenNote: 6.1.1
 Imports:
     dplyr,
     here,
-    magrittr
+    magrittr,
+    tibble

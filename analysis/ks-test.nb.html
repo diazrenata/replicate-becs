@@ -244,6 +244,7 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<p>From Zar (1999) <em>Biostatistical Analysis</em>.</p>
 <div id="base-k-s-test" class="section level4">
 <h4>Base K-S test</h4>
 <ul>
@@ -275,10 +276,24 @@ $(document).ready(function () {
 </div>
 <div id="delta-corrected-ks-test" class="section level4">
 <h4><span class="math inline">\(\delta\)</span>-corrected KS test</h4>
+<ul>
+<li>For small sample sizes (&lt;25) we can obtain increased power using the <span class="math inline">\(\delta\)</span>-corrected KS test.</li>
+<li>For each <span class="math inline">\(i\)</span> determine
+<ul>
+<li><span class="math inline">\(\textrm{rel}G_i = \frac{F_i}{n + 1}\)</span></li>
+<li><span class="math inline">\(\textrm{rel}G'_i = \frac{F_i - 1}{n - 1}\)</span></li>
+</ul></li>
+<li>Then obtain similar <span class="math inline">\(D\)</span>s
+<ul>
+<li><span class="math inline">\(D_{0, i} = |\textrm{rel}G_i - \textrm{rel}\hat{F_i}|\)</span></li>
+<li><span class="math inline">\(D_{1, i} = |\textrm{rel}G'_i - \textrm{rel}\hat{F_i}|\)</span></li>
+</ul></li>
+<li>The test statistic is either <span class="math inline">\(\max(D_{0, i})\)</span> or <span class="math inline">\(\max(D_{1, i})\)</span>, whichever leads to the highest level of significance/smallest probability. Look up significance in table from appendix. The 1 and 0 are the <span class="math inline">\(\delta\)</span>s.</li>
+</ul>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiS1MgdGVzdCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyMjIyBCYXNlIEstUyB0ZXN0Ci0gVGFrZSB2ZWN0b3Igb2YgbWVhc3VyZW1lbnRzICRYX2kkLiAKLSBGb3IgZWFjaCAkWF9pJCByZWNvcmQgdGhlIG9ic2VydmVkIGZyZXF1ZW5jeSAkZl9pJCAobnVtYmVyIG9mIG9ic2VydmF0aW9ucyB3aXRoIHRoYXQgdmFsdWUpLgotIERldGVybWluZSBjdW11bGF0aXZlIG9ic2VydmVkIGZyZXF1ZW5jaWVzICRGX2kkIGFuZCBjdW11bGF0aXZlIHJlbGF0aXZlIGZyZXF1ZW5jaWVzICRcdGV4dHJte3JlbH1GX2kkOgogICAgLSAkXHRleHRybXtyZWx9Rl9pID0gXGZyYWN7Rl9pfXtufSQgd2hlcmUgJG4kIGlzIHRoZSBudW1iZXIgb2YgbWVhc3VyZW1lbnRzIHRha2VuLiAKICAgIC0gJFx0ZXh0cm17cmVsfUZfaSQgaXMgdGhlIHByb3BvcnRpb24gb2YgdGhlIHNhbXBsZSB0aGF0IGlzIG1lYXN1cmVtZW50cyAkXGxlcSBYX2kkLiAKLSBGb3IgZWFjaCAkWF9pJCwgZGV0ZXJtaW5lIHRoZSBjdW11bGF0aXZlICpyZWxhdGl2ZSogZXhwZWN0ZWQgZnJlcXVlbmN5IGZyb20gdGhlIGNvbXBhcmlzb24gZGlzdHJpYnV0aW9uLCAkXHRleHRybXtyZWx9XGhhdHtGX2l9JC4KICAgIC0gRm9yIGEgdW5pZm9ybSBkaXN0cmlidXRpb24sICRcdGV4dHJte3JlbH1caGF0e0ZfaX0gPSBcZnJhY3tYX2kgLSBcbWluKFgpfXtcbWF4KFgpIC0gXG1pbihYKX0kCi0gRGV0ZXJtaW5lICREX2kkIGFuZCAkRCdfaSQgYXM6CiAgICAtICREX2kgPSB8e1x0ZXh0cm17cmVsfUZfaSAtIFx0ZXh0cm17cmVsfVxoYXR7Rl9pfX18JAogICAgLSAkRCdfaSA9IHx7XHRleHRybXtyZWx9Rl97aS0xfSAtIFx0ZXh0cm17cmVsfVxoYXR7Rl9pfX18JAogICAgICAgIC0gbm90ZSAkRl8wID0gMCQgc28gJEQnXzEgPSBcdGV4dHJte3JlbH1caGF0e0ZfaX0kCi0gVGhlIHRlc3Qgc3RhdGlzdGljICREJCBpczoKICAgIC0gJEQgPSBcbWF4WyhcbWF4KERfaSksIChcbWF4KEQnX2kpXSQKLSBDb21wYXJlIHRvIGNyaXRpY2FsIHZhbHVlcyBmcm9tIGFwcGVuZGl4LgoKIyMjIyAkXGRlbHRhJC1jb3JyZWN0ZWQgS1MgdGVzdA==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiS1MgdGVzdCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRnJvbSBaYXIgKDE5OTkpIF9CaW9zdGF0aXN0aWNhbCBBbmFseXNpc18uCgojIyMjIEJhc2UgSy1TIHRlc3QKLSBUYWtlIHZlY3RvciBvZiBtZWFzdXJlbWVudHMgJFhfaSQuIAotIEZvciBlYWNoICRYX2kkIHJlY29yZCB0aGUgb2JzZXJ2ZWQgZnJlcXVlbmN5ICRmX2kkIChudW1iZXIgb2Ygb2JzZXJ2YXRpb25zIHdpdGggdGhhdCB2YWx1ZSkuCi0gRGV0ZXJtaW5lIGN1bXVsYXRpdmUgb2JzZXJ2ZWQgZnJlcXVlbmNpZXMgJEZfaSQgYW5kIGN1bXVsYXRpdmUgcmVsYXRpdmUgZnJlcXVlbmNpZXMgJFx0ZXh0cm17cmVsfUZfaSQ6CiAgICAtICRcdGV4dHJte3JlbH1GX2kgPSBcZnJhY3tGX2l9e259JCB3aGVyZSAkbiQgaXMgdGhlIG51bWJlciBvZiBtZWFzdXJlbWVudHMgdGFrZW4uIAogICAgLSAkXHRleHRybXtyZWx9Rl9pJCBpcyB0aGUgcHJvcG9ydGlvbiBvZiB0aGUgc2FtcGxlIHRoYXQgaXMgbWVhc3VyZW1lbnRzICRcbGVxIFhfaSQuIAotIEZvciBlYWNoICRYX2kkLCBkZXRlcm1pbmUgdGhlIGN1bXVsYXRpdmUgKnJlbGF0aXZlKiBleHBlY3RlZCBmcmVxdWVuY3kgZnJvbSB0aGUgY29tcGFyaXNvbiBkaXN0cmlidXRpb24sICRcdGV4dHJte3JlbH1caGF0e0ZfaX0kLgogICAgLSBGb3IgYSB1bmlmb3JtIGRpc3RyaWJ1dGlvbiwgJFx0ZXh0cm17cmVsfVxoYXR7Rl9pfSA9IFxmcmFje1hfaSAtIFxtaW4oWCl9e1xtYXgoWCkgLSBcbWluKFgpfSQKLSBEZXRlcm1pbmUgJERfaSQgYW5kICREJ19pJCBhczoKICAgIC0gJERfaSA9IHx7XHRleHRybXtyZWx9Rl9pIC0gXHRleHRybXtyZWx9XGhhdHtGX2l9fXwkCiAgICAtICREJ19pID0gfHtcdGV4dHJte3JlbH1GX3tpLTF9IC0gXHRleHRybXtyZWx9XGhhdHtGX2l9fXwkCiAgICAgICAgLSBub3RlICRGXzAgPSAwJCBzbyAkRCdfMSA9IFx0ZXh0cm17cmVsfVxoYXR7Rl9pfSQKLSBUaGUgdGVzdCBzdGF0aXN0aWMgJEQkIGlzOgogICAgLSAkRCA9IFxtYXhbKFxtYXgoRF9pKSwgKFxtYXgoRCdfaSldJAotIENvbXBhcmUgdG8gY3JpdGljYWwgdmFsdWVzIGZyb20gYXBwZW5kaXguCgojIyMjICRcZGVsdGEkLWNvcnJlY3RlZCBLUyB0ZXN0CgotIEZvciBzbWFsbCBzYW1wbGUgc2l6ZXMgKDwyNSkgd2UgY2FuIG9idGFpbiBpbmNyZWFzZWQgcG93ZXIgdXNpbmcgdGhlICRcZGVsdGEkLWNvcnJlY3RlZCBLUyB0ZXN0LgotIEZvciBlYWNoICRpJCBkZXRlcm1pbmUKICAgIC0gJFx0ZXh0cm17cmVsfUdfaSA9IFxmcmFje0ZfaX17biArIDF9JAogICAgLSAkXHRleHRybXtyZWx9RydfaSA9IFxmcmFje0ZfaSAtIDF9e24gLSAxfSQKLSBUaGVuIG9idGFpbiBzaW1pbGFyICREJHMKICAgIC0gJERfezAsIGl9ID0gfFx0ZXh0cm17cmVsfUdfaSAtIFx0ZXh0cm17cmVsfVxoYXR7Rl9pfXwkCiAgICAtICREX3sxLCBpfSA9IHxcdGV4dHJte3JlbH1HJ19pIC0gXHRleHRybXtyZWx9XGhhdHtGX2l9fCQKLSBUaGUgdGVzdCBzdGF0aXN0aWMgaXMgZWl0aGVyICRcbWF4KERfezAsIGl9KSQgb3IgJFxtYXgoRF97MSwgaX0pJCwgd2hpY2hldmVyIGxlYWRzIHRvIHRoZSBoaWdoZXN0IGxldmVsIG9mIHNpZ25pZmljYW5jZS9zbWFsbGVzdCBwcm9iYWJpbGl0eS4gTG9vayB1cCBzaWduaWZpY2FuY2UgaW4gdGFibGUgZnJvbSBhcHBlbmRpeC4gVGhlIDEgYW5kIDAgYXJlIHRoZSAkXGRlbHRhJHMuIAoKCgoKCg==</div>
 
 
 
