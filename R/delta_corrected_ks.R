@@ -6,13 +6,14 @@
 #' @param delta_correction T/F use delta correction for small sample sizes
 #' @param focal_column name of column for the distribution to be evaluated
 #' @param expected_range vector of expected min and max values for uniform; defaults to min and max of measurement column
+#' @param n_or_i "n" or "i"
 #'
 #' @return list of signif to p = 0.05, d value, dcrit
 #'
 #' @export
 
 zar_ks_test <- function(distribution, delta_correction = F, focal_column = "species_mean_mass", 
-                        expected_range = NULL)
+                        expected_range = NULL, n_or_i = 'n')
 {
   
   x = distribution %>%
@@ -60,6 +61,10 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
       tidyr::gather(key = 'delta', value = 'd', -i) %>%
       dplyr::mutate(delta = ifelse(delta == 'd_0', 0, 1))
     
+    if(n_or_i == 'i') { 
+      nvals = NULL
+    }
+    
     p_vals_d0 = find_ps(rel_f = rel_f, d_crits = d_crits, delta = 0, nvals = nvals)
     
     p_vals_d1 = find_ps(rel_f = rel_f, d_crits = d_crits, delta = 1, nvals = nvals)
@@ -77,7 +82,7 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
     rel_f = rel_f %>%
       dplyr::mutate(d = abs(rel_freq - exp_rel_freq),
                     d2 = abs(dplyr::lag(rel_freq, n= 1, default = 0) - exp_rel_freq))
-    
+  
     p_vals = find_ps(rel_f = rel_f, d_crits = d_crits, nvals = nvals)
     
   }
@@ -99,11 +104,12 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
 #' @param rel_f rel_f table
 #' @param d_crits d_crit table 
 #' @param deltaval 0, 1, or null for non-delta-corrected
-#' @param nvals sample size
+#' @param nvals sample size, or NULL in which case i is used
 #'
 #' @return list of pvals
+#' @export
 
-find_ps = function(rel_f, d_crits, deltaval = NULL, nvals) {
+find_ps = function(rel_f, d_crits, deltaval = NULL, nvals = NULL) {
   
   if(is.null(deltaval)) {
     d = max(c(rel_f$d, rel_f$d2))
@@ -121,10 +127,13 @@ find_ps = function(rel_f, d_crits, deltaval = NULL, nvals) {
     d = this_rel$d
     i = this_rel$i
     
-    
+    if(is.null(nvals)) {
     d_comparison = d_crits %>%
       dplyr::filter(n == i, delta == deltaval)
-    
+    } else {
+      d_comparison = d_crits %>%
+        dplyr::filter(n == nvals, delta == deltaval)
+    }
   }
   
   p_min = d_comparison %>%

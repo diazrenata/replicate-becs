@@ -1,0 +1,44 @@
+---
+title: "KS test scenarios"
+output: html_notebook
+---
+```{r setup}
+library(replicatebecs)
+load(paste0(here::here(), '/bsds.Rdata'))
+```
+
+## KS test scenario exploration
+
+Ernest's results:
+
+```{r load ernest}
+ernest_results = read.csv(paste0(here::here(), '/data/ernest_bsd_results.csv'))
+print(ernest_results)
+```
+
+Starting with Niwot.
+
+```{r niwot}
+
+niwot_ks_log_mintomax =  zar_ks_test(distribution = bsds$niwot,
+                       delta_correction = T,
+                       focal_column = 'ln_mass',
+                       expected_range = NULL, n_or_i = 'n')
+```
+
+ln_mass works?
+
+
+```{r all kstests} 
+
+bsd_ks_test = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'ln_mass',
+                     expected_range = NULL,
+                     n_or_i = 'n')
+
+bsd_ks_test_full_range = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'ln_mass',
+                     expected_range = c(min(bsds$niwot$ln_mass), max(bsds$niwot$ln_mass)),
+                     n_or_i = 'n')
+
+```

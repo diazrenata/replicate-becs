@@ -4,7 +4,7 @@
 \alias{find_ps}
 \title{find ps}
 \usage{
-find_ps(rel_f, d_crits, deltaval = NULL, nvals)
+find_ps(rel_f, d_crits, deltaval = NULL, nvals = NULL)
 }
 \arguments{
 \item{rel_f}{rel_f table}
@@ -13,7 +13,7 @@ find_ps(rel_f, d_crits, deltaval = NULL, nvals)
 
 \item{deltaval}{0, 1, or null for non-delta-corrected}
 
-\item{nvals}{sample size}
+\item{nvals}{sample size, or NULL in which case i is used}
 }
 \value{
 list of pvals
