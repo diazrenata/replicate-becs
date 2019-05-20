@@ -307,7 +307,7 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
 - The test statistic is either $\max(D_{0, i})$ or $\max(D_{1, i})$, whichever leads to the highest level of significance/smallest probability. Look up significance in table from appendix. The 1 and 0 are the $\delta$s. 
 
 
-Tables of critical values were entered by hand from the appendix to Zar (1999). Note that the $\delta$-correction is only included in the seventh edition. 
+Tables of critical values were entered by hand from the appendix to Zar (1999).
 
 ```{r bsds deltaks to uniform}
 

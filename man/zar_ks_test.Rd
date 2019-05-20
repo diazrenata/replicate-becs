@@ -4,12 +4,17 @@
 \alias{zar_ks_test}
 \title{d-Corrected Kolgomorov-Smirnov test}
 \usage{
-zar_ks_test(bsd, delta_correction = F)
+zar_ks_test(distribution, delta_correction = F,
+  focal_column = "species_mean_mass", expected_range = NULL)
 }
 \arguments{
-\item{bsd}{distribution}
-
 \item{delta_correction}{T/F use delta correction for small sample sizes}
+
+\item{focal_column}{name of column for the distribution to be evaluated}
+
+\item{expected_range}{vector of expected min and max values for uniform; defaults to min and max of measurement column}
+
+\item{bsd}{distribution}
 }
 \value{
 list of signif to p = 0.05, d value, dcrit
