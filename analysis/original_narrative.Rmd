@@ -275,6 +275,13 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
   - "The $\delta$-corrected K-S test increases the power of the test when sample sizes are small (n < 25; Zar 1999)"
 - The $\delta$-corrected test is not widely discussed online. 
 
+
+```{r ernest d ks test results}
+ernest_results = read.csv(paste0(here::here(), '/data/ernest_bsd_results.csv'))
+print(ernest_results)
+```
+
+
 #### Translation to `replicate-becs`:
 
 *From Zar (1999) _Biostatistical Analysis_.*
@@ -295,6 +302,7 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
     - $D = \max[(\max(D_i), (\max(D'_i)]$
 - Compare to critical values from appendix.
 
+
 ##### $\delta$-corrected KS test
 
 - For small sample sizes (<25) we can obtain increased power using the $\delta$-corrected KS test.
@@ -310,7 +318,43 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
 Tables of critical values were entered by hand from the appendix to Zar (1999).
 
 ```{r bsds deltaks to uniform}
+bsd_ks_test = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'species_mean_mass',
+                     expected_range = NULL,
+                     n_or_i = 'n')
 
-bsd_uniform_ks = lapply(bsds, FUN = zar_ks_test, delta_correction = T)
+print(bsd_ks_test)
 
 ```
+
+The $\delta$ corrected KS test does not correspond to the results from Ernest when the species mean body size values are on an untransformed scale. 
+
+Using the natural log of the species mean body size value, however...:
+
+```{r bsds deltaks to uniform log}
+bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'ln_mass',
+                     expected_range = NULL, 
+                     n_or_i = 'n')
+
+print(bsd_ks_test_log)
+```
+
+With mean mass logged, all the results replicate qualitatively (i.e. not significantly different from uniform) and Niwot, for which the currently-available data most closely matches that reported in Ernest (2005), replicates almost exactly numerically. 
+
+### Comparing BSDs among communities
+
+#### Ernest approach
+
+Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every possible combination of community-level BSDs. 
+
+#### Translation to `replicate-becs`
+
+```{r ks two sample}
+
+# use same community combinations as before
+
+bsd_crosscomm_ks = lapply(community_combinations, FUN = ks_bsd, 
+                          ln_mass_vals = F)
+```
+

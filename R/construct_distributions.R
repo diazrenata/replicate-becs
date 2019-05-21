@@ -147,14 +147,14 @@ energetic_dominance <- function(community_df, mode_cutoff = 0.05)
 #' @description species level body size distributions
 #'
 #' @param community_table df of species ids, individual sizes, energy, and size class
-#' @param decimals how many decimals
+#' @param decimals how many decimals, defaults to NULL
 #' @param ln_units  defaults to 0.2
 #'
 #' @return bsd of species and mean masses in g and log(mean mass)
 #'
 #' @export
 
-make_bsd <- function(community_df, decimals = 2, ln_units = 0.2)
+make_bsd <- function(community_df, decimals = NULL, ln_units = 0.2)
 {
   bsd <- community_df %>%
     dplyr::select(individual_species_ids, individual_sizes) %>%

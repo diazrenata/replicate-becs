@@ -4,10 +4,10 @@
 \alias{make_bsd}
 \title{Construct BSD from df with community data}
 \usage{
-make_bsd(community_df, decimals = 2, ln_units = 0.2)
+make_bsd(community_df, decimals = NULL, ln_units = 0.2)
 }
 \arguments{
-\item{decimals}{how many decimals}
+\item{decimals}{how many decimals, defaults to NULL}
 
 \item{ln_units}{defaults to 0.2}
 
