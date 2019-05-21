@@ -53,7 +53,7 @@ plot_crosscomm_bseds <- function(cross_community_comparisons) {
 #'
 #' @return histogram of p values
 #' @export
-plot_pvals <- function(bootstrap_result) {
+plot_bootstrap_pvals <- function(bootstrap_result) {
   
   all_ps <- lapply(bootstrap_result, FUN = get_bootstrap_p) %>%
     unlist() %>%

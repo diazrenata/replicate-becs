@@ -15,11 +15,11 @@ A walkthrough of Ernest (2005)'s original analytical approach, from close readin
 ## Questions
 
 1. Is energy use across body size categories (regardless of species) uniform or multimodal?
-  - uniform would correspond generally to energetic equivalence/Damuth's rule.
-  - multimodal might suggest different resource availability for different body sizes.
+- uniform would correspond generally to energetic equivalence/Damuth's rule.
+- multimodal might suggest different resource availability for different body sizes.
 2. If energy use is not uniform across body size categories, does the species level body size distribution correspond to modes of energy use?
-  - i.e. are there more species with mean body sizes around the modes of the body size-energy use distribution?
-  - if so, maybe it's good to be certain sizes, and species accumulate at those optima.
+- i.e. are there more species with mean body sizes around the modes of the body size-energy use distribution?
+- if so, maybe it's good to be certain sizes, and species accumulate at those optima.
 
 
 ## Data
@@ -70,8 +70,12 @@ head(communities[[1]])
 
 - Per individual, calculate metabolic rate as metabolic rate $B \propto M^\frac{3}{4}$ where $M$ is mass in grams.
 - Sum energy use of all individuals in body size classes of .2 natural log units.
-    - Also try classes of .1 and .3 natural log units
+- Also try classes of .1 and .3 natural log units
 - Convert raw energy use values for each body size class into the proportion of all the energy used in that community used by that body size class. This allows for comparisons between communities.
+
+
+![Ernest 2005 Fig 1](../ernest-2005-files/ernest2005_fig1.png)
+
 
 #### Translation to `replicate-becs`
 
@@ -103,11 +107,11 @@ invisible(bseds_plot)
 #### Ernest method
 - Frequency distributions of mean mass of each species in a community.
 - For plotting (but not statistics), smoothed using kernel density estimation. 
-    - Gaussian kernel to mimic the actual body size distribution in log space
-    - avg. std dev of the mean of the logged masses = smoothing parameter $h$
-    - align sampling points with the midpoint of each size class in the BSED
-    - after Manly 1996, "Are there clumps in body-size distributions?", _Ecology_
-    
+- Gaussian kernel to mimic the actual body size distribution in log space
+- avg. std dev of the mean of the logged masses = smoothing parameter $h$
+- align sampling points with the midpoint of each size class in the BSED
+- after Manly 1996, "Are there clumps in body-size distributions?", _Ecology_
+
 #### Translation to `replicate-becs`
 
 Calculate mean mass of each species in each community. 
@@ -130,11 +134,11 @@ invisible(bsds_plot)
 ### Energetic dominance ($D_E$)
 
 - Define "energy use modes" as contiguous body size classes where the energy use of each size class > 5% of the community total. 
-    - i.e. a little bit more than the expectation if energy use is uniform across all body sizes
-    - RMD is unsure of this. Doesn't the uniform expectation depend on the number of size classes?
+- i.e. a little bit more than the expectation if energy use is uniform across all body sizes
+- RMD is unsure of this. Doesn't the uniform expectation depend on the number of size classes?
 - Calculate the total energy use for each species in the mode. 
 - Calculate the "dominance" of the species with the highest energy use in that mode as $D_E = p_{max}$, where $p_{max}$ is the maximum proportion of energy use by any one species in a mode. 
-    - "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
+- "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
 
 #### Translation to `replicate-becs`
 
@@ -179,12 +183,12 @@ e_dom_prop_plot
 
 - Use bootstrap sampling to compare to uniform distributions.
 - For every community, draw 10000 samples (sim communities):
-    - Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest ~~body size~~ individual metabolic rate of any individual in that community.
+- Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest ~~body size~~ individual metabolic rate of any individual in that community.
 - For sim communities and the empirical community, calculate a distribution overlap index ($DOI$):
-    - $DOI = \sum_k {|y_{ak} - y_{bk}|}$ where $y$ is the value for size class $k$ in communities $a$ and $b$.
-    - $DOI$ values will range from 0 (complete overlap) to 2 (no overlap). 
-    - For the BSED bootstraps, community $a$ is the empirical or sim distribution, and community $b$ is a true uniform distribution ~~(i.e. $y_{bk} = \frac{1}{\max(k)}$ for all $k$)~~
-        - "True uniform distribution": There are exactly the same number of individuals of every size. 
+- $DOI = \sum_k {|y_{ak} - y_{bk}|}$ where $y$ is the value for size class $k$ in communities $a$ and $b$.
+- $DOI$ values will range from 0 (complete overlap) to 2 (no overlap). 
+- For the BSED bootstraps, community $a$ is the empirical or sim distribution, and community $b$ is a true uniform distribution ~~(i.e. $y_{bk} = \frac{1}{\max(k)}$ for all $k$)~~
+- "True uniform distribution": There are exactly the same number of individuals of every size. 
 - Calculate the $DOI$ for all sim communities and the empirical.
 - Find the quantile value for the empirical $DOI$ compared to the distribution of sim $DOI$s. This is the p-value; i.e. the proportion of sim uniform distributions with DOIs greater than the empirical.
 
@@ -192,7 +196,7 @@ e_dom_prop_plot
 
 - For a given empirical community, draw 10000 sim communities each with the same number of individuals $n$, with body sizes randomly drawn from a uniform distribution from the minimum to maximum body size in that community.
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution. 
-    - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
+- True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
 ```{r BSED-uniform bootstrapped DOIs}
 
@@ -202,8 +206,8 @@ bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  boots
 
 
 _See issue #4 on github._
-    
-    
+
+
 ```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10} 
 
 bsed_uniform_bootstrap_plot <- plot_paper_dists(bsed_uniform_bootstraps, dist_type = 'bsed_bootstraps')
@@ -260,7 +264,7 @@ invisible(crosscomm_bootstrap_plot)
 ```
 
 ```{r plot cross community p values, echo = F, fig.height = 5, fig.width = 5}
-pvals_histogram = plot_pvals(bsed_crosscomm_bootstraps)
+pvals_histogram = plot_bootstrap_pvals(bsed_crosscomm_bootstraps)
 
 pvals_histogram
 ```
@@ -279,8 +283,8 @@ ernest_richness = read.csv(here::here("ernest-2005-files/ernest_richness.csv"), 
 
 # Guesses based on body size plots
 ernest_richness$community_name <- c('andrews', 'niwot', 'portal', 'sev-5pgrass', 
-                             'sev-rsgrass', 'sev-two22', 'sev-goatdraw', 
-                             'sev-5plarrea', 'sev-rslarrea')
+                                    'sev-rsgrass', 'sev-two22', 'sev-goatdraw', 
+                                    'sev-5plarrea', 'sev-rslarrea')
 
 
 bsds_richness = data.frame(community_name = names(bsds), stringsAsFactors = F)
@@ -313,12 +317,12 @@ write.csv(ernest_key, file = here::here('ernest-2005-files/ernest_key.csv'), row
 
 #### Ernest approach
 - $\delta$-corrected Kolmogorov-Smirnov test. 
-  - "The $\delta$-corrected K-S test increases the power of the test when sample sizes are small (n < 25; Zar 1999)"
+- "The $\delta$-corrected K-S test increases the power of the test when sample sizes are small (n < 25; Zar 1999)"
 - The $\delta$-corrected test is not widely discussed online. 
 
 
 ```{r ernest d ks test results}
-ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files/ernest_appendixA.csv')) %>%
+ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files/ernest_appendixA.csv'), stringsAsFactors = F) %>%
   dplyr::left_join(ernest_key, by = 'site')
 print(ernest_bsds_uniform_results)
 ```
@@ -333,16 +337,16 @@ print(ernest_bsds_uniform_results)
 - Take vector of measurements $X_i$. 
 - For each $X_i$ record the observed frequency $f_i$ (number of observations with that value).
 - Determine cumulative observed frequencies $F_i$ and cumulative relative frequencies $\textrm{rel}F_i$:
-    - $\textrm{rel}F_i = \frac{F_i}{n}$ where $n$ is the number of measurements taken. 
-    - $\textrm{rel}F_i$ is the proportion of the sample that is measurements $\leq X_i$. 
+- $\textrm{rel}F_i = \frac{F_i}{n}$ where $n$ is the number of measurements taken. 
+- $\textrm{rel}F_i$ is the proportion of the sample that is measurements $\leq X_i$. 
 - For each $X_i$, determine the cumulative *relative* expected frequency from the comparison distribution, $\textrm{rel}\hat{F_i}$.
-    - For a uniform distribution, $\textrm{rel}\hat{F_i} = \frac{X_i - \min(X)}{\max(X) - \min(X)}$
+- For a uniform distribution, $\textrm{rel}\hat{F_i} = \frac{X_i - \min(X)}{\max(X) - \min(X)}$
 - Determine $D_i$ and $D'_i$ as:
-    - $D_i = |{\textrm{rel}F_i - \textrm{rel}\hat{F_i}}|$
-    - $D'_i = |{\textrm{rel}F_{i-1} - \textrm{rel}\hat{F_i}}|$
-        - note $F_0 = 0$ so $D'_1 = \textrm{rel}\hat{F_i}$
+- $D_i = |{\textrm{rel}F_i - \textrm{rel}\hat{F_i}}|$
+- $D'_i = |{\textrm{rel}F_{i-1} - \textrm{rel}\hat{F_i}}|$
+- note $F_0 = 0$ so $D'_1 = \textrm{rel}\hat{F_i}$
 - The test statistic $D$ is:
-    - $D = \max[(\max(D_i), (\max(D'_i)]$
+- $D = \max[(\max(D_i), (\max(D'_i)]$
 - Compare to critical values from appendix.
 
 
@@ -350,28 +354,28 @@ print(ernest_bsds_uniform_results)
 
 - For small sample sizes (<25) we can obtain increased power using the $\delta$-corrected KS test.
 - For each $i$ determine
-    - $\textrm{rel}G_i = \frac{F_i}{n + 1}$
-    - $\textrm{rel}G'_i = \frac{F_i - 1}{n - 1}$
+- $\textrm{rel}G_i = \frac{F_i}{n + 1}$
+- $\textrm{rel}G'_i = \frac{F_i - 1}{n - 1}$
 - Then obtain similar $D$s
-    - $D_{0, i} = |\textrm{rel}G_i - \textrm{rel}\hat{F_i}|$
-    - $D_{1, i} = |\textrm{rel}G'_i - \textrm{rel}\hat{F_i}|$
+- $D_{0, i} = |\textrm{rel}G_i - \textrm{rel}\hat{F_i}|$
+- $D_{1, i} = |\textrm{rel}G'_i - \textrm{rel}\hat{F_i}|$
 - The test statistic is either $\max(D_{0, i})$ or $\max(D_{1, i})$, whichever leads to the highest level of significance/smallest probability. Look up significance in table from appendix. The 1 and 0 are the $\delta$s. 
 
 
 Tables of critical values were entered by hand from the appendix to Zar (1999).
 
-```{r bsds deltaks to uniform}
+```{r bsds deltaks to uniform, echo = F}
 bsd_ks_test_raw = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
-                     focal_column = 'species_mean_mass',
-                     expected_range = NULL,
-                     n_or_i = 'n')
+                         focal_column = 'species_mean_mass',
+                         expected_range = NULL,
+                         n_or_i = 'n')
 
 bsd_ks_test_raw_results = data.frame(
   community_name = as.character(names(bsd_ks_test_raw)),
   signif = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "signif", FUN.VALUE = TRUE),
   p_max = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_max", FUN.VALUE = .1), 
   p_min = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_min", FUN.VALUE = .1),
-    d_statistic = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
+  d_statistic = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
   stringsAsFactors = F
 ) %>% 
   dplyr::left_join(ernest_bsds_uniform_results, by = 'community_name')
@@ -384,18 +388,18 @@ The $\delta$ corrected KS test does not correspond to the results from Ernest wh
 
 Using the natural log of the species mean body size value, however...:
 
-```{r bsds deltaks to uniform log}
+```{r bsds deltaks to uniform log, echo =F}
 bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
-                     focal_column = 'ln_mass',
-                     expected_range = NULL,
-                     n_or_i = 'n')
+                         focal_column = 'ln_mass',
+                         expected_range = NULL,
+                         n_or_i = 'n')
 
 bsd_ks_test_log_results = data.frame(
   community_name = as.character(names(bsd_ks_test_log)),
   signif = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "signif", FUN.VALUE = TRUE),
   p_max = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "p_max", FUN.VALUE = .1), 
   p_min = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "p_min", FUN.VALUE = .1),
-    d_statistic = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
+  d_statistic = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
   stringsAsFactors = F
 ) %>% 
   dplyr::left_join(ernest_bsds_uniform_results, by = 'community_name')
@@ -411,7 +415,7 @@ With mean mass logged, all the results replicate qualitatively (i.e. not signifi
 
 Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every possible combination of community-level BSDs. 
 
-```{r ernest ks two sample results}
+```{r ernest ks two sample results, echo =F}
 appendix_b = tidy_appendix_b() %>%
   dplyr::left_join(ernest_key, by = c('site_a' = 'site')) %>%
   dplyr::rename(community_a = community_name) %>%
@@ -432,24 +436,35 @@ print(appendix_b)
 
 bsd_crosscomm_ks = lapply(community_combinations, FUN = ks_bsd, 
                           ln_mass_vals = F)
+
 ```
 
-```{r print ks two sample}
-for(i in 1:length(bsd_crosscomm_ks)){
-  print(bsd_crosscomm_ks[[i]]$ks_result$p.value)
-}
+```{r print ks two sample, echo = F}
+bsd_crosscomm_results = data.frame(
+  community_a = vapply(bsd_crosscomm_ks, FUN = extract_values_tsks, val_name = "community_a", FUN.VALUE = 'portal'),
+  community_b = vapply(bsd_crosscomm_ks, FUN = extract_values_tsks, val_name = "community_b", FUN.VALUE = 'portal'),
+  ks_d =  vapply(bsd_crosscomm_ks, FUN = extract_values_tsks, val_name = "statistic", FUN.VALUE = .5),
+    p_value =  vapply(bsd_crosscomm_ks, FUN = extract_values_tsks, val_name = "p.value", FUN.VALUE = .5),
+  stringsAsFactors = F
+)
+
+
+bsd_crosscomm_joined = bsd_crosscomm_results %>%
+  dplyr::left_join(appendix_b, by = c('community_a', 'community_b')) %>%
+  na.omit()
+
+bsd_crosscomm_joined2 = bsd_crosscomm_results %>%
+  dplyr::rename(community_b = community_a, community_a = community_b) %>%
+  dplyr::left_join(appendix_b, by = c('community_a', 'community_b')) %>%
+  na.omit() %>%
+  dplyr::bind_rows(bsd_crosscomm_joined)
+
+print(bsd_crosscomm_joined2)
+
 ```
-```{r ks two sample log}
+```{r plot bsd crosscomm pval hist, echo =F, fig.height=5, fig.width=10} 
+bsd_pvals_histogram = plot_crosscomm_ks_pvals(bsd_crosscomm_joined2)
 
-# use same community combinations as before
-
-bsd_crosscomm_ks_log = lapply(community_combinations, FUN = ks_bsd, 
-                          ln_mass_vals = T)
-```
-
-```{r print ks two sample log}
-for(i in 1:length(bsd_crosscomm_ks_log)){
-  print(bsd_crosscomm_ks_log[[i]]$ks_result$p.value)
-}
+invisible(bsd_pvals_histogram)
 ```
 

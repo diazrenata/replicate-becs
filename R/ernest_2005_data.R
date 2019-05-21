@@ -376,7 +376,7 @@ tidy_appendix_b <- function(){
   
   appendix_b_p = read.csv(here::here('ernest-2005-files/ernest_appendixB_pval.csv'), stringsAsFactors = F)
   appendix_b_p = appendix_b_p %>%
-    tidyr::gather(key = "site_b", value = "p_val", -site_a, na.rm = T)%>%
+    tidyr::gather(key = "site_b", value = "ernest_p_val", -site_a, na.rm = T)%>%
     dplyr::mutate(site_b = site_b %>%
                     stringr::str_replace(pattern = "v.", replacement = "v ") %>%
                     stringr::str_replace(pattern = ".2", replacement = " 2")%>%
