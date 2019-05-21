@@ -4,10 +4,12 @@
 \alias{find_modes}
 \title{Find energy modes from BSED}
 \usage{
-find_modes(bsed)
+find_modes(bsed, mode_cutoff = 0.05)
 }
 \arguments{
 \item{bsed}{A BSED}
+
+\item{mode_cutoff}{defaults to 0.05, can be another number or "prop" = proportional to # of size classes in community}
 }
 \value{
 size classes with modes

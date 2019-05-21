@@ -1,0 +1,32 @@
+---
+title: "KS test scenarios"
+output: html_notebook
+---
+```{r setup}
+library(replicatebecs)
+load(paste0(here::here(), '/bsds.Rdata'))
+```
+
+## KS test scenario exploration
+
+Ernest's results:
+
+```{r load ernest}
+ernest_results = read.csv(paste0(here::here(), '/data/ernest_bsd_results.csv'))
+print(ernest_results)
+```
+
+
+```{r all kstests} 
+
+bsd_ks_test = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'species_mean_mass',
+                     expected_range = NULL,
+                     n_or_i = 'n')
+
+bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                     focal_column = 'ln_mass',
+                     expected_range = NULL, 
+                     n_or_i = 'n')
+
+```

@@ -289,7 +289,7 @@ process_sev_data <- function(datapath = here::here()){
 #'
 
 process_portal_data <- function(datapath = here::here(), 
-                             portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
+                                portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
   
   portal <- portalr::summarise_individual_rodents(path = portaldatapath, download_if_missing = F, clean = T)
   
@@ -311,4 +311,79 @@ process_portal_data <- function(datapath = here::here(),
   
   
   return(TRUE)
+}
+
+#' Load paper community data
+#'
+#' @param datapath Main working directory
+#'
+#' @return list of data frames, one for each community.
+#' @export
+#'
+load_paper_data <- function(datapath = here::here()){
+  data_files <- list.files(path = paste0(datapath, '/data/paper/processed'), full.names = T)
+  
+  community_names <- vapply(data_files, FUN = get_community_name, FUN.VALUE = "name", USE.NAMES =F)
+  
+  communities <- list()
+  
+  for(i in 1:length(data_files)) {
+    communities[[i]] <- read.csv(data_files[[i]], stringsAsFactors = F)
+    colnames(communities[[i]]) <- c('individual_species_ids', 'individual_sizes')
+    
+  }
+  
+  names(communities) <- community_names
+  
+  return(communities)
+}
+
+
+#' Get community name from data path
+#'
+#' @param data_file data path
+#'
+#' @return community name
+#'
+get_community_name <- function(data_file) {
+  
+  this_name <-strsplit(data_file, split = 'processed/') %>%
+    unlist() %>%
+    dplyr::nth(2) %>%
+    strsplit(split = '-processed.csv') %>%
+    unlist()
+  
+  return(this_name)
+  
+}
+
+
+#' Rerrange table in appendix B
+#'
+#' @return table of site comparisons, and d and p values, for KS tests.
+#' @export
+#'
+tidy_appendix_b <- function(){
+  
+  appendix_b_d = read.csv(here::here('ernest-2005-files/ernest_appendixB_maxD.csv'), stringsAsFactors = F)
+  
+  appendix_b_d = appendix_b_d %>%
+    tidyr::gather(key = "site_b", value = "max_d", -site_a, na.rm = T) %>%
+    dplyr::mutate(site_b = site_b %>%
+                    stringr::str_replace(pattern = "v.", replacement = "v ") %>%
+                    stringr::str_replace(pattern = ".2", replacement = " 2") %>%
+                    stringr::str_replace(pattern = "s.s", replacement = "s s"))
+  
+  appendix_b_p = read.csv(here::here('ernest-2005-files/ernest_appendixB_pval.csv'), stringsAsFactors = F)
+  appendix_b_p = appendix_b_p %>%
+    tidyr::gather(key = "site_b", value = "ernest_p_val", -site_a, na.rm = T)%>%
+    dplyr::mutate(site_b = site_b %>%
+                    stringr::str_replace(pattern = "v.", replacement = "v ") %>%
+                    stringr::str_replace(pattern = ".2", replacement = " 2")%>%
+                    stringr::str_replace(pattern = "s.s", replacement = "s s"))
+  
+  appendix_b = dplyr::left_join(appendix_b_d, appendix_b_p, by = c("site_a", "site_b"))
+  
+  return(appendix_b)
+  
 }
