@@ -8,6 +8,8 @@ output: html_notebook
 ```{r setup, include = F}
 library(replicatebecs)
 download_data = FALSE
+source_sims = TRUE
+set.seed(352)
 ```
 
 A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
@@ -198,10 +200,21 @@ e_dom_prop_plot
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution. 
 - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
-```{r BSED-uniform bootstrapped DOIs}
+```{r BSED-uniform bootstrapped DOIs, eval = F}
 
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
 
+```
+
+```{r source or draw BSED uniform bootstraps, include = F}
+if(source_sims) {
+  load(here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
+} else {
+  
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+
+save(bsed_uniform_bootstraps, file = (here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
+}
 ```
 
 
@@ -247,12 +260,25 @@ community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = 
 
 ```
 
-```{r cross community BSED comparisons}
+```{r cross community BSED comparisons, eval =F}
 
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
-                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10)
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
 
 
+```
+
+
+```{r source or draw cross community BSED, include = F}
+if(source_sims) {
+  load(here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
+} else {
+  
+bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
+
+save(bsed_crosscomm_bootstraps, file = (here::here('data', 'sims', 'bsed_crosscomm_bootstraps.Rdata')))
+}
 ```
 
 ```{r plot cross community comparisons, echo = F, fig.height=30, fig.width=10}
@@ -462,6 +488,7 @@ bsd_crosscomm_joined2 = bsd_crosscomm_results %>%
 print(bsd_crosscomm_joined2)
 
 ```
+
 ```{r plot bsd crosscomm pval hist, echo =F, fig.height=5, fig.width=10} 
 bsd_pvals_histogram = plot_crosscomm_ks_pvals(bsd_crosscomm_joined2)
 
