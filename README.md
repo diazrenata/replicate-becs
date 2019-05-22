@@ -14,6 +14,7 @@ The master branch of this repo should stay stable, but I am in the process of ge
   - Barriers to replication are (in principle) lower: data are often available online; methods are generally computational rather than empirical. We just need to write some code, not re-run an expensive experiment. 
   - Online, version controlled open source projects are relatively new. Most foundational work in macroecology was conducted before coding was the norm, let alone a GitHub project. By bringing them online, we can better
     - prevent data/analysis rot
+    - support high standards of replicabile, open science, from the roots of the field on up
     - be specific about assumptions, idiosyncracies in data, limitations of past analytical methods that contribute to our foundational knowledge
     - make explicit comparisons of new results to old ones - new data, improved methods
 - Why replicate this specifically
