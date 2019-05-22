@@ -236,7 +236,7 @@ Statistical tests
 -   True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
 ``` r
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
 ```
 
 *See issue \#4 on github.*
@@ -278,7 +278,7 @@ community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = 
 
 ``` r
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
-                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10)
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
 ```
 
 ![](ernest2005_replication_files/figure-markdown_github/plot%20cross%20community%20comparisons-1.png)

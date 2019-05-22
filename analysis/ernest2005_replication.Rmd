@@ -271,7 +271,7 @@ bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_boots
 
 ```{r source or draw cross community BSED, include = F}
 if(source_sims) {
-  load(here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
+  load(here::here('data', 'sims', 'bsed_crosscomm_bootstraps.Rdata'))
 } else {
   
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
