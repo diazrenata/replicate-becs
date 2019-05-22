@@ -54,7 +54,7 @@ The master branch of this repo should stay stable, but I am in the process of ge
     - uniform size-abundance relationship
     - uniform size-energy relationship
 - 'Uniform' comparison for BSDs (delta-corrrected KS tests)
-  - To replicate the comparison of BSDs to uniform, we must compare the *log of the species mean mass* to a uniform distribution. This is not the same as a uniform species-body size relationship; it is a distribution with fewer large species than small ones. Both the log mass and mass on a linear scale are used to study BSDs.
+  - To replicate the comparison of BSDs to uniform, we must compare the *log of the species mean mass* to a uniform distribution. This is not the same as a uniform species-body size relationship; it is a distribution with fewer large species than small ones. Both the log mass and mass on a linear scale are standard in studies of BSDs, but they describe substantially different distributions!
   - Also, the K-S test as documented in Zar (1999) is somewhat ambiguously defined. (#5)
   - Given modern tools, we can:
     - Use bootstrapping instead of the K-S test to explore alternative hypotheses
