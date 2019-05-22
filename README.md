@@ -17,7 +17,14 @@ The master branch of this repo should stay stable, but I am in the process of ge
     - be specific about assumptions, idiosyncracies in data, limitations of past analytical methods that contribute to our foundational knowledge
     - make explicit comparisons of new results to old ones - new data, improved methods
 - Why replicate this specifically
-  - Considerable work and interest around body size-abundance and body size-energy use 
+  - Considerable work and interest around body size-abundance and body size-energy use. However, we don't know very much about these relationships in terrestrial animal communities (but see Thibault, Baiser/other smammal paper). Fundamental questions and debates are still unresolved at the community level:
+    - Species-body size relationships (size vs. no of species) 
+    - Body size-energy use relationships (does energetic equivalence emerge *within communities*?)
+  - Ernest (2005) was an early analysis of these relationships in small mammal communities, using predominately desert rodent communities. Thanks to NEON and other efforts, we now have a much larger and more diverse collection of small mammal community data we can use to explore these questions more rigorously. 
+  - Replicating Ernest (2005)
+    - brings a pre-github analysis into the github era
+    - add context to our existing knowledge base: what are the assumptions, what are the specific results
+    - track changes in analysis methods & results; understand and resolve conflicting results if they occur. 
 
 ### Analysis
 - For the full analysis, see the [full replication](https://github.com/diazrenata/replicate-becs/blob/master/analysis/ernest2005_replication.md). 
