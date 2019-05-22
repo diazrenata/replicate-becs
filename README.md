@@ -12,9 +12,9 @@ The master branch of this repo should stay stable, but I am in the process of ge
 - Why replicate
   - Macroecology could benefit a lot from replication efforts. Highly statistical, potentially very sensitive to modeling assumptions. 
   - Barriers to replication are (in principle) lower: data are often available online; methods are generally computational rather than empirical. We just need to write some code, not re-run an expensive experiment. 
-  - Online, version controlled open source projects are relatively new. Most foundational work in macroecology was conducted before coding was the norm, let alone a GitHub project. By bringing them online, we can better
+  - Online, version controlled open source projects are relatively new. Most foundational work in macroecology was conducted before coding was the norm, let GitHub projects. By bringing them online, we can better
     - prevent data/analysis rot
-    - support high standards of replicabile, open science, from the roots of the field on up
+    - support high standards of replicable, open science, from the roots of the field on up
     - be specific about assumptions, idiosyncracies in data, limitations of past analytical methods that contribute to our foundational knowledge
     - make explicit comparisons of new results to old ones - new data, improved methods
 - Why replicate this specifically
@@ -32,7 +32,7 @@ The master branch of this repo should stay stable, but I am in the process of ge
     - Body size-energy use relationships *at the community scale* (size vs. total energy use)
       - Does energetic equivalence emerge?
   - Ernest (2005) was an early analysis of these relationships in small mammal communities, using predominately desert rodent communities. 
-  - Thanks to NEON and other efforts, we now have a much larger and more diverse collection of small mammal community data we can use to explore these questions more rigorously. 
+  - Thanks to NEON and other efforts, we now have a much larger and more diverse collection of small mammal community data we can use to explore these questions more generally and more rigorously. 
   - Replicating Ernest (2005) is a first step towards a broader and more computationally intensive analysis of small mammal community distributions (Diaz in prep....)
     - brings a pre-github analysis into the github era
     - add context to our existing knowledge base: what are the assumptions, what are the specific results
