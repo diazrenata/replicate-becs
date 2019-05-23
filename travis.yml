@@ -1,7 +1,10 @@
 language: r
-cache: packages
+cache:
+- packages
 sudo: required
+dist: "trusty"
 warnings_are_errors: false
+
 
 matrix:
   include:
