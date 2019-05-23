@@ -5,9 +5,8 @@
 \alias{process_andrews_data}
 \title{Process Andrews data in to the appropriate format.}
 \usage{
-process_andrews_data(datapath = here::here())
+process_andrews_data()
 }
 \description{
 Process Andrews smammal data
-#'
 }

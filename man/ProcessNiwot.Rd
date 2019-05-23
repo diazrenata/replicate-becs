@@ -7,9 +7,6 @@
 \usage{
 process_niwot_data(datapath = here::here())
 }
-\arguments{
-\item{datapath}{path to where data is}
-}
 \description{
 Process Niwot smammal data
 Initial cleaning from LTER website code generator

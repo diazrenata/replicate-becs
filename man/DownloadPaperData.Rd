@@ -5,10 +5,7 @@
 \alias{download_raw_paper_data}
 \title{Download raw paper data}
 \usage{
-download_raw_paper_data(datapath = here::here("data", "paper", "raw"))
-}
-\arguments{
-\item{datapath}{Folder to store the data}
+download_raw_paper_data()
 }
 \description{
 Download datasets used in Ernest 2005.

@@ -302,7 +302,8 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
 
 
 ```{r ernest d ks test results}
-ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files/ernest_appendixA.csv'), stringsAsFactors = F) %>%
+ernest_key =  read.csv(here::here('ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
+ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files', 'ernest_appendixA.csv'), stringsAsFactors = F) %>%
   dplyr::left_join(ernest_key, by = 'site')
 print(ernest_bsds_uniform_results)
 ```
