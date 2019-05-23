@@ -5,7 +5,7 @@ This is an effort to replicate [Ernest 2005 "Body Size, Energy Use, and Communit
 
 Renata Diaz (the author) is Morgan Ernest's PhD student. Dr. Ernest is aware of the project but has not been involved directly with it at any stage. 
 
-The master branch of this repo should stay stable, but I am in the process of generalizing these functions and moving them to a separate package so they can be used for future projects. 
+The master branch of this repo should stay stable, but I (Renata) am in the process of generalizing these functions and moving them to a separate package so they can be used for future projects. 
 
 ### Motivation
 
