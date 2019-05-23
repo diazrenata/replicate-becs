@@ -137,7 +137,6 @@ invisible(bsds_plot)
 
 - Define "energy use modes" as contiguous body size classes where the energy use of each size class > 5% of the community total. 
 - i.e. a little bit more than the expectation if energy use is uniform across all body sizes
-- RMD is unsure of this. Doesn't the uniform expectation depend on the number of size classes?
 - Calculate the total energy use for each species in the mode. 
 - Calculate the "dominance" of the species with the highest energy use in that mode as $D_E = p_{max}$, where $p_{max}$ is the maximum proportion of energy use by any one species in a mode. 
 - "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
@@ -163,19 +162,6 @@ e_dom_plot <- plot_e_dom(energetic_dom)
 e_dom_plot
 ```
 
-
-- Out of curiousity, what happens if we define the modes with the cutoff proportional to the number of size classes (instead of a fixed 5%?)
-
-```{r edom proportional}
-energetic_dom_prop <- lapply(communities_energy, FUN = energetic_dominance, mode_cutoff = 'prop') 
-```
-
-```{r plot edom proportional, echo=FALSE, fig.height=5, fig.width=5}
-e_dom_prop_plot <- plot_e_dom(energetic_dom_prop)
-e_dom_prop_plot
-```
-
-- RMD: They're similar. 
 
 ## Statistical tests
 
