@@ -9,7 +9,7 @@ output: html_notebook
 library(replicatebecs)
 download_data = FALSE
 source_sims = TRUE
-set.seed(352)
+set.seed(352) # GNV area code, for fun
 ```
 
 A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
@@ -27,13 +27,11 @@ A walkthrough of Ernest (2005)'s original analytical approach, from close readin
 ## Data
 
 #### Ernest data
-Ernest drew data from the Andrews LTER, the Sevilleta, Niwot Ridge, and Portal. 
-
-The data available online do not quite match the descriptive statistics reported in Ernest (2005). 
+Ernest drew data from the Andrews LTER, the Sevilleta, Niwot Ridge, and Portal. For details of these field sites, see the _relevant publications cited in Ernest (2005)._ 
 
 #### Translation to `replicate-becs`
 
-Download raw data. By default data will be stored in subdirectories of `replicate-becs/data/paper/raw/` for each site. 
+The same datasets are available online, _from these sources_. 
 ```{r download data if not downloaded, include = F}
 if(download_data) download_raw_paper_data()
 ```
@@ -48,19 +46,30 @@ Process raw data into the appropriate format. This is a data table with a record
 process_raw_data()
 ```
 
-Load data tables for each community. There should be 9 communities.
+Load data tables for each community. 
 
 ```{r load community data, echo=TRUE}
 communities <- load_paper_data()
-
-length(communities)
 ```
 
 Each community should be a data table with columns for species and size for each individual, for example:
 
 ```{r inspect community data}
-names(communities)
+names(communities)[[1]]
 head(communities[[1]])
+```
+
+
+#### Comparing data from 2005 to data available in 2019
+
+Although the same datasets are now available online, they may have changed somewhat since 2005 (due to error checking, etc). Ernest (2005) may also have taken some cleaning and filtering steps, the details of which could have been omitted from the manuscript due to length restrictions. For example, many studies using data from the Portal Project omit ground squirrels, because although they may be within the "small mammal" size range, they are not target taxa for the sampling method. 
+
+Ernest (2005) reported summary statistics of her datasets; here I compare them to the corresponding dataset in the 2019 data. 
+
+```{r compare summary stats}
+summary_stats_comparison = compare_summary_stats()
+
+print(summary_stats_comparison)
 ```
 
 
@@ -285,47 +294,6 @@ pvals_histogram
 See histogram of p values for comparisons to see if commuities' BSEDs are the same or different.
 
 ### Testing BSDs for uniformity
-
-#### Matching communities
-
-Ernest (2005) refers to the communities with the `site` column above. To compare the communities above to the communities in the resurrected data set, we can try to match them based on the BSD and BSED plots (above) and species richness. 
-
-```{r match bsds}
-ernest_richness = read.csv(here::here("ernest-2005-files/ernest_richness.csv"), stringsAsFactors = F)
-
-# Guesses based on body size plots
-ernest_richness$community_name <- c('andrews', 'niwot', 'portal', 'sev-5pgrass', 
-                                    'sev-rsgrass', 'sev-two22', 'sev-goatdraw', 
-                                    'sev-5plarrea', 'sev-rslarrea')
-
-
-bsds_richness = data.frame(community_name = names(bsds), stringsAsFactors = F)
-bsds_richness$new_richness = NA
-for(i in 1:nrow(bsds_richness)){
-  bsds_richness$new_richness[i] = nrow(bsds[[i]])
-}
-
-# See if the richness values match
-ernest_richness = ernest_richness %>%
-  dplyr::left_join(bsds_richness, by = 'community_name') %>%
-  dplyr::mutate(richness_match = (richness == new_richness))
-
-print(ernest_richness)
-
-
-```
-
-We can get 2 (of 7) communities at the Sevilleta to match up, and Niwot and Andrews. The other pairings are as close as possible.
-
-Moving forward, we can compare the results of the Kolmogorov-Smirnov tests based on the values in the appendix and these name pairings.
-
-```{r ernest key}
-
-ernest_key = ernest_richness %>%
-  dplyr::select(site, community_name)
-
-write.csv(ernest_key, file = here::here('ernest-2005-files/ernest_key.csv'), row.names = F)
-```
 
 #### Ernest approach
 - $\delta$-corrected Kolmogorov-Smirnov test. 

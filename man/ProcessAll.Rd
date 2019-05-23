@@ -8,6 +8,5 @@
 process_raw_data()
 }
 \description{
-Process all the datasets 
-#'
+Process all the datasets and make the key of site names
 }

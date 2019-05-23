@@ -48,8 +48,8 @@ download_raw_paper_data <- function(datapath = here::here('data', 'paper', 'raw'
 #' @title Process raw data in to the appropriate format. 
 #'
 #' @name ProcessAll
-#' @description Process all the datasets 
-#'#'
+#' @description Process all the datasets and make the key of site names
+#'
 #' @return NULL
 #'
 #' @export
@@ -59,6 +59,7 @@ process_raw_data <- function() {
   process_niwot_data()
   process_sev_data()
   process_portal_data()
+  make_ernest_name_key()
   return(TRUE)
 }
 
@@ -320,10 +321,10 @@ process_portal_data <- function(datapath = here::here(),
 #' @return list of data frames, one for each community.
 #' @export
 #'
-load_paper_data <- function(datapath = here::here()){
-  data_files <- list.files(path = paste0(datapath, '/data/paper/processed'), full.names = T)
+load_paper_data <- function(){
+  data_files <- list.files(path = here::here('data', 'paper', 'processed'), full.names = T)
   
-  community_names <- vapply(data_files, FUN = get_community_name, FUN.VALUE = "name", USE.NAMES =F)
+  community_names <- vapply(data_files, FUN = replicatebecs:::get_community_name, FUN.VALUE = "name", USE.NAMES =F)
   
   communities <- list()
   
@@ -386,4 +387,66 @@ tidy_appendix_b <- function(){
   
   return(appendix_b)
   
+}
+
+
+#' Compare summary stats from Ernest and current data
+#'
+#' @return data frame of Ernest summary stats and current summary stats
+#' @export
+#'
+compare_summary_stats = function() {
+  communities <- load_paper_data()
+  
+  bsds <- lapply(communities, FUN = make_bsd) 
+  
+  
+  communities_summary_stats = data.frame(community_name = names(bsds), 
+                                         new_richness = NA, 
+                                         new_min_mass = NA, 
+                                         new_max_mass = NA)
+  
+  for(i in 1:nrow(communities_summary_stats)) {
+    communities_summary_stats$new_richness[i] = nrow(bsds[[i]])
+    communities_summary_stats$new_min_mass[i] = min(bsds[[i]]$species_mean_mass)
+    communities_summary_stats$new_max_mass[i] = max(bsds[[i]]$species_mean_mass)
+  }
+  
+  communities_summary_stats$new_min_mass[4:9] = min(communities_summary_stats$new_min_mass[4:9])
+  communities_summary_stats$new_max_mass[4:9] = max(communities_summary_stats$new_max_mass[4:9])
+  
+  
+  ernest_summary_stats = read.csv(here::here('ernest-2005-files', 'ernest_summary_stats.csv'), stringsAsFactors = F)
+  
+  ernest_key = read.csv(here::here('ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
+  
+  joined_summary_stats = dplyr::left_join(ernest_summary_stats, ernest_key, by = 'site') %>%
+    dplyr::left_join(communities_summary_stats, by = 'community_name') %>%
+    dplyr::rename(ernest_name = site, 
+                  new_name = community_name) %>%
+    dplyr::select(ernest_name, new_name, ernest_richness, new_richness,
+                  ernest_min_mass, new_min_mass,
+                  ernest_max_mass, new_max_mass)
+  
+  return(joined_summary_stats)
+}
+
+#' Make key to Ernest names - current community names
+#' Ernest (2005) refers to the communities with the `site` name in the text and Figure 1 To compare the communities above to the communities in the resurrected data set, we can try to match them based on the BSD and BSED plots and species richness. 
+#' @return
+#' @export
+#'
+make_ernest_name_key <- function() {
+  
+  ernest_summary_stats = read.csv(here::here("ernest-2005-files/ernest_summary_stats.csv"), stringsAsFactors = F)
+  
+  # Guesses based on body size plots
+  ernest_summary_stats$community_name <- c('andrews', 'niwot', 'portal', 'sev-5pgrass', 
+                                           'sev-rsgrass', 'sev-two22', 'sev-goatdraw', 
+                                           'sev-5plarrea', 'sev-rslarrea')
+  
+  ernest_key = ernest_summary_stats %>%
+    dplyr::select(site, community_name)
+  
+  write.csv(ernest_key, file = here::here('ernest-2005-files/ernest_key.csv'), row.names = F)
 }

@@ -4,7 +4,7 @@
 \alias{load_paper_data}
 \title{Load paper community data}
 \usage{
-load_paper_data(datapath = here::here())
+load_paper_data()
 }
 \arguments{
 \item{datapath}{Main working directory}
