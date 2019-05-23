@@ -2,12 +2,13 @@
 #' Wrapper for `bootstrap_unif_bsed_doi`, possibly others. 
 #' @param community_df Empirical community to base samples on
 #' @param bootstrap_function Bootstrapping function to use
+#' @param bootstrap_function_options list of options for bootstrap function
 #' @param nbootstraps How many samples to draw
 #'
 #' @return vector of nbootstraps sampled test statistics
 #' @export
 
-community_bootstrap <- function(community_dfs, bootstrap_function, nbootstraps) {
+community_bootstrap <- function(community_dfs, bootstrap_function, bootstrap_function_options = list(currency = 'size'), nbootstraps) {
   
   empirical_value = NULL
   
@@ -15,13 +16,24 @@ community_bootstrap <- function(community_dfs, bootstrap_function, nbootstraps) 
     comm_table = make_community_table(community_dfs)
     community_bsed = make_bsed(comm_table)
     
-    true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_dfs$individual_sizes),
-                                                           max(community_dfs$individual_sizes), 
-                                                           by = .1), 
-                                    individual_species_ids = "notimpt") %>%
-      make_community_table() %>%
-      make_bsed()
-    
+    if(bootstrap_function_options$currency == 'size') {
+      true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_dfs$individual_sizes),
+                                                             max(community_dfs$individual_sizes), 
+                                                             by = .1), 
+                                      individual_species_ids = "notimpt") %>%
+        make_community_table() %>%
+        make_bsed()
+    } else if (bootstrap_function_options$currency == 'energy') {
+      community_dfs = community_dfs %>%
+        make_community_table()
+      true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_dfs$individual_energy),
+                                                             max(community_dfs$individual_energy), 
+                                                             by = .1), 
+                                      individual_species_ids = "notimpt") %>%
+        dplyr::mutate(individual_sizes = individual_sizes ^ (4/3))
+        make_community_table() %>%
+        make_bsed()
+    }
     empirical_value <- doi(community_bsed, true_uniform_bsed)
   }
   
@@ -115,7 +127,7 @@ bootstrap_unif_bsed_doi <- function(community_df){
 
 bootstrap_crosscomm_bseds <- function(community_dfs)
 {
- 
+  
   community_a = community_dfs$community_a
   community_b = community_dfs$community_b
   
@@ -137,7 +149,7 @@ bootstrap_crosscomm_bseds <- function(community_dfs)
     dplyr::mutate(individual_sizes = pool[random_indices_b]) %>%
     make_community_table() %>%
     make_bsed()
-
+  
   
   ab_doi <- doi(bootstrap_a_bsed,
                 bootstrap_b_bsed)
