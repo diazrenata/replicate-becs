@@ -16,4 +16,5 @@ Imports:
     dplyr,
     here,
     magrittr,
+    testthat,
     tibble
