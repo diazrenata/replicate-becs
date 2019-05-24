@@ -197,20 +197,27 @@ e_dom_plot
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution.
 - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
-```{r BSED-uniform bootstrapped DOIs, eval = F}
+```{r BSED-uniform size abund bootstrapped DOIs, eval = F}
 
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_sizeabund_bsed_doi', nbootstraps = 10000)
 
 ```
 
-```{r source or draw BSED uniform bootstraps, include = F}
+```{r source or draw BSED uniform size abund bootstraps, include = F}
 if(source_sims) {
   load(file.path(simspath, 'bsed_uniform_bootstraps.Rdata'))
 } else {
+<<<<<<< HEAD
 
 bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
 
 save(bsed_uniform_bootstraps, file = (file.path(simspath, 'bsed_uniform_bootstraps.Rdata')))
+=======
+
+bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_sizeabund_bsed_doi', nbootstraps = 10)
+
+save(bsed_unif_sizeabund_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
+>>>>>>> energy-assumptions
 }
 ```
 
@@ -220,9 +227,9 @@ _See issue #4 on github._
 
 ```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10}
 
-bsed_uniform_bootstrap_plot <- plot_paper_dists(bsed_uniform_bootstraps, dist_type = 'bsed_bootstraps')
+bsed_unif_sizeabund_bootstrap_plot <- plot_paper_dists(bsed_unif_sizeabund_bootstraps, dist_type = 'bsed_bootstraps')
 
-invisible(bsed_uniform_bootstrap_plot)
+invisible(bsed_unif_sizeabund_bootstrap_plot)
 ```
 
 ### Compare BSEDs among communities
@@ -351,7 +358,12 @@ Tables of critical values were entered by hand from the appendix to Zar (1999).
 bsd_ks_test_raw = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
                          focal_column = 'species_mean_mass',
                          expected_range = NULL,
+<<<<<<< HEAD
                          n_or_i = 'n')
+=======
+                         n_or_i = 'n',
+                         )
+>>>>>>> energy-assumptions
 
 bsd_ks_test_raw_results = data.frame(
   community_name = as.character(names(bsd_ks_test_raw)),
@@ -375,7 +387,12 @@ Using the natural log of the species mean body size value, however...:
 bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
                          focal_column = 'ln_mass',
                          expected_range = NULL,
+<<<<<<< HEAD
                          n_or_i = 'n')
+=======
+                         n_or_i = 'n',
+                         )
+>>>>>>> energy-assumptions
 
 bsd_ks_test_log_results = data.frame(
   community_name = as.character(names(bsd_ks_test_log)),

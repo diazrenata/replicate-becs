@@ -1,3 +1,57 @@
+<<<<<<< HEAD
+=======
+#' Set up files
+#'
+#' @param storagepath defaults to 'files'
+#' @export
+
+setup_files <- function(storagepath = here::here('files')) {
+  if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw'))) {
+    dir.create(file.path(storagepath, 'data', 'paper', 'raw'), recursive = TRUE)
+  }
+  
+  if(!dir.exists(file.path(storagepath, 'data', 'paper', 'processed'))) {
+    dir.create(file.path(storagepath, 'data', 'paper', 'processed'), recursive = TRUE)
+  }
+  
+  if(!dir.exists(file.path(storagepath, 'data', 'sims'))) {
+    dir.create(file.path(storagepath, 'data', 'sims'), recursive = TRUE)
+  }
+  
+  
+  if(!dir.exists(file.path(storagepath, 'data', 'sims', 'bsed-options'))) {
+    dir.create(file.path(storagepath, 'data', 'sims', 'bsed-options'), recursive = TRUE)
+  }
+  
+  
+  if(!file.exists(file.path(storagepath, 'data', 'kstable.csv'))) {
+    download.list = c('kstable.csv', 
+                      'delta_kstable.csv')
+    for(i in 1:length(download.list)) {
+      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/', download.list[i])
+      download.file(file.url, destfile = file.path(storagepath, download.list[i]))
+    }
+    
+  }
+  
+  if(!dir.exists(file.path(storagepath, 'ernest-2005-files'))) {
+    dir.create(file.path(storagepath, 'ernest-2005-files'))
+    download.list = c('ernest_summary_stats.csv', 
+                      'ernest_richness.csv',
+                      'ernest_key.csv',
+                      'ernest_appendixB_pval.csv',
+                      'ernest_appendixB_maxD.csv',
+                      'ernest_appendixA.csv')
+    
+    for(i in 1:length(download.list)) {
+      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/ernest-2005-files/', download.list[i])
+      download.file(file.url, destfile = file.path(storagepath, 'ernest-2005-files', download.list[i]))
+    }
+    
+    }
+}
+
+>>>>>>> energy-assumptions
 #' @title Download raw paper data
 #'
 #' @name DownloadPaperData
