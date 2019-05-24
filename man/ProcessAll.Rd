@@ -5,7 +5,7 @@
 \alias{process_raw_data}
 \title{Process raw data in to the appropriate format.}
 \usage{
-process_raw_data(storagepath = "files")
+process_raw_data(storagepath = here::here("files"))
 }
 \arguments{
 \item{storagepath}{where to put the data}

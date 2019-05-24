@@ -6,7 +6,7 @@
 \usage{
 zar_ks_test(distribution, delta_correction = F,
   focal_column = "species_mean_mass", expected_range = NULL,
-  n_or_i = "n", storagepath = "files")
+  n_or_i = "n", storagepath = here::here("files"))
 }
 \arguments{
 \item{delta_correction}{T/F use delta correction for small sample sizes}

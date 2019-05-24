@@ -4,7 +4,7 @@
 \alias{tidy_appendix_b}
 \title{Rerrange table in appendix B}
 \usage{
-tidy_appendix_b(storagepath = "files")
+tidy_appendix_b(storagepath = here::here("files"))
 }
 \arguments{
 \item{storagepath}{where the data is}

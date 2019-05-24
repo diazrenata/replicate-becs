@@ -4,7 +4,7 @@
 \alias{load_paper_data}
 \title{Load paper community data}
 \usage{
-load_paper_data(storagepath = "files")
+load_paper_data(storagepath = here::here("files"))
 }
 \arguments{
 \item{storagepath}{Main working directory}

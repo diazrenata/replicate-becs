@@ -1,5 +1,9 @@
+#' Set up files
+#'
+#' @param storagepath defaults to 'files'
+#' @export
 
-setup_files <- function(storagepath) {
+setup_files <- function(storagepath = here::here('files')) {
   if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw'))) {
     dir.create(file.path(storagepath, 'data', 'paper', 'raw'), recursive = TRUE)
   }
@@ -12,11 +16,11 @@ setup_files <- function(storagepath) {
     dir.create(file.path(storagepath, 'data', 'sims'), recursive = TRUE)
   }
   
-  if(!file.exists(file.path(storagepath, 'kstable.csv'))) {
+  if(!file.exists(file.path(storagepath, 'data', 'kstable.csv'))) {
     download.list = c('kstable.csv', 
                       'delta_kstable.csv')
     for(i in 1:length(download.list)) {
-      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/data/', download.list[i])
+      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/', download.list[i])
       download.file(file.url, destfile = file.path(storagepath, download.list[i]))
     }
     
@@ -32,7 +36,7 @@ setup_files <- function(storagepath) {
                       'ernest_appendixA.csv')
     
     for(i in 1:length(download.list)) {
-      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/ernest-2005-files/', download.list[i])
+      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/ernest-2005-files/', download.list[i])
       download.file(file.url, destfile = file.path(storagepath, 'ernest-2005-files', download.list[i]))
     }
     
@@ -52,7 +56,7 @@ setup_files <- function(storagepath) {
 #'
 #' @export
 
-download_raw_paper_data <- function(storagepath) {
+download_raw_paper_data <- function(storagepath = here::here('files')) {
 
   if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))) {
     dir.create(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))
@@ -96,7 +100,7 @@ download_raw_paper_data <- function(storagepath) {
 #'
 #' @export
 
-process_raw_data <- function(storagepath = 'files') {
+process_raw_data <- function(storagepath = here::here('files')) {
   process_andrews_data(storagepath)
   process_niwot_data(storagepath)
   process_sev_data(storagepath)
@@ -114,7 +118,7 @@ process_raw_data <- function(storagepath = 'files') {
 #'
 #' @export
 
-process_andrews_data <- function(storagepath = 'files') {
+process_andrews_data <- function(storagepath = here::here('files')) {
 
   andrews_raw <- read.csv(file.path(storagepath, 'data', 'paper', 'raw', 'andrews-lter', 'andrews.csv'), stringsAsFactors = F)
 
@@ -167,7 +171,7 @@ process_andrews_data <- function(storagepath = 'files') {
 #' @return NULL
 #'
 #' @export
-process_niwot_data <- function(storagepath = 'files'){
+process_niwot_data <- function(storagepath = here::here('files')){
   # Halfpenny, Jim. 2019. Small mammal disturbance data for Niwot Ridge from 1981-6-30 to 1990-8-23, yearly. http://niwot.colorado.edu
   # http://niwot.colorado.edu/data/data/small-mammal-species-composition-data-for-niwot-ridge-1981-1990
 
@@ -229,7 +233,7 @@ process_niwot_data <- function(storagepath = 'files'){
 #'
 #' @export
 #'
-process_sev_data <- function(storagepath = 'files'){
+process_sev_data <- function(storagepath = here::here('files')){
   # FROM LTER WEBSITE #
   # Package ID: knb-lter-sev.8.297976 Cataloging System:https://pasta.lternet.edu.
   # Data set title: Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta National Wildlife Refuge, New Mexico (1989 - present).
@@ -333,7 +337,7 @@ process_sev_data <- function(storagepath = 'files'){
 #' @export
 #'
 
-process_portal_data <- function(storagepath = 'files',
+process_portal_data <- function(storagepath = here::here('files'),
 portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
 
   if(!is.null(portaldatapath)) {
@@ -369,7 +373,7 @@ portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
 #' @return list of data frames, one for each community.
 #' @export
 #'
-load_paper_data <- function(storagepath = 'files'){
+load_paper_data <- function(storagepath = here::here('files')){
   data_files <- list.files(path = file.path(storagepath, 'data', 'paper', 'processed'), full.names = T)
 
   community_names <- vapply(data_files, FUN = replicatebecs:::get_community_name, FUN.VALUE = "name", USE.NAMES =F)
@@ -413,7 +417,7 @@ get_community_name <- function(data_file) {
 #' @return table of site comparisons, and d and p values, for KS tests.
 #' @export
 #'
-tidy_appendix_b <- function(storagepath = 'files'){
+tidy_appendix_b <- function(storagepath = here::here('files')){
 
   appendix_b_d = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_appendixB_maxD.csv'), stringsAsFactors = F)
 
@@ -444,8 +448,8 @@ tidy_appendix_b <- function(storagepath = 'files'){
 #' @return data frame of Ernest summary stats and current summary stats
 #' @export
 #'
-compare_summary_stats = function(storagepath = 'files') {
-  communities <- load_paper_data()
+compare_summary_stats = function(storagepath = here::here('files')) {
+  communities <- load_paper_data(storagepath = storagepath)
 
   bsds <- lapply(communities, FUN = make_bsd)
 
@@ -485,7 +489,7 @@ compare_summary_stats = function(storagepath = 'files') {
 #' @param storagepath where the data is
 #' @export
 #'
-make_ernest_name_key <- function(storagepath = 'files') {
+make_ernest_name_key <- function(storagepath = here::here('files')) {
 
   ernest_summary_stats = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_summary_stats.csv'), stringsAsFactors = F)
 

@@ -4,7 +4,7 @@
 \alias{compare_summary_stats}
 \title{Compare summary stats from Ernest and current data}
 \usage{
-compare_summary_stats(storagepath = "files")
+compare_summary_stats(storagepath = here::here("files"))
 }
 \arguments{
 \item{storagepath}{where the data is}

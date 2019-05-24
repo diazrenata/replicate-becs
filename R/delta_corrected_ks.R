@@ -14,7 +14,7 @@
 #' @export
 
 zar_ks_test <- function(distribution, delta_correction = F, focal_column = "species_mean_mass",
-                        expected_range = NULL, n_or_i = 'n', storagepath = 'files')
+                        expected_range = NULL, n_or_i = 'n', storagepath = here::here('files'))
 {
 
   x = distribution %>%
@@ -51,7 +51,7 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
 
   if(delta_correction) {
 
-    d_crits = read.csv(file.path(storagepath, 'data', 'delta_kstable.csv'), stringsAsFactors = F)
+    d_crits = read.csv(file.path(storagepath, 'delta_kstable.csv'), stringsAsFactors = F)
 
     rel_f = rel_f %>%
       dplyr::mutate(rel_delta_freq = cum_freq / (nvals + 1),
@@ -78,7 +78,7 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
 
   } else {
 
-    d_crits = read.csv(file.path(storagepath, 'data', 'kstable.csv'), stringsAsFactors = F)
+    d_crits = read.csv(file.path(storagepath, 'kstable.csv'), stringsAsFactors = F)
 
     rel_f = rel_f %>%
       dplyr::mutate(d = abs(rel_freq - exp_rel_freq),

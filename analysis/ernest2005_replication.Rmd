@@ -7,9 +7,11 @@ output: html_notebook
 
 ```{r setup, include = F}
 library(replicatebecs)
-download_data = FALSE
-source_sims = TRUE
+download_data = TRUE
+source_sims = FALSE
 set.seed(352) # GNV area code, for fun
+storagepath = here::here('files')
+setup_files(storagepath = storagepath)
 ```
 
 A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
@@ -33,23 +35,23 @@ Ernest drew data from the Andrews LTER, the Sevilleta, Niwot Ridge, and Portal. 
 
 The same datasets are available online, _from these sources_. 
 ```{r download data if not downloaded, include = F}
-if(download_data) download_raw_paper_data()
+if(download_data) download_raw_paper_data(storagepath = storagepath)
 ```
 
 ```{r download raw data, eval = F}
-download_raw_paper_data()
+download_raw_paper_data(storagepath = storagepath)
 ```
 
 Process raw data into the appropriate format. This is a data table with a record for each individual and columns for `species` and `weight` in grams. By default these tables will be stored in subdirectores of `replicate-becs/data/paper/processed`. 
 
 ```{r process paper data}
-process_raw_data()
+process_raw_data(storagepath = storagepath)
 ```
 
 Load data tables for each community. 
 
 ```{r load community data, echo=TRUE}
-communities <- load_paper_data()
+communities <- load_paper_data(storagepath = storagepath)
 ```
 
 Each community should be a data table with columns for species and size for each individual, for example:
@@ -67,7 +69,7 @@ Although the same datasets are now available online, they may have changed somew
 Ernest (2005) reported summary statistics of her datasets; here I compare them to the corresponding dataset in the 2019 data. 
 
 ```{r compare summary stats}
-summary_stats_comparison = compare_summary_stats()
+summary_stats_comparison = compare_summary_stats(storagepath = storagepath)
 
 print(summary_stats_comparison)
 ```
@@ -85,7 +87,7 @@ print(summary_stats_comparison)
 - Convert raw energy use values for each body size class into the proportion of all the energy used in that community used by that body size class. This allows for comparisons between communities.
 
 
-![Ernest 2005 Fig 1](../ernest-2005-files/ernest2005_fig1.png)
+![Ernest 2005 Fig 1](../analysis/ernest2005_fig1.png)
 
 
 #### Translation to `replicate-becs`
@@ -206,7 +208,7 @@ if(source_sims) {
   load(file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
 } else {
   
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
 
 save(bsed_uniform_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
 }
@@ -270,7 +272,7 @@ if(source_sims) {
 } else {
   
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
-                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
+                                   bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10)
 
 save(bsed_crosscomm_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_crosscomm_bootstraps.Rdata')))
 }
@@ -349,7 +351,8 @@ Tables of critical values were entered by hand from the appendix to Zar (1999).
 bsd_ks_test_raw = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
                          focal_column = 'species_mean_mass',
                          expected_range = NULL,
-                         n_or_i = 'n')
+                         n_or_i = 'n',
+                         storagepath = storagepath)
 
 bsd_ks_test_raw_results = data.frame(
   community_name = as.character(names(bsd_ks_test_raw)),
@@ -373,7 +376,8 @@ Using the natural log of the species mean body size value, however...:
 bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
                          focal_column = 'ln_mass',
                          expected_range = NULL,
-                         n_or_i = 'n')
+                         n_or_i = 'n',
+                         storagepath = storagepath)
 
 bsd_ks_test_log_results = data.frame(
   community_name = as.character(names(bsd_ks_test_log)),
@@ -397,7 +401,7 @@ With mean mass logged, all the results replicate qualitatively (i.e. not signifi
 Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every possible combination of community-level BSDs. 
 
 ```{r ernest ks two sample results, echo =F}
-appendix_b = tidy_appendix_b() %>%
+appendix_b = tidy_appendix_b(storagepath = storagepath) %>%
   dplyr::left_join(ernest_key, by = c('site_a' = 'site')) %>%
   dplyr::rename(community_a = community_name) %>%
   dplyr::left_join(ernest_key, by = c('site_b' = 'site')) %>%

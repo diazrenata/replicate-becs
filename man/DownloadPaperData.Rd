@@ -5,7 +5,7 @@
 \alias{download_raw_paper_data}
 \title{Download raw paper data}
 \usage{
-download_raw_paper_data(storagepath)
+download_raw_paper_data(storagepath = here::here("files"))
 }
 \arguments{
 \item{storagepath}{where to put the data
