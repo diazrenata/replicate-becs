@@ -293,6 +293,7 @@ process_sev_data <- function(storagepath){
 #'
 
 process_portal_data <- function(storagepath,
+
 portaldatapath = NULL) {
 
   if(!is.null(portaldatapath)) {

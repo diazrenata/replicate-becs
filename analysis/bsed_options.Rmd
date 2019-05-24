@@ -1,0 +1,35 @@
+---
+title: "BSED bootstrapping scenarios"
+output: html_notebook
+---
+```{r setup}
+library(replicatebecs)
+download_data = FALSE
+source_sims = FALSE
+set.seed(352) # GNV area code, for fun
+```
+
+This is a deeper dive into the outcomes of the BSED analyses using different assumptions in the bootstrapping. 
+
+### Load data and prepare distributions
+
+```{r load data}
+if(download_data) download_raw_paper_data()
+process_raw_data()
+communities <- load_paper_data()
+communities_energy <- lapply(communities, FUN = make_community_table, ln_units = 0.2)
+bseds <- lapply(communities_energy, FUN = make_bsed)
+```
+
+## No energetic constraint
+
+### Uniform size-abundance by .1g (presumed paper approach)
+
+### Uniform size-energy by X units
+
+### Uniform size-abundance by size class
+
+### Uniform size-energy by size class
+
+## Energetically constrained
+

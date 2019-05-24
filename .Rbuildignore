@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 revisitbecs.Rproj
-/analysis/*
 ^~$workflow\.pptx$
 ^ernest2005_fig1\.png$
 ^ernest2005_replication_files$
