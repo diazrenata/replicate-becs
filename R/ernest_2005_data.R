@@ -331,7 +331,7 @@ process_sev_data <- function(storagepath = here::here('files')){
 #' @description Process Portal smammal data
 #' Using `portalr`
 #' @param storagepath where to put the data
-#' @param portaldatapth where the portal data is
+#' @param portaldatapath where the portal data is
 #' @return NULL
 #'
 #' @export

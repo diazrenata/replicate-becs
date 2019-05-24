@@ -10,7 +10,8 @@ test_that("base KS function works", {
 
   moths_ks = zar_ks_test(moths, delta_correction = F, 
                          focal_column = "height", 
-                         expected_range = c(0, 25))
+                         expected_range = c(0, 25),
+                         storagepath = storagepath)
   
   expect_true(moths_ks$signif)
   expect_true((round(moths_ks$d, digits = 3) == .371))
@@ -19,7 +20,8 @@ test_that("base KS function works", {
   
   uniform_moths_ks = zar_ks_test(uniform_moths, delta_correction = F, 
                                  focal_column = 'height', 
-                                 expected_range = c(1, 40))
+                                 expected_range = c(1, 40),
+                                 storagepath = storagepath)
   
   expect_false(uniform_moths_ks$signif)
   expect_true((round(uniform_moths_ks$d, digits = 3) == .242))
@@ -31,7 +33,8 @@ test_that("base KS function works", {
 test_that("delta corrected KS function works", {
   
   moths_ks = zar_ks_test(moths, delta_correction = T, focal_column = "height", 
-                         expected_range = c(0, 25), n_or_i = 'i')
+                         expected_range = c(0, 25), n_or_i = 'i',
+                         storagepath = storagepath)
   
   expect_true(moths_ks$signif)
   expect_true((round(moths_ks$d, digits = 3) == .361))
@@ -40,7 +43,8 @@ test_that("delta corrected KS function works", {
   
   uniform_moths_ks = zar_ks_test(uniform_moths, delta_correction = T, 
                                  focal_column = 'height', 
-                                 expected_range = c(1, 40), n_or_i = 'i')
+                                 expected_range = c(1, 40), n_or_i = 'i',
+                                 storagepath = storagepath)
   
   expect_false(uniform_moths_ks$signif)
   expect_true((round(uniform_moths_ks$d, digits = 3) == .199))

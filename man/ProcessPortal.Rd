@@ -11,7 +11,7 @@ process_portal_data(storagepath = here::here("files"),
 \arguments{
 \item{storagepath}{where to put the data}
 
-\item{portaldatapth}{where the portal data is}
+\item{portaldatapath}{where the portal data is}
 }
 \description{
 Process Portal smammal data
