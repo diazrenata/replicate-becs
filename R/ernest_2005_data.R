@@ -20,7 +20,7 @@ setup_files <- function(storagepath = here::here('files')) {
     download.list = c('kstable.csv', 
                       'delta_kstable.csv')
     for(i in 1:length(download.list)) {
-      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/', download.list[i])
+      file.url = paste0('https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/', download.list[i])
       download.file(file.url, destfile = file.path(storagepath, download.list[i]))
     }
     

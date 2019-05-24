@@ -10,7 +10,8 @@ library(replicatebecs)
 download_data = TRUE
 source_sims = FALSE
 set.seed(352) # GNV area code, for fun
-storagepath = here::here('files')
+storagepath = '/Users/renatadiaz/Desktop/toy-becs'
+#storagepath = here::here('files')
 setup_files(storagepath = storagepath)
 ```
 
