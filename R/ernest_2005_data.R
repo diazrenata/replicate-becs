@@ -55,7 +55,7 @@ download_raw_paper_data <- function(storagepath = file.path(system.file(package=
 #'
 #' @export
 
-process_raw_data <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data', 'paper')) {
+process_raw_data <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')) {
   process_andrews_data(storagepath)
   process_niwot_data(storagepath)
   process_sev_data(storagepath)
@@ -75,14 +75,14 @@ process_raw_data <- function(storagepath = file.path(system.file(package= 'repli
 
 process_andrews_data <- function(storagepath) {
 
-  andrews_raw <- read.csv(file.path(storagepath, 'raw', 'andrews-lter', 'andrews.csv'), stringsAsFactors = F)
+  andrews_raw <- read.csv(file.path(storagepath, 'paper', 'raw', 'andrews-lter', 'andrews.csv'), stringsAsFactors = F)
 
   andrews <- andrews_raw %>%
     as.data.frame() %>%
     `names<-`(tolower(names(.))) %>%
     dplyr::filter(month >= 7, year <= 1999, !is.na(weight))
 
-  andrews_species <-  read.csv(file.path(storagepath, 'raw', 'andrews-lter', 'andrews-specieslist.csv'), stringsAsFactors = F)
+  andrews_species <-  read.csv(file.path(storagepath, 'paper',  'raw', 'andrews-lter', 'andrews-specieslist.csv'), stringsAsFactors = F)
 
   andrews_rod <- andrews_species %>%
     as.data.frame() %>%
@@ -106,12 +106,12 @@ process_andrews_data <- function(storagepath) {
     dplyr::filter(species %in% andrews_means$species) %>%
     dplyr::select(species, weight)
 
-  processedpath = file.path(storagepath,'processed')
+  processedpath = file.path(storagepath, 'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(andrews, file.path(storagepath, 'processed', 'andrews-processed.csv'), row.names = F)
+  write.csv(andrews, file.path(storagepath, 'paper',  'processed', 'andrews-processed.csv'), row.names = F)
 
   return(TRUE)
 
@@ -130,7 +130,7 @@ process_niwot_data <- function(storagepath){
   # Halfpenny, Jim. 2019. Small mammal disturbance data for Niwot Ridge from 1981-6-30 to 1990-8-23, yearly. http://niwot.colorado.edu
   # http://niwot.colorado.edu/data/data/small-mammal-species-composition-data-for-niwot-ridge-1981-1990
 
-  niwot_raw <- read.csv(file.path(storagepath, 'raw', 'niwot', 'niwot-raw.csv'), stringsAsFactors = F)
+  niwot_raw <- read.csv(file.path(storagepath,'paper', 'raw', 'niwot', 'niwot-raw.csv'), stringsAsFactors = F)
 
   niwot <- niwot_raw %>%
     dplyr::filter(!is.na(weight)) %>%
@@ -162,12 +162,12 @@ process_niwot_data <- function(storagepath){
   niwot <- niwot %>%
     dplyr::select(species, weight)
 
-  processedpath = file.path(storagepath, 'processed')
+  processedpath = file.path(storagepath, 'paper','processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(niwot, file.path(storagepath,'processed', 'niwot-processed.csv'), row.names = F)
+  write.csv(niwot, file.path(storagepath,'paper','processed', 'niwot-processed.csv'), row.names = F)
 
   return(TRUE)
 
@@ -199,7 +199,7 @@ process_sev_data <- function(storagepath){
   # Metadata Link: https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976
   # Stylesheet for metadata conversion into program: John H. Porter, Univ. Virginia, jporter@Virginia.edu
   #
-  infile1  <- file.path(storagepath, 'raw', 'sev', 'sev.csv')
+  infile1  <- file.path(storagepath, 'paper','raw', 'sev', 'sev.csv')
   # This creates a tibble named: dt1
   sev_raw <-readr::read_delim(infile1
                               ,delim=","
@@ -259,7 +259,7 @@ process_sev_data <- function(storagepath){
 
   sev_locations <- unique(sev$location)
 
-  processedpath = file.path(storagepath, 'processed')
+  processedpath = file.path(storagepath,'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
@@ -271,7 +271,7 @@ process_sev_data <- function(storagepath){
       dplyr::filter(location == this_location) %>%
       dplyr::select(-location)
 
-    write.csv(this_sev, file.path(storagepath, 'processed',paste0('sev-', this_location, '-processed.csv')), row.names = F)
+    write.csv(this_sev, file.path(storagepath, 'paper','processed',paste0('sev-', this_location, '-processed.csv')), row.names = F)
 
   }
 
@@ -310,12 +310,12 @@ portaldatapath = NULL) {
     dplyr::group_by(species) %>%
     dplyr::summarize(meanwgt = mean(wgt), totaln = dplyr::n())
 
-  processedpath = file.path(storagepath, 'data', 'paper', 'processed')
+  processedpath = file.path(storagepath,'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(portal, file.path(storagepath, 'processed', 'portal-processed.csv'), row.names = F)
+  write.csv(portal, file.path(storagepath, 'paper','processed', 'portal-processed.csv'), row.names = F)
 
 
 
