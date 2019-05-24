@@ -5,7 +5,10 @@
 \alias{process_sev_data}
 \title{Process Sevilleta data in to the appropriate format.}
 \usage{
-process_sev_data()
+process_sev_data(storagepath = "files")
+}
+\arguments{
+\item{storagepath}{where to put the data}
 }
 \description{
 Process Sevilleta smammal data

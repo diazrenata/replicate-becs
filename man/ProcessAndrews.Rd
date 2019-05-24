@@ -5,7 +5,10 @@
 \alias{process_andrews_data}
 \title{Process Andrews data in to the appropriate format.}
 \usage{
-process_andrews_data()
+process_andrews_data(storagepath = "files")
+}
+\arguments{
+\item{storagepath}{where to put the data}
 }
 \description{
 Process Andrews smammal data

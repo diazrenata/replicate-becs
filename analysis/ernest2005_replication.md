@@ -294,7 +294,7 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
 Ernest (2005) refers to the communities with the `site` column above. To compare the communities above to the communities in the resurrected data set, we can try to match them based on the BSD and BSED plots (above) and species richness.
 
 ``` r
-ernest_richness = read.csv(here::here("ernest-2005-files/ernest_richness.csv"), stringsAsFactors = F)
+ernest_richness = read.csv(file.path("ernest-2005-files/ernest_richness.csv"), stringsAsFactors = F)
 
 # Guesses based on body size plots
 ernest_richness$community_name <- c('andrews', 'niwot', 'portal', 'sev-5pgrass', 
@@ -335,7 +335,7 @@ Moving forward, we can compare the results of the Kolmogorov-Smirnov tests based
 ernest_key = ernest_richness %>%
   dplyr::select(site, community_name)
 
-write.csv(ernest_key, file = here::here('ernest-2005-files/ernest_key.csv'), row.names = F)
+write.csv(ernest_key, file = file.path(storagepath, 'ernest-2005-files/ernest_key.csv'), row.names = F)
 ```
 
 #### Ernest approach
@@ -345,7 +345,7 @@ write.csv(ernest_key, file = here::here('ernest-2005-files/ernest_key.csv'), row
 -   The *δ*-corrected test is not widely discussed online.
 
 ``` r
-ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files/ernest_appendixA.csv'), stringsAsFactors = F) %>%
+ernest_bsds_uniform_results = read.csv(file.path(storagepath, 'ernest-2005-files/ernest_appendixA.csv'), stringsAsFactors = F) %>%
   dplyr::left_join(ernest_key, by = 'site')
 print(ernest_bsds_uniform_results)
 ```

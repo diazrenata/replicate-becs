@@ -620,8 +620,8 @@ community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = 
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXJuZXN0X2tleSA9ICByZWFkLmNzdihoZXJlOjpoZXJlKCdlcm5lc3QtMjAwNS1maWxlcycsICdlcm5lc3Rfa2V5LmNzdicpLCBzdHJpbmdzQXNGYWN0b3JzID0gRilcbmVybmVzdF9ic2RzX3VuaWZvcm1fcmVzdWx0cyA9IHJlYWQuY3N2KGhlcmU6OmhlcmUoJ2VybmVzdC0yMDA1LWZpbGVzJywgJ2VybmVzdF9hcHBlbmRpeEEuY3N2JyksIHN0cmluZ3NBc0ZhY3RvcnMgPSBGKSAlPiVcbiAgZHBseXI6OmxlZnRfam9pbihlcm5lc3Rfa2V5LCBieSA9ICdzaXRlJylcbnByaW50KGVybmVzdF9ic2RzX3VuaWZvcm1fcmVzdWx0cylcbmBgYCJ9 -->
-<pre class="r"><code>ernest_key =  read.csv(here::here('ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
-ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files', 'ernest_appendixA.csv'), stringsAsFactors = F) %&gt;%
+<pre class="r"><code>ernest_key =  read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
+ernest_bsds_uniform_results = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_appendixA.csv'), stringsAsFactors = F) %&gt;%
   dplyr::left_join(ernest_key, by = 'site')
 print(ernest_bsds_uniform_results)</code></pre>
 <!-- rnb-source-end -->

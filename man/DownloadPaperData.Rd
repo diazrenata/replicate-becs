@@ -5,9 +5,12 @@
 \alias{download_raw_paper_data}
 \title{Download raw paper data}
 \usage{
-download_raw_paper_data()
+download_raw_paper_data(storagepath)
+}
+\arguments{
+\item{storagepath}{where to put the data
+Only downloads if the relevant folders do not exist in the `storagepath`.}
 }
 \description{
 Download datasets used in Ernest 2005.
-Only downloads if the relevant folders do not exist in the `datapath`.
 }

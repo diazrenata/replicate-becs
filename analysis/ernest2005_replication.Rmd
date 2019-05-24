@@ -203,12 +203,12 @@ bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  boots
 
 ```{r source or draw BSED uniform bootstraps, include = F}
 if(source_sims) {
-  load(here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
+  load(file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
 } else {
   
 bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
 
-save(bsed_uniform_bootstraps, file = (here::here('data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
+save(bsed_uniform_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
 }
 ```
 
@@ -266,13 +266,13 @@ bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_boots
 
 ```{r source or draw cross community BSED, include = F}
 if(source_sims) {
-  load(here::here('data', 'sims', 'bsed_crosscomm_bootstraps.Rdata'))
+  load(file.path(storagepath, 'data', 'sims', 'bsed_crosscomm_bootstraps.Rdata'))
 } else {
   
 bsed_crosscomm_bootstraps = lapply(community_combinations, FUN = community_bootstrap, 
                                    bootstrap_function = 'bootstrap_crosscomm_bseds', nbootstraps = 10000)
 
-save(bsed_crosscomm_bootstraps, file = (here::here('data', 'sims', 'bsed_crosscomm_bootstraps.Rdata')))
+save(bsed_crosscomm_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_crosscomm_bootstraps.Rdata')))
 }
 ```
 
@@ -302,8 +302,8 @@ See histogram of p values for comparisons to see if commuities' BSEDs are the sa
 
 
 ```{r ernest d ks test results}
-ernest_key =  read.csv(here::here('ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
-ernest_bsds_uniform_results = read.csv(here::here('ernest-2005-files', 'ernest_appendixA.csv'), stringsAsFactors = F) %>%
+ernest_key =  read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
+ernest_bsds_uniform_results = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_appendixA.csv'), stringsAsFactors = F) %>%
   dplyr::left_join(ernest_key, by = 'site')
 print(ernest_bsds_uniform_results)
 ```

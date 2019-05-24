@@ -4,7 +4,10 @@
 \alias{tidy_appendix_b}
 \title{Rerrange table in appendix B}
 \usage{
-tidy_appendix_b()
+tidy_appendix_b(storagepath = "files")
+}
+\arguments{
+\item{storagepath}{where the data is}
 }
 \value{
 table of site comparisons, and d and p values, for KS tests.

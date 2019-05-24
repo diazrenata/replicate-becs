@@ -4,7 +4,10 @@
 \alias{compare_summary_stats}
 \title{Compare summary stats from Ernest and current data}
 \usage{
-compare_summary_stats()
+compare_summary_stats(storagepath = "files")
+}
+\arguments{
+\item{storagepath}{where the data is}
 }
 \value{
 data frame of Ernest summary stats and current summary stats

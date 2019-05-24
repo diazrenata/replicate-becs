@@ -4,10 +4,10 @@
 \alias{load_paper_data}
 \title{Load paper community data}
 \usage{
-load_paper_data()
+load_paper_data(storagepath = "files")
 }
 \arguments{
-\item{datapath}{Main working directory}
+\item{storagepath}{Main working directory}
 }
 \value{
 list of data frames, one for each community.

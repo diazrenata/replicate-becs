@@ -1,0 +1,9 @@
+Data Use Policy
+
+1. Use our data freely. All Niwot LTER data products (except some recent data sets for which metadata but not data are available) are released to the public and may be freely copied, distributed, edited, remixed, and built upon under the condition that you provide acknowledgement as described below.
+
+2. Give proper acknowledgement. Publications, models and data products that make use of these data sets must include proper acknowledgement, including citing data sets in a similar way to citing a journal article. See http://www.datacite.org/whycitedata). The following acknowledgment should accompany any publication or citation of these data: Logistical support and/or data were provided by the NSF supported Niwot Ridge Long-Term Ecological Research project and the University of Colorado Mountain Research Station
+
+3. Let us know how you will use the data. The data set creators and Niwot LTER would appreciate hearing of any plans to use the data set. Consider consultation or collaboration with data set creators.
+
+4. Although efforts have been made to ensure that these data are of the highest quality, the possibility of errors exists. Plase notify the data manager of any errors at lternwt@colorado.edu.
