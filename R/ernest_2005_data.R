@@ -339,12 +339,12 @@ process_sev_data <- function(storagepath = here::here('files')){
 #'
 
 process_portal_data <- function(storagepath = here::here('files'),
-portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
+portaldatapath = NULL) {
 
   if(!is.null(portaldatapath)) {
     portal <- portalr::summarise_individual_rodents(path = portaldatapath, download_if_missing = F, clean = T)
   } else {
-    portal <- portalr::summarise_individual_rodents(path = 'repo', download_if_missing = F, clean = T)
+    portal <- portalr::summarise_individual_rodents(path = 'repo', download_if_missing = T, clean = T)
   }
 
   portal <- portal %>%
