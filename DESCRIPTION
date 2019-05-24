@@ -14,6 +14,13 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports:
     dplyr,
+    ggplot2,
+    gridExtra,
     here,
     magrittr,
-    tibble
+    portalr,
+    readr,
+    stringr,
+    testthat,
+    tibble,
+    tidyr

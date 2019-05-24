@@ -1,0 +1,13 @@
+language: r
+cache:
+- packages
+sudo: required
+dist: "trusty"
+warnings_are_errors: false
+
+matrix:
+  include:
+  - r: devel
+  - r: release
+    after_success:
+    - R CMD INSTALL .

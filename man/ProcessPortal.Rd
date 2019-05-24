@@ -5,8 +5,13 @@
 \alias{process_portal_data}
 \title{Process Portal data in to the appropriate format.}
 \usage{
-process_portal_data(datapath = here::here(),
+process_portal_data(storagepath = here::here("files"),
   portaldatapath = "/Users/renatadiaz/Documents/GitHub/weecology/")
+}
+\arguments{
+\item{storagepath}{where to put the data}
+
+\item{portaldatapath}{where the portal data is}
 }
 \description{
 Process Portal smammal data

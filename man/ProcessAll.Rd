@@ -5,9 +5,11 @@
 \alias{process_raw_data}
 \title{Process raw data in to the appropriate format.}
 \usage{
-process_raw_data()
+process_raw_data(storagepath = here::here("files"))
+}
+\arguments{
+\item{storagepath}{where to put the data}
 }
 \description{
-Process all the datasets 
-#'
+Process all the datasets and make the key of site names
 }

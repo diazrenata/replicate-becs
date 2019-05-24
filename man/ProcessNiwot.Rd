@@ -5,10 +5,10 @@
 \alias{process_niwot_data}
 \title{Process Niwot data into the appropriate format.}
 \usage{
-process_niwot_data(datapath = here::here())
+process_niwot_data(storagepath = here::here("files"))
 }
 \arguments{
-\item{datapath}{path to where data is}
+\item{storagepath}{where to put the data}
 }
 \description{
 Process Niwot smammal data

@@ -5,12 +5,15 @@
 \alias{download_raw_paper_data}
 \title{Download raw paper data}
 \usage{
-download_raw_paper_data(datapath = here::here("data", "paper", "raw"))
+download_raw_paper_data(storagepath = here::here("files"),
+  from_repo = TRUE)
 }
 \arguments{
-\item{datapath}{Folder to store the data}
+\item{storagepath}{where to put the data}
+
+\item{from_repo}{T or F, download from repo or from source online
+Only downloads if the relevant folders do not exist in the `storagepath`.}
 }
 \description{
 Download datasets used in Ernest 2005.
-Only downloads if the relevant folders do not exist in the `datapath`.
 }
