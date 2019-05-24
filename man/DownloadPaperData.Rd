@@ -5,13 +5,11 @@
 \alias{download_raw_paper_data}
 \title{Download raw paper data}
 \usage{
-download_raw_paper_data(storagepath = here::here("files"),
-  from_repo = TRUE)
+download_raw_paper_data(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data", "paper"))
 }
 \arguments{
-\item{storagepath}{where to put the data}
-
-\item{from_repo}{T or F, download from repo or from source online
+\item{storagepath}{where to put the data
 Only downloads if the relevant folders do not exist in the `storagepath`.}
 }
 \description{

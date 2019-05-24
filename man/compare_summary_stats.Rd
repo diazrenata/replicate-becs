@@ -4,7 +4,8 @@
 \alias{compare_summary_stats}
 \title{Compare summary stats from Ernest and current data}
 \usage{
-compare_summary_stats(storagepath = here::here("files"))
+compare_summary_stats(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data"))
 }
 \arguments{
 \item{storagepath}{where the data is}

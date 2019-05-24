@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 #' Set up files
 #'
 #' @param storagepath defaults to 'files'
@@ -49,13 +51,13 @@ setup_files <- function(storagepath = here::here('files')) {
     }
 }
 
+>>>>>>> energy-assumptions
 #' @title Download raw paper data
 #'
 #' @name DownloadPaperData
 #'
 #' @description Download datasets used in Ernest 2005.
 #' @param storagepath where to put the data
-#' @param from_repo T or F, download from repo or from source online
 #' Only downloads if the relevant folders do not exist in the `storagepath`.
 #'
 #'
@@ -63,35 +65,35 @@ setup_files <- function(storagepath = here::here('files')) {
 #'
 #' @export
 
-download_raw_paper_data <- function(storagepath = here::here('files'), from_repo = TRUE) {
+download_raw_paper_data <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data', 'paper')) {
 
-  if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))) {
-    dir.create(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))
+  if(!dir.exists(file.path(storagepath,  'raw','andrews-lter'))) {
+    dir.create(file.path(storagepath,   'raw','andrews-lter'))
   }
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews.csv', 'http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews.csv'))
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews-metadata.pdf', 'http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-metadata.pdf'))
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews-specieslist.csv', 'http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-specieslist.csv'))
+  download.file('http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv', file.path(storagepath, 'raw','andrews-lter', 'andrews.csv'))
+  download.file('http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026', file.path(storagepath, 'raw','andrews-lter', 'andrews-metadata.pdf'))
+  download.file('http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv', file.path(storagepath, 'raw','andrews-lter', 'andrews-specieslist.csv'))
 
 
-  if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','niwot'))) {
+  if(!dir.exists(file.path(storagepath, 'raw','niwot'))) {
 
-    dir.create(file.path(storagepath, 'data', 'paper', 'raw','niwot'))
-
-  }
-
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/niwot/niwot-raw.csv', 'http://niwot.colorado.edu/data_csvs/smammals.jh.data.csv'), file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-raw.csv'))
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/niwot/niwot-metadata.txt', 'http://niwot.colorado.edu/meta_data/smammals.jh.meta.txt'), file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-metadata.txt'))
-
-
-
-  if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','sev'))) {
-
-    dir.create(file.path(storagepath, 'data', 'paper', 'raw','sev'))
+    dir.create(file.path(storagepath,  'raw','niwot'))
 
   }
 
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/sev/sev.csv', 'https://portal.lternet.edu/nis/dataviewer?packageid=knb-lter-sev.8.297976&entityid=d70c7027949ca1d8ae053eb10300dc0e'), file.path(storagepath, 'data', 'paper', 'raw','sev', 'sev.csv'))
-  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/sev/sev-metadata.html', 'https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976'), file.path(storagepath, 'data', 'paper', 'raw','sev','sev-metadata.html'))
+  download.file('http://niwot.colorado.edu/data_csvs/smammals.jh.data.csv', file.path(storagepath, 'raw','niwot', 'niwot-raw.csv'))
+  download.file('http://niwot.colorado.edu/meta_data/smammals.jh.meta.txt', file.path(storagepath, 'raw','niwot', 'niwot-metadata.txt'))
+
+
+
+  if(!dir.exists(file.path(storagepath, 'raw','sev'))) {
+
+    dir.create(file.path(storagepath,  'raw','sev'))
+
+  }
+
+  download.file('https://portal.lternet.edu/nis/dataviewer?packageid=knb-lter-sev.8.297976&entityid=d70c7027949ca1d8ae053eb10300dc0e', file.path(storagepath, 'raw','sev', 'sev.csv'))
+  download.file('https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976', file.path(storagepath, 'raw','sev','sev-metadata.html'))
 
 
 }
@@ -107,7 +109,7 @@ download_raw_paper_data <- function(storagepath = here::here('files'), from_repo
 #'
 #' @export
 
-process_raw_data <- function(storagepath = here::here('files')) {
+process_raw_data <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')) {
   process_andrews_data(storagepath)
   process_niwot_data(storagepath)
   process_sev_data(storagepath)
@@ -125,16 +127,16 @@ process_raw_data <- function(storagepath = here::here('files')) {
 #'
 #' @export
 
-process_andrews_data <- function(storagepath = here::here('files')) {
+process_andrews_data <- function(storagepath) {
 
-  andrews_raw <- read.csv(file.path(storagepath, 'data', 'paper', 'raw', 'andrews-lter', 'andrews.csv'), stringsAsFactors = F)
+  andrews_raw <- read.csv(file.path(storagepath, 'paper', 'raw', 'andrews-lter', 'andrews.csv'), stringsAsFactors = F)
 
   andrews <- andrews_raw %>%
     as.data.frame() %>%
     `names<-`(tolower(names(.))) %>%
     dplyr::filter(month >= 7, year <= 1999, !is.na(weight))
 
-  andrews_species <-  read.csv(file.path(storagepath, 'data', 'paper', 'raw', 'andrews-lter', 'andrews-specieslist.csv'), stringsAsFactors = F)
+  andrews_species <-  read.csv(file.path(storagepath, 'paper',  'raw', 'andrews-lter', 'andrews-specieslist.csv'), stringsAsFactors = F)
 
   andrews_rod <- andrews_species %>%
     as.data.frame() %>%
@@ -158,12 +160,12 @@ process_andrews_data <- function(storagepath = here::here('files')) {
     dplyr::filter(species %in% andrews_means$species) %>%
     dplyr::select(species, weight)
 
-  processedpath = file.path(storagepath, 'data', 'paper', 'processed')
+  processedpath = file.path(storagepath, 'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(andrews, file.path(storagepath, 'data', 'paper', 'processed', 'andrews-processed.csv'), row.names = F)
+  write.csv(andrews, file.path(storagepath, 'paper',  'processed', 'andrews-processed.csv'), row.names = F)
 
   return(TRUE)
 
@@ -178,11 +180,11 @@ process_andrews_data <- function(storagepath = here::here('files')) {
 #' @return NULL
 #'
 #' @export
-process_niwot_data <- function(storagepath = here::here('files')){
+process_niwot_data <- function(storagepath){
   # Halfpenny, Jim. 2019. Small mammal disturbance data for Niwot Ridge from 1981-6-30 to 1990-8-23, yearly. http://niwot.colorado.edu
   # http://niwot.colorado.edu/data/data/small-mammal-species-composition-data-for-niwot-ridge-1981-1990
 
-  niwot_raw <- read.csv(file.path(storagepath, 'data','paper', 'raw', 'niwot', 'niwot-raw.csv'), stringsAsFactors = F)
+  niwot_raw <- read.csv(file.path(storagepath,'paper', 'raw', 'niwot', 'niwot-raw.csv'), stringsAsFactors = F)
 
   niwot <- niwot_raw %>%
     dplyr::filter(!is.na(weight)) %>%
@@ -214,12 +216,12 @@ process_niwot_data <- function(storagepath = here::here('files')){
   niwot <- niwot %>%
     dplyr::select(species, weight)
 
-  processedpath = file.path(storagepath, 'data','paper', 'processed')
+  processedpath = file.path(storagepath, 'paper','processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(niwot, file.path(storagepath, 'data','paper', 'processed', 'niwot-processed.csv'), row.names = F)
+  write.csv(niwot, file.path(storagepath,'paper','processed', 'niwot-processed.csv'), row.names = F)
 
   return(TRUE)
 
@@ -240,7 +242,7 @@ process_niwot_data <- function(storagepath = here::here('files')){
 #'
 #' @export
 #'
-process_sev_data <- function(storagepath = here::here('files')){
+process_sev_data <- function(storagepath){
   # FROM LTER WEBSITE #
   # Package ID: knb-lter-sev.8.297976 Cataloging System:https://pasta.lternet.edu.
   # Data set title: Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta National Wildlife Refuge, New Mexico (1989 - present).
@@ -251,7 +253,7 @@ process_sev_data <- function(storagepath = here::here('files')){
   # Metadata Link: https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976
   # Stylesheet for metadata conversion into program: John H. Porter, Univ. Virginia, jporter@Virginia.edu
   #
-  infile1  <- file.path(storagepath, 'data','paper', 'raw', 'sev', 'sev.csv')
+  infile1  <- file.path(storagepath, 'paper','raw', 'sev', 'sev.csv')
   # This creates a tibble named: dt1
   sev_raw <-readr::read_delim(infile1
                               ,delim=","
@@ -311,7 +313,7 @@ process_sev_data <- function(storagepath = here::here('files')){
 
   sev_locations <- unique(sev$location)
 
-  processedpath = file.path(storagepath, 'data','paper', 'processed')
+  processedpath = file.path(storagepath,'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
@@ -323,7 +325,7 @@ process_sev_data <- function(storagepath = here::here('files')){
       dplyr::filter(location == this_location) %>%
       dplyr::select(-location)
 
-    write.csv(this_sev, file.path(storagepath, 'data','paper', 'processed',paste0('sev-', this_location, '-processed.csv')), row.names = F)
+    write.csv(this_sev, file.path(storagepath, 'paper','processed',paste0('sev-', this_location, '-processed.csv')), row.names = F)
 
   }
 
@@ -344,13 +346,14 @@ process_sev_data <- function(storagepath = here::here('files')){
 #' @export
 #'
 
-process_portal_data <- function(storagepath = here::here('files'),
-portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
+process_portal_data <- function(storagepath,
+
+portaldatapath = NULL) {
 
   if(!is.null(portaldatapath)) {
     portal <- portalr::summarise_individual_rodents(path = portaldatapath, download_if_missing = F, clean = T)
   } else {
-    portal <- portalr::summarise_individual_rodents(path = 'repo', download_if_missing = F, clean = T)
+    portal <- portalr::summarise_individual_rodents(path = 'repo', download_if_missing = T, clean = T)
   }
 
   portal <- portal %>%
@@ -361,12 +364,12 @@ portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
     dplyr::group_by(species) %>%
     dplyr::summarize(meanwgt = mean(wgt), totaln = dplyr::n())
 
-  processedpath = file.path(storagepath, 'data', 'paper', 'processed')
+  processedpath = file.path(storagepath,'paper', 'processed')
   if(!dir.exists(processedpath)) {
     dir.create(processedpath)
   }
 
-  write.csv(portal, file.path(storagepath, 'data', 'paper', 'processed', 'portal-processed.csv'), row.names = F)
+  write.csv(portal, file.path(storagepath, 'paper','processed', 'portal-processed.csv'), row.names = F)
 
 
 
@@ -380,8 +383,8 @@ portaldatapath = '/Users/renatadiaz/Documents/GitHub/weecology/') {
 #' @return list of data frames, one for each community.
 #' @export
 #'
-load_paper_data <- function(storagepath = here::here('files')){
-  data_files <- list.files(path = file.path(storagepath, 'data', 'paper', 'processed'), full.names = T)
+load_paper_data <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')){
+  data_files <- list.files(path = file.path(storagepath, 'paper', 'processed'), full.names = T)
 
   community_names <- vapply(data_files, FUN = replicatebecs:::get_community_name, FUN.VALUE = "name", USE.NAMES =F)
 
@@ -424,9 +427,9 @@ get_community_name <- function(data_file) {
 #' @return table of site comparisons, and d and p values, for KS tests.
 #' @export
 #'
-tidy_appendix_b <- function(storagepath = here::here('files')){
+tidy_appendix_b <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')){
 
-  appendix_b_d = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_appendixB_maxD.csv'), stringsAsFactors = F)
+  appendix_b_d = read.csv(file.path(storagepath, 'ernest_appendixB_maxD.csv'), stringsAsFactors = F)
 
   appendix_b_d = appendix_b_d %>%
     tidyr::gather(key = "site_b", value = "max_d", -site_a, na.rm = T) %>%
@@ -435,7 +438,7 @@ tidy_appendix_b <- function(storagepath = here::here('files')){
                     stringr::str_replace(pattern = ".2", replacement = " 2") %>%
                     stringr::str_replace(pattern = "s.s", replacement = "s s"))
 
-  appendix_b_p = read.csv(file.path(storagepath, 'ernest-2005-files','ernest_appendixB_pval.csv'), stringsAsFactors = F)
+  appendix_b_p = read.csv(file.path(storagepath, 'ernest_appendixB_pval.csv'), stringsAsFactors = F)
   appendix_b_p = appendix_b_p %>%
     tidyr::gather(key = "site_b", value = "ernest_p_val", -site_a, na.rm = T)%>%
     dplyr::mutate(site_b = site_b %>%
@@ -455,7 +458,7 @@ tidy_appendix_b <- function(storagepath = here::here('files')){
 #' @return data frame of Ernest summary stats and current summary stats
 #' @export
 #'
-compare_summary_stats = function(storagepath = here::here('files')) {
+compare_summary_stats = function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')) {
   communities <- load_paper_data(storagepath = storagepath)
 
   bsds <- lapply(communities, FUN = make_bsd)
@@ -476,9 +479,9 @@ compare_summary_stats = function(storagepath = here::here('files')) {
   communities_summary_stats$new_max_mass[4:9] = max(communities_summary_stats$new_max_mass[4:9])
 
 
-  ernest_summary_stats = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_summary_stats.csv'), stringsAsFactors = F)
+  ernest_summary_stats = read.csv(file.path(storagepath, 'ernest_summary_stats.csv'), stringsAsFactors = F)
 
-  ernest_key = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_key.csv'), stringsAsFactors = F)
+  ernest_key = read.csv(file.path(storagepath, 'ernest_key.csv'), stringsAsFactors = F)
 
   joined_summary_stats = dplyr::left_join(ernest_summary_stats, ernest_key, by = 'site') %>%
     dplyr::left_join(communities_summary_stats, by = 'community_name') %>%
@@ -496,9 +499,9 @@ compare_summary_stats = function(storagepath = here::here('files')) {
 #' @param storagepath where the data is
 #' @export
 #'
-make_ernest_name_key <- function(storagepath = here::here('files')) {
+make_ernest_name_key <- function(storagepath = file.path(system.file(package= 'replicatebecs'), 'data')) {
 
-  ernest_summary_stats = read.csv(file.path(storagepath, 'ernest-2005-files', 'ernest_summary_stats.csv'), stringsAsFactors = F)
+  ernest_summary_stats = read.csv(file.path(storagepath, 'ernest_summary_stats.csv'), stringsAsFactors = F)
 
   # Guesses based on body size plots
   ernest_summary_stats$community_name <- c('andrews', 'niwot', 'portal', 'sev-5pgrass',
@@ -508,5 +511,5 @@ make_ernest_name_key <- function(storagepath = here::here('files')) {
   ernest_key = ernest_summary_stats %>%
     dplyr::select(site, community_name)
 
-  write.csv(ernest_key, file = file.path(storagepath, 'ernest-2005-files', 'ernest_key.csv'), row.names = F)
+  write.csv(ernest_key, file = file.path(storagepath, 'ernest_key.csv'), row.names = F)
 }

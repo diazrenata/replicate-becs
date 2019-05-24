@@ -4,7 +4,8 @@
 \alias{tidy_appendix_b}
 \title{Rerrange table in appendix B}
 \usage{
-tidy_appendix_b(storagepath = here::here("files"))
+tidy_appendix_b(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data"))
 }
 \arguments{
 \item{storagepath}{where the data is}

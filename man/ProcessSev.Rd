@@ -5,7 +5,7 @@
 \alias{process_sev_data}
 \title{Process Sevilleta data in to the appropriate format.}
 \usage{
-process_sev_data(storagepath = here::here("files"))
+process_sev_data(storagepath)
 }
 \arguments{
 \item{storagepath}{where to put the data}
