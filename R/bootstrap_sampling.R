@@ -87,6 +87,24 @@ uniform_size_abund_bsed <- function(community_df) {
   return(true_uniform_bsed)
 }
 
+#' Uniform size-energy BSED
+#'
+#' Based on a community_df
+#'
+#' @param community_df table of sizes and ids
+#'
+#' @return bsed drawn from a uniform body size energy distribution
+#' @export
+#'
+uniform_size_energy_bsed <- function(community_df) {
+  true_uniform_bsed <- community_df %>%
+    make_community_table() %>%
+    make_bsed() %>%
+    dplyr::mutate(total_energy = sum(total_energy) / nrow(true_uniform_bsed),
+                  total_energy_proportional = total_energy / sum(total_energy))
+  return(true_uniform_bsed)
+}
+
 #' @title DOI of sampled community masses from uniform compared to uniform
 #'
 #' @description Randomly draw N masses, where N is the total number of individuals in a community, from a uniform distribution with min and max corresponding the min and max of the entire community. 
@@ -111,6 +129,34 @@ bootstrap_unif_sizeabund_bsed_doi <- function(community_df){
   sampled_bsed <- make_bsed(sampled_community_table)
   
   true_uniform_bsed = uniform_size_abund_bsed(community_df)
+  
+  sampled_doi <- doi(sampled_bsed, true_uniform_bsed)
+  return(sampled_doi)
+}
+
+
+#' @title DOI of sampled community masses from uniform compared to uniform
+#'
+#' @description Randomly draw N masses, where N is the total number of individuals in a community, from a uniform distribution with min and max corresponding the min and max of the entire community. 
+#' Calculate the DOI of this BSED compared to uniform.
+#' 
+#' @param community_df Community to base samples on (nind, min and max mass)
+#'
+#' @return doi
+#'
+#' @export
+
+bootstrap_unif_sizeenergy_bsed_doi <- function(community_df){
+  
+  sampled_bsed <- community_df %>%
+    make_community_table %>%
+    make_bsed %>%
+    dplyr::mutate(total_energy = runif(n = nrow(sampled_bsed), 
+                                       min = min(total_energy), 
+                                       max = max(total_energy)),
+                  total_energy_proportional = total_energy / sum(total_energy))
+  
+  true_uniform_bsed = uniform_size_energy_bsed(community_df)
   
   sampled_doi <- doi(sampled_bsed, true_uniform_bsed)
   return(sampled_doi)
