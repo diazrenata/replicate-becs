@@ -49,6 +49,7 @@ setup_files <- function(storagepath = here::here('files')) {
 #'
 #' @description Download datasets used in Ernest 2005.
 #' @param storagepath where to put the data
+#' @param from_repo T or F, download from repo or from source online
 #' Only downloads if the relevant folders do not exist in the `storagepath`.
 #'
 #'
@@ -56,14 +57,14 @@ setup_files <- function(storagepath = here::here('files')) {
 #'
 #' @export
 
-download_raw_paper_data <- function(storagepath = here::here('files')) {
+download_raw_paper_data <- function(storagepath = here::here('files'), from_repo = TRUE) {
 
   if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))) {
     dir.create(file.path(storagepath, 'data', 'paper', 'raw','andrews-lter'))
   }
-  download.file('http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv', file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews.csv'))
-  download.file('http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026', file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-metadata.pdf'))
-  download.file('http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv', file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-specieslist.csv'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews.csv', 'http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews.csv'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews-metadata.pdf', 'http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-metadata.pdf'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/andrews-lter/andrews-specieslist.csv', 'http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv'), file.path(storagepath, 'data', 'paper', 'raw','andrews-lter', 'andrews-specieslist.csv'))
 
 
   if(!dir.exists(file.path(storagepath, 'data', 'paper', 'raw','niwot'))) {
@@ -72,8 +73,8 @@ download_raw_paper_data <- function(storagepath = here::here('files')) {
 
   }
 
-  download.file('http://niwot.colorado.edu/data_csvs/smammals.jh.data.csv', file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-raw.csv'))
-  download.file('http://niwot.colorado.edu/meta_data/smammals.jh.meta.txt', file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-metadata.txt'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/niwot/niwot-raw.csv', 'http://niwot.colorado.edu/data_csvs/smammals.jh.data.csv'), file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-raw.csv'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/niwot/niwot-metadata.txt', 'http://niwot.colorado.edu/meta_data/smammals.jh.meta.txt'), file.path(storagepath, 'data', 'paper', 'raw','niwot', 'niwot-metadata.txt'))
 
 
 
@@ -83,8 +84,8 @@ download_raw_paper_data <- function(storagepath = here::here('files')) {
 
   }
 
-  download.file('https://portal.lternet.edu/nis/dataviewer?packageid=knb-lter-sev.8.297976&entityid=d70c7027949ca1d8ae053eb10300dc0e', file.path(storagepath, 'data', 'paper', 'raw','sev', 'sev.csv'))
-  download.file('https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976', file.path(storagepath, 'data', 'paper', 'raw','sev','sev-metadata.html'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/sev/sev.csv', 'https://portal.lternet.edu/nis/dataviewer?packageid=knb-lter-sev.8.297976&entityid=d70c7027949ca1d8ae053eb10300dc0e'), file.path(storagepath, 'data', 'paper', 'raw','sev', 'sev.csv'))
+  download.file(switch(from_repo, 'https://raw.githubusercontent.com/diazrenata/replicate-becs/master/files/data/paper/raw/sev/sev-metadata.html', 'https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-sev.8.297976'), file.path(storagepath, 'data', 'paper', 'raw','sev','sev-metadata.html'))
 
 
 }
