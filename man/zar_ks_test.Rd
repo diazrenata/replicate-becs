@@ -6,7 +6,7 @@
 \usage{
 zar_ks_test(distribution, delta_correction = F,
   focal_column = "species_mean_mass", expected_range = NULL,
-  n_or_i = "n", storagepath = here::here("files"))
+  n_or_i = "n")
 }
 \arguments{
 \item{delta_correction}{T/F use delta correction for small sample sizes}
@@ -16,8 +16,6 @@ zar_ks_test(distribution, delta_correction = F,
 \item{expected_range}{vector of expected min and max values for uniform; defaults to min and max of measurement column}
 
 \item{n_or_i}{"n" or "i"}
-
-\item{storagepath}{where files are}
 
 \item{bsd}{distribution}
 }

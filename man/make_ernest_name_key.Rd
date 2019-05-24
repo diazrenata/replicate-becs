@@ -5,7 +5,8 @@
 \title{Make key to Ernest names - current community names
 Ernest (2005) refers to the communities with the `site` name in the text and Figure 1 To compare the communities above to the communities in the resurrected data set, we can try to match them based on the BSD and BSED plots and species richness.}
 \usage{
-make_ernest_name_key(storagepath = here::here("files"))
+make_ernest_name_key(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data"))
 }
 \arguments{
 \item{storagepath}{where the data is}
