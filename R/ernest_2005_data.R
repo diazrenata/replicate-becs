@@ -16,6 +16,12 @@ setup_files <- function(storagepath = here::here('files')) {
     dir.create(file.path(storagepath, 'data', 'sims'), recursive = TRUE)
   }
   
+  
+  if(!dir.exists(file.path(storagepath, 'data', 'sims', 'bsed-options'))) {
+    dir.create(file.path(storagepath, 'data', 'sims', 'bsed-options'), recursive = TRUE)
+  }
+  
+  
   if(!file.exists(file.path(storagepath, 'data', 'kstable.csv'))) {
     download.list = c('kstable.csv', 
                       'delta_kstable.csv')

@@ -7,12 +7,10 @@ output: html_notebook
 
 ```{r setup, include = F}
 library(replicatebecs)
-download_data = TRUE
+download_data = FALSE
 source_sims = FALSE
 set.seed(352) # GNV area code, for fun
-storagepath = '/Users/renatadiaz/Desktop/toy-becs'
-#storagepath = here::here('files')
-setup_files(storagepath = storagepath)
+storagepath = here::here('files')
 ```
 
 A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper. 
@@ -198,20 +196,20 @@ e_dom_plot
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution. 
 - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
 
-```{r BSED-uniform bootstrapped DOIs, eval = F}
+```{r BSED-uniform size abund bootstrapped DOIs, eval = F}
 
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10000)
+bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_sizeabund_bsed_doi', nbootstraps = 10000)
 
 ```
 
-```{r source or draw BSED uniform bootstraps, include = F}
+```{r source or draw BSED uniform size abund bootstraps, include = F}
 if(source_sims) {
   load(file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata'))
 } else {
   
-bsed_uniform_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_bsed_doi', nbootstraps = 10)
+bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = community_bootstrap,  bootstrap_function = 'bootstrap_unif_sizeabund_bsed_doi', nbootstraps = 10)
 
-save(bsed_uniform_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
+save(bsed_unif_sizeabund_bootstraps, file = (file.path(storagepath, 'data', 'sims', 'bsed_uniform_bootstraps.Rdata')))
 }
 ```
 
@@ -221,9 +219,9 @@ _See issue #4 on github._
 
 ```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10} 
 
-bsed_uniform_bootstrap_plot <- plot_paper_dists(bsed_uniform_bootstraps, dist_type = 'bsed_bootstraps')
+bsed_unif_sizeabund_bootstrap_plot <- plot_paper_dists(bsed_unif_sizeabund_bootstraps, dist_type = 'bsed_bootstraps')
 
-invisible(bsed_uniform_bootstrap_plot)
+invisible(bsed_unif_sizeabund_bootstrap_plot)
 ```
 
 ### Compare BSEDs among communities
