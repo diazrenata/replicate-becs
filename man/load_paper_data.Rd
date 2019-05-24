@@ -4,7 +4,8 @@
 \alias{load_paper_data}
 \title{Load paper community data}
 \usage{
-load_paper_data(storagepath = here::here("files"))
+load_paper_data(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data"))
 }
 \arguments{
 \item{storagepath}{Main working directory}

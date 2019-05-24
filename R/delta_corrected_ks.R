@@ -7,14 +7,13 @@
 #' @param focal_column name of column for the distribution to be evaluated
 #' @param expected_range vector of expected min and max values for uniform; defaults to min and max of measurement column
 #' @param n_or_i "n" or "i"
-#' @param storagepath where files are
 #'
 #' @return list of signif to p = 0.05, d value, dcrit
 #'
 #' @export
 
 zar_ks_test <- function(distribution, delta_correction = F, focal_column = "species_mean_mass",
-                        expected_range = NULL, n_or_i = 'n', storagepath = here::here('files'))
+                        expected_range = NULL, n_or_i = 'n')
 {
 
   x = distribution %>%
@@ -51,7 +50,7 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
 
   if(delta_correction) {
 
-    d_crits = read.csv(file.path(storagepath, 'delta_kstable.csv'), stringsAsFactors = F)
+    d_crits = read.csv(file.path(system.file(package= 'replicatebecs'), 'data', 'delta_kstable.csv'), stringsAsFactors = F)
 
     rel_f = rel_f %>%
       dplyr::mutate(rel_delta_freq = cum_freq / (nvals + 1),
@@ -78,7 +77,7 @@ zar_ks_test <- function(distribution, delta_correction = F, focal_column = "spec
 
   } else {
 
-    d_crits = read.csv(file.path(storagepath, 'kstable.csv'), stringsAsFactors = F)
+    d_crits = read.csv(file.path(system.file(package= 'replicatebecs'), 'data', 'kstable.csv'), stringsAsFactors = F)
 
     rel_f = rel_f %>%
       dplyr::mutate(d = abs(rel_freq - exp_rel_freq),

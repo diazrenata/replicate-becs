@@ -5,7 +5,8 @@
 \alias{process_raw_data}
 \title{Process raw data in to the appropriate format.}
 \usage{
-process_raw_data(storagepath = here::here("files"))
+process_raw_data(storagepath = file.path(system.file(package =
+  "replicatebecs"), "data", "paper"))
 }
 \arguments{
 \item{storagepath}{where to put the data}
