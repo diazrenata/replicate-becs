@@ -3,15 +3,12 @@
 \name{community_bootstrap}
 \alias{community_bootstrap}
 \title{Bootstrap based on a community
-Wrapper for `bootstrap_unif_sizeabund_bsed_doi`, possibly others.}
+Wrapper for `bootstrap_unif_bsed_doi`, possibly others.}
 \usage{
-community_bootstrap(community_dfs, bootstrap_function,
-  bootstrap_function_options = list(currency = "size"), nbootstraps)
+community_bootstrap(community_dfs, bootstrap_function, nbootstraps)
 }
 \arguments{
 \item{bootstrap_function}{Bootstrapping function to use}
-
-\item{bootstrap_function_options}{list of options for bootstrap function}
 
 \item{nbootstraps}{How many samples to draw}
 
@@ -22,5 +19,5 @@ vector of nbootstraps sampled test statistics
 }
 \description{
 Bootstrap based on a community
-Wrapper for `bootstrap_unif_sizeabund_bsed_doi`, possibly others.
+Wrapper for `bootstrap_unif_bsed_doi`, possibly others.
 }

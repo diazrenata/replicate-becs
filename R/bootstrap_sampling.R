@@ -1,5 +1,5 @@
 #' Bootstrap based on a community
-#' Wrapper for `bootstrap_unif_sizeabund_bsed_doi`, possibly others. 
+#' Wrapper for `bootstrap_unif_bsed_doi`, possibly others. 
 #' @param community_df Empirical community to base samples on
 #' @param bootstrap_function Bootstrapping function to use
 #' @param nbootstraps How many samples to draw
@@ -11,12 +11,16 @@ community_bootstrap <- function(community_dfs, bootstrap_function, nbootstraps) 
   
   empirical_value = NULL
   
-  
-  if(as.character(bootstrap_function) == 'bootstrap_unif_sizeabund_bsed_doi') {
+  if(as.character(bootstrap_function) == 'bootstrap_unif_bsed_doi') {
     comm_table = make_community_table(community_dfs)
     community_bsed = make_bsed(comm_table)
     
-    true_uniform_bsed = uniform_size_abund_bsed(community_dfs)
+    true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_dfs$individual_sizes),
+                                                           max(community_dfs$individual_sizes), 
+                                                           by = .1), 
+                                    individual_species_ids = "notimpt") %>%
+      make_community_table() %>%
+      make_bsed()
     
     empirical_value <- doi(community_bsed, true_uniform_bsed)
   }
@@ -35,10 +39,6 @@ community_bootstrap <- function(community_dfs, bootstrap_function, nbootstraps) 
     
     empirical_value <- doi(bsed_a, bsed_b)
   }
-  
-  
-  
-  
   
   bootstrap_function <- match.fun(bootstrap_function)
   
@@ -67,44 +67,6 @@ get_bootstrap_p <- function(bootstrap_results) {
   
 }
 
-
-#' Uniform size-abundance BSED
-#'
-#' Based on a community_df
-#'
-#' @param community_df table of sizes and ids
-#'
-#' @return bsed drawn from a uniform size abundance distribution (one individual of every size)
-#' @export
-#'
-uniform_size_abund_bsed <- function(community_df) {
-  true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_df$individual_sizes),
-                                                         max(community_df$individual_sizes), 
-                                                         by = .1), 
-                                  individual_species_ids = "notimpt") %>%
-    make_community_table() %>%
-    make_bsed()
-  return(true_uniform_bsed)
-}
-
-#' Uniform size-energy BSED
-#'
-#' Based on a community_df
-#'
-#' @param community_df table of sizes and ids
-#'
-#' @return bsed drawn from a uniform body size energy distribution
-#' @export
-#'
-uniform_size_energy_bsed <- function(community_df) {
-  true_uniform_bsed <- community_df %>%
-    make_community_table() %>%
-    make_bsed() %>%
-    dplyr::mutate(total_energy = sum(total_energy) / nrow(true_uniform_bsed),
-                  total_energy_proportional = total_energy / sum(total_energy))
-  return(true_uniform_bsed)
-}
-
 #' @title DOI of sampled community masses from uniform compared to uniform
 #'
 #' @description Randomly draw N masses, where N is the total number of individuals in a community, from a uniform distribution with min and max corresponding the min and max of the entire community. 
@@ -116,7 +78,7 @@ uniform_size_energy_bsed <- function(community_df) {
 #'
 #' @export
 
-bootstrap_unif_sizeabund_bsed_doi <- function(community_df){
+bootstrap_unif_bsed_doi <- function(community_df){
   
   sampled_community <- community_df
   
@@ -128,35 +90,13 @@ bootstrap_unif_sizeabund_bsed_doi <- function(community_df){
   
   sampled_bsed <- make_bsed(sampled_community_table)
   
-  true_uniform_bsed = uniform_size_abund_bsed(community_df)
   
-  sampled_doi <- doi(sampled_bsed, true_uniform_bsed)
-  return(sampled_doi)
-}
-
-
-#' @title DOI of sampled community masses from uniform compared to uniform
-#'
-#' @description Randomly draw N masses, where N is the total number of individuals in a community, from a uniform distribution with min and max corresponding the min and max of the entire community. 
-#' Calculate the DOI of this BSED compared to uniform.
-#' 
-#' @param community_df Community to base samples on (nind, min and max mass)
-#'
-#' @return doi
-#'
-#' @export
-
-bootstrap_unif_sizeenergy_bsed_doi <- function(community_df){
-  
-  sampled_bsed <- community_df %>%
-    make_community_table %>%
-    make_bsed %>%
-    dplyr::mutate(total_energy = runif(n = nrow(sampled_bsed), 
-                                       min = min(total_energy), 
-                                       max = max(total_energy)),
-                  total_energy_proportional = total_energy / sum(total_energy))
-  
-  true_uniform_bsed = uniform_size_energy_bsed(community_df)
+  true_uniform_bsed <- data.frame(individual_sizes = seq(min(community_df$individual_sizes),
+                                                         max(community_df$individual_sizes), 
+                                                         by = .1), 
+                                  individual_species_ids = "notimpt") %>%
+    make_community_table() %>%
+    make_bsed()
   
   sampled_doi <- doi(sampled_bsed, true_uniform_bsed)
   return(sampled_doi)
