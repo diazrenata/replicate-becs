@@ -1,9 +1,0 @@
-﻿site_a,sev grass,sev shrub,sev shrub 2,sev grass shrub,sev juniper,portal,niwot,andrews
-sev pinyon juniper,0.948,0.869,0.996,0.996,0.993,0.993,0.91,0.822
-sev grass,,0.964,0.941,0.792,0.98,0.684,0.817,0.996
-sev shrub,,,0.967,0.538,0.903,0.642,0.872,0.928
-sev shrub 2,,,,0.978,1,0.924,0.888,0.973
-sev grass shrub,,,,,1,1,0.727,0.956
-sev juniper,,,,,,0.983,0.937,0.951
-portal,,,,,,,0.772,0.951
-niwot,,,,,,,,0.566

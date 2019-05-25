@@ -13,3 +13,12 @@ revisitbecs.Rproj
 ^workflow\.pptx$
 ^figure-markdown_github$
 ^R/new_bootstrap\.R$
+^working-data/paper/raw/andrews-lter/andrews-metadata\.pdf$
+^working-data/paper/raw/andrews-lter/andrews-specieslist\.csv$
+^working-data/paper/raw/andrews-lter/andrews\.csv$
+^working-data/paper/raw/niwot/niwot-metadata\.txt$
+^working-data/paper/raw/niwot/niwot-raw\.csv$
+^working-data/paper/raw/sev/sev-metadata\.html$
+^working-data/paper/raw/sev/sev\.csv$
+^working-data$
+^analysis$
