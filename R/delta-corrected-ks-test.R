@@ -151,3 +151,14 @@ find_ps = function(rel_f, d_crits, deltaval = NULL, nvals = NULL) {
   
   return(list(p_min = p_min, p_max = p_max, d = d))
 }
+
+#' @title Extract values from Zar ks test results
+#' @description Helper function.
+#' @param this_test a test result
+#' @param val_name name of the value to pull
+#' @return requested value
+#' @export
+extract_values_zarks <- function(this_test, val_name) {
+  this_val = this_test[[val_name]]
+  return(this_val)
+}
