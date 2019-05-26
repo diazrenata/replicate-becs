@@ -48,3 +48,22 @@ test_that("delta corrected KS function works", {
   expect_true(uniform_moths_ks$p_max == 1)
   
 })
+
+test_that("Two-sample KS test works", {
+  communities = load_paper_data()
+  community_pairs = setup_community_combinations(communities)
+  
+  bsd_comparison = ks_bsd(raw_communities = community_pairs[[1]], ln_mass_vals = T)
+  
+  expect_true(is.list(bsd_comparison))
+  expect_false(anyNA(bsd_comparison))
+  
+  pval = extract_values_twosampleks(bsd_comparison, "p.value")
+  first_community = extract_values_twosampleks(bsd_comparison, "community_a")
+  second_community = extract_values_twosampleks(bsd_comparison, "community_b")
+  
+  expect_true(signif(pval, digits = 2) == 0.17)
+  expect_true(first_community == "andrews")
+  expect_true(second_community == "niwot")
+  
+  })

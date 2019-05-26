@@ -10,11 +10,11 @@ ks_bsd <- function(raw_communities, ln_mass_vals = FALSE){
   
   
   bsd_a = community_a %>%
-    make_community_table() %>%
+    add_energy_sizeclass() %>%
     make_bsd()
   
   bsd_b = community_b %>%
-    make_community_table() %>%
+    add_energy_sizeclass() %>%
     make_bsd()
   
   if(ln_mass_vals) {
@@ -24,8 +24,8 @@ ks_bsd <- function(raw_communities, ln_mass_vals = FALSE){
                                bsd_b$species_mean_mass)
   }
   
-  community_names = list(community_a = community_dfs$community_names[1],
-                         community_b = community_dfs$community_names[2])
+  community_names = list(community_a = raw_communities$community_names[1],
+                         community_b = raw_communities$community_names[2])
   
   outcome = list(ks_result = ks_result, community_names = community_names)
   
