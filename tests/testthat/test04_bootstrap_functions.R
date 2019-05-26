@@ -71,4 +71,10 @@ test_that("bootstrap wrapper works", {
   expect_true(all(bootstrap_dois$sampled_dois >= 0))
   expect_true(all(bootstrap_dois$sampled_dois <= 2))
   
-})
+  bootstrap_pval = calculate_bootstrap_p(bootstrap_dois)
+  expect_false(is.na(bootstrap_pval))
+  expect_true(is.numeric(bootstrap_pval))
+  expect_true(bootstrap_pval >= 0)
+  expect_true(bootstrap_pval <= 1)
+
+  })

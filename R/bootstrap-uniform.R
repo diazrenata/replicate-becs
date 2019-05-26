@@ -74,3 +74,16 @@ calculate_bootstrap_dois <- function(bootstrap_results) {
                      sampled_dois = sampled_dois)
   return(doi_results)
 }
+
+#' Get p value of empirical value v. bootstrapped results
+#' @param bootstrap_dois output of calculate_bootstrap_dois
+#' @return p value of empirical value vs. sim distribution
+#' @export
+#' @importFrom stats ecdf
+calculate_bootstrap_p <- function(bootstrap_dois) {
+  
+  sim_ecdf = ecdf(bootstrap_dois$sampled_dois)
+  p = 1- sim_ecdf(bootstrap_dois$focal_doi)
+  
+  return(p)
+}
