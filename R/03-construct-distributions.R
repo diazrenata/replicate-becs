@@ -41,12 +41,39 @@ make_bsd <- function(raw_community, decimals = NULL, ln_units = 0.2)
     dplyr::mutate(ln_mass = log(species_mean_mass),
                   size_class = ln_units * (floor(ln_mass/ln_units)),
                   size_class_g = exp(size_class), stdev = sd(ln_mass))
-
+  
   if(!is.null(decimals)) {
     bsd <- bsd %>%
       dplyr::mutate(size_class_g = round(size_class_g, digits = decimals))
   }
   
-  
   return(bsd)
+}
+
+#' @title Construct BSED from df with size classes
+#'
+#' @description Calculate total energy of individuals per size class 
+#'
+#' @param community_energy df of species ids, individual sizes, energy, and size class
+#' @param decimals default NULL; decimals to round size classes
+#'
+#' @return bsed
+#'
+#' @export
+
+make_bsed <- function(community_energy, decimals = NULL)
+{
+  
+  bsed <- community_energy %>%
+    dplyr::group_by(size_class, size_class_g) %>%
+    dplyr::summarize(total_energy = sum(individual_energy)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(total_energy_proportional = total_energy / sum(total_energy))
+  
+  if(!is.null(decimals)) {
+    bsed <- bsed %>%
+      dplyr::mutate(size_class_g = round(size_class_g, digits = decimals))
+  }
+  
+  return(bsed)
 }

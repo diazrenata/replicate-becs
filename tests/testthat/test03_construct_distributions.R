@@ -22,3 +22,17 @@ test_that("make_bsd works", {
   expect_false(anyNA(test_bsd))
   
 })
+
+
+test_that("make_bsed works", {
+  
+  test_community_energy = add_energy_sizeclass(communities[[1]])
+  
+  test_bsed = make_bsed(test_community_energy)
+  
+  expect_true(nrow(test_bsed) == 23) 
+  expect_true(ncol(test_bsed) == 4)
+  expect_false(anyNA(test_bsed))
+  expect_true(sum(test_bsed$total_energy_proportional) == 1)
+  
+})
