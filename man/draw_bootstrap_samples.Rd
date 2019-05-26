@@ -8,7 +8,7 @@ draw_bootstrap_samples(raw_community, assumption = "uniform_size_abund",
   nbootstraps = 25)
 }
 \arguments{
-\item{raw_community}{to base samples one}
+\item{raw_community}{community or communities to base samples on}
 
 \item{assumption}{sampling condition.}
 

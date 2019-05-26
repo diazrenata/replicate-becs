@@ -54,7 +54,7 @@ test_that("uniform size-abundance works", {
   
 })
 
-test_that("bootstrap wrapper works", {
+test_that("bootstrap wrapper works for uniform", {
   communities = load_paper_data()
   nbootstraps = 10
   bootstraps = draw_bootstrap_samples(raw_community = communities[[1]], nbootstraps = nbootstraps)
@@ -63,7 +63,7 @@ test_that("bootstrap wrapper works", {
   expect_true(length(bootstraps) == 3)
   expect_true(length(bootstraps$sampled_bseds) == nbootstraps)
   
-  bootstrap_dois = calculate_bootstrap_dois(bootstraps)
+  bootstrap_dois = calculate_bootstrap_uniform_dois(bootstraps)
   expect_true(is.list(bootstrap_dois))
   expect_true(bootstrap_dois$focal_doi >= 0)
   expect_true(bootstrap_dois$focal_doi <= 2)
@@ -78,3 +78,18 @@ test_that("bootstrap wrapper works", {
   expect_true(bootstrap_pval <= 1)
 
   })
+
+test_that("bootstrap wrapper works for cross communities", {
+  communities = load_paper_data()
+  community_pairs = setup_community_combinations(communities)
+  nbootstraps = 25
+  
+  cross_bootstraps = draw_bootstrap_samples(raw_community = community_pairs[[1]],
+                                            assumption = "cross_communities",
+                                            nbootstraps = nbootstraps)
+  
+  expect_false(anyNA(cross_bootstraps))
+  expect_true(length(cross_bootstraps) == nbootstraps)
+  
+  #cross_bootstrap_dois = calculate_bootstrap_dois(cross_bootstraps)
+})

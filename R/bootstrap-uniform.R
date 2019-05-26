@@ -36,38 +36,75 @@ sample_uniform_size_abund_bsed <- function(raw_community) {
   return(sampled_community)  
 }
 
+#' @title Bootstrap compare two communities
+#' @description Randomly re-draw communities with masses and nindividuals of original communities.
+#' @param community_pair list of 2 communities to compare
+#' @return list of 2 bseds
+#' @export
+sample_cross_communities_bsed <- function(community_pair) {
+  community_a = community_pair$community_a 
+  community_b = community_pair$community_b
+  
+  nind_a = as.integer(nrow(community_a))
+  nind_b = as.integer(nrow(community_b))
+  
+  pool = c(community_a$individual_sizes, community_b$individual_sizes)
+  
+  nind_tot = as.integer(length(pool))
+  random_indices_a = sample(1:nind_tot, size = nind_a, replace = T)
+  random_indices_b = sample(1:nind_tot, size = nind_b, replace = T)
+  
+  bootstrap_a_bsed = community_a %>%
+    dplyr::mutate(individual_sizes = pool[random_indices_a]) %>%
+    add_energy_sizeclass() %>%
+    make_bsed()
+  bootstrap_b_bsed =  community_b %>%
+    dplyr::mutate(individual_sizes = pool[random_indices_b]) %>%
+    add_energy_sizeclass() %>%
+    make_bsed()
+  
+  bootstrap_results = list(bootstrap_a = bootstrap_a_bsed,
+                           bootstrap_b = bootstrap_b_bsed)
+  
+  return(bootstrap_results)
+}
+
 #' Draw bootstrap samples
 #' @description Wrapper for bootstrap sampling functions
-#' @param raw_community to base samples one
+#' @param raw_community community or communities to base samples on
 #' @param assumption sampling condition. 
 #' @param nbootstraps number of samples to draw
 #' @return list of focal bsed, sampled bseds, calculated bseds
 #' @export
 draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abund", nbootstraps = 25) {
-  calculate_function = match.fun(paste0("calculate_", assumption, "_bsed"))
   sampler_function = match.fun(paste0("sample_", assumption, "_bsed"))
   
-  focal_bsed = raw_community %>%
-    add_energy_sizeclass() %>%
-    make_bsed()
-  
-  sampled_bseds = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
-  
-  calculated_bsed = calculate_function(raw_community)
-  
-  bootstrap_results = list(focal_bsed = focal_bsed,
-                           sampled_bseds = sampled_bseds,
-                           calculated_bsed = calculated_bsed)
+  if(assumption == "uniform_size_abund") {
+    calculate_function = match.fun(paste0("calculate_", assumption, "_bsed"))
+    
+    focal_bsed = raw_community %>%
+      add_energy_sizeclass() %>%
+      make_bsed()
+    
+    sampled_bseds = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
+    
+    calculated_bsed = calculate_function(raw_community)
+    
+    bootstrap_results = list(focal_bsed = focal_bsed,
+                             sampled_bseds = sampled_bseds,
+                             calculated_bsed = calculated_bsed)
+  } else if (assumption == "cross_communities") {
+    bootstrap_results = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
+  }
   
   return(bootstrap_results)
 }
 
 #' Calculate DOIs for bootstrapped BSEDs
-#'
 #' @param bootstrap_results output of draw_bootstrap_samples
 #' @return list of focal DOI and sampled DOIs
 #' @export
-calculate_bootstrap_dois <- function(bootstrap_results) {
+calculate_bootstrap_uniform_dois <- function(bootstrap_results) {
   focal_doi = doi(bootstrap_results$focal_bsed, bootstrap_results$calculated_bsed)
   sampled_dois = vapply(bootstrap_results$sampled_bseds, FUN = doi, bsed_b = bootstrap_results$calculated_bsed, FUN.VALUE = 0.5)
   doi_results = list(focal_doi = focal_doi,
