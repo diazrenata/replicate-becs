@@ -77,3 +77,92 @@ make_bsed <- function(community_energy, decimals = NULL)
   
   return(bsed)
 }
+
+
+#' @title Find energy modes from BSED
+#'
+#' @description Find contiguous size classes with %energy > 5% of total energy. Helper for energetic dominance. 
+#'
+#' @param bsed A BSED
+#' @param mode_cutoff defaults to 0.05, can be another number or "prop" = proportional to # of size classes in community
+#' @return size classes with modes
+find_modes <- function(bsed, mode_cutoff = 0.05)
+{
+  
+  if(mode_cutoff ==  "prop") {
+    mode_cutoff = 1/(length(unique(bsed$size_class)))
+  }
+  
+  these_modes <- bsed %>%
+    dplyr::filter(total_energy_proportional > mode_cutoff) %>%
+    dplyr::mutate(mode_id = NA)
+  
+  this_mode = 1
+  
+  for(i in 1:nrow(these_modes)){
+    if(i == 1) {
+      these_modes$mode_id[i] = 1
+    } else {
+      if(these_modes$size_class[i-1] < these_modes$size_class[i] - 0.3) {
+        this_mode = this_mode + 1
+      }
+      these_modes$mode_id[i] = this_mode
+    } 
+    
+  }
+  
+  these_modes <- these_modes %>%
+    dplyr::select(size_class, mode_id)
+  
+  return(these_modes)
+}
+
+#' @title Calculate energetic dominance
+#'
+#' @description Calculate energetic dominance
+#' 
+#' @param community_energy community table
+#' @param mode_cutoff defaults to 0.05, or "prop" = proportional to # of size classes in community
+#'
+#' @return size classes with modes and energetic dominance 
+#'
+#' @export
+
+energetic_dominance <- function(community_energy, mode_cutoff = 0.05)
+{
+  
+  bsed = make_bsed(community_energy)
+  
+  modes_list = find_modes(bsed, mode_cutoff)
+  
+  modes_df <- community_energy %>%
+    dplyr::left_join(modes_list, by = "size_class") %>% 
+    dplyr::filter(!is.na(mode_id)) %>%
+    dplyr::group_by(individual_species_ids, mode_id) %>%
+    dplyr::summarize(species_energy = sum(individual_energy)) 
+  
+  
+  mode_totals <- modes_df %>%
+    dplyr::group_by(mode_id) %>%
+    dplyr::summarize(mode_energy = sum(species_energy)) %>%
+    dplyr::ungroup()
+  
+  modes_df <- modes_df %>%
+    dplyr::left_join(mode_totals, by = "mode_id") %>%
+    dplyr::mutate(species_energy_prop = species_energy / mode_energy) %>%
+    dplyr::group_by(mode_id) %>%
+    dplyr::filter(species_energy_prop == max(species_energy_prop)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(e_dominance = species_energy_prop) %>%
+    dplyr::select(mode_id, e_dominance)
+  
+  modes_list <- modes_list %>%
+    dplyr::left_join(modes_df, by = "mode_id") %>% 
+    dplyr::group_by(mode_id) %>%
+    dplyr::mutate(size_class_min = min(size_class), size_class_max = max(size_class)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-size_class) %>%
+    dplyr::distinct() 
+  
+  return(modes_list)
+}

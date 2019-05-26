@@ -36,3 +36,14 @@ test_that("make_bsed works", {
   expect_true(sum(test_bsed$total_energy_proportional) == 1)
   
 })
+
+test_that("energetic dominance works", {
+  test_community_energy = add_energy_sizeclass(communities[[1]])
+  
+  test_edom = energetic_dominance(test_community_energy)
+  
+  expect_true(ncol(test_edom) == 4)
+  expect_true(nrow(test_edom) == 3)
+  expect_false(anyNA(test_edom))
+  
+})
