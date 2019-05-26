@@ -323,3 +323,47 @@ process_portal_data <- function(storage_path = here::here("working-data", "paper
   
   return(TRUE)
 }
+
+#' Load paper community data
+#'
+#' @param storage_path Main working directory
+#'
+#' @return list of data frames, one for each community.
+#' @export
+#'
+load_paper_data <- function(storage_path = here::here("working-data", "paper", "processed")){
+  data_files <- list.files(path = storage_path, full.names = T)
+  
+  community_names <- vapply(data_files, FUN = get_community_name, FUN.VALUE = "name", USE.NAMES =F)
+  
+  communities <- list()
+  
+  for(i in 1:length(data_files)) {
+    communities[[i]] <- read.csv(data_files[[i]], stringsAsFactors = F)
+    colnames(communities[[i]]) <- c("individual_species_ids", "individual_sizes")
+    
+  }
+  
+  names(communities) <- community_names
+  
+  return(communities)
+}
+
+
+#' Get community name from data path
+#'
+#' @param data_file data path
+#'
+#' @return community name
+#'
+get_community_name <- function(data_file) {
+  
+  this_name <-strsplit(data_file, split = "processed/") %>%
+    unlist() %>%
+    dplyr::nth(2) %>%
+    strsplit(split = "-processed.csv") %>%
+    unlist()
+  
+  return(this_name)
+  
+}

@@ -15,3 +15,9 @@ test_that("ProcessData functions correctly", {
   expect_true(dir.exists(here::here("working-data", "paper", "processed")))
   expect_true(length(list.files(here::here("working-data", "paper", "processed"))) == 9)
 })
+
+test_that("loading data functions correctly", {
+  communities <- load_paper_data()
+  expect_true(length(communities) == 9)
+  expect_true(names(communities)[[1]] == "andrews")
+})
