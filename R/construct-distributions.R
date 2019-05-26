@@ -166,3 +166,34 @@ energetic_dominance <- function(community_energy, mode_cutoff = 0.05)
   
   return(modes_list)
 }
+
+
+#' @title Set up pairwise community combinations
+#' @description Set up a list of lists of all possible 2-way comparisons of communities in a list of communities.
+#' @param communities list of communities to compare to each other
+#' @return list of all possible combinations of two communities.
+#' @export
+setup_community_combinations = function(communities) {
+  ncommunities = length(communities)
+  
+community_combination_indices = utils::combn(x = c(1:ncommunities), m = 2, simplify = TRUE) %>%
+  t() %>%
+  as.data.frame() %>%
+  dplyr::rename(community_a = V1, community_b = V2)
+
+community_combinations = apply(community_combination_indices, MARGIN = 1, FUN = combine_communities, communities = communities)
+
+return(community_combinations)
+}
+
+
+
+#' @title Combine communities
+#' @description Helper function for setup_community_combinations
+#' @param indices indices of communities to pair
+#' @param communities list of communities
+#' @return list of the two indices to pair
+combine_communities = function(indices, communities) {
+  community_combination = list(community_a = communities[[indices[1]]], community_b = communities[[indices[2]]], community_names = c(names(communities)[[indices[1]]], names(communities)[[indices[2]]]))
+  return(community_combination)
+}

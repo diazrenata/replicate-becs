@@ -47,3 +47,16 @@ test_that("energetic dominance works", {
   expect_false(anyNA(test_edom))
   
 })
+
+test_that("combining communities works", {
+  community_pairs = setup_community_combinations(communities)
+  
+  expect_true(is.list(community_pairs))
+  expect_true(length(community_pairs) == 36)
+  expect_false(anyNA(community_pairs))
+  
+  expect_true(nrow(community_pairs[[1]]$community_a) == 750)
+  expect_true(nrow(community_pairs[[1]]$community_b) == 2888)
+  expect_true(length(community_pairs[[1]]$community_names) == 2)
+  
+})
