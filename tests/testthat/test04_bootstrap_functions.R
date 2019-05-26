@@ -63,4 +63,12 @@ test_that("bootstrap wrapper works", {
   expect_true(length(bootstraps) == 3)
   expect_true(length(bootstraps$sampled_bseds) == nbootstraps)
   
+  bootstrap_dois = calculate_bootstrap_dois(bootstraps)
+  expect_true(is.list(bootstrap_dois))
+  expect_true(bootstrap_dois$focal_doi >= 0)
+  expect_true(bootstrap_dois$focal_doi <= 2)
+  expect_false(anyNA(bootstrap_dois$sampled_dois))
+  expect_true(all(bootstrap_dois$sampled_dois >= 0))
+  expect_true(all(bootstrap_dois$sampled_dois <= 2))
+  
 })

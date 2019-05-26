@@ -20,6 +20,7 @@ calculate_uniform_size_abund_bsed <- function(raw_community) {
 #' @param raw_community Community to base new community on. 
 #' @return bsed of sampled community
 #' @export
+#' @importFrom stats runif
 sample_uniform_size_abund_bsed <- function(raw_community) {
   min_size = min(raw_community$individual_sizes)
   max_size = max(raw_community$individual_sizes)
@@ -59,4 +60,17 @@ draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abu
                            calculated_bsed = calculated_bsed)
   
   return(bootstrap_results)
+}
+
+#' Calculate DOIs for bootstrapped BSEDs
+#'
+#' @param bootstrap_results output of draw_bootstrap_samples
+#' @return list of focal DOI and sampled DOIs
+#' @export
+calculate_bootstrap_dois <- function(bootstrap_results) {
+  focal_doi = doi(bootstrap_results$focal_bsed, bootstrap_results$calculated_bsed)
+  sampled_dois = vapply(bootstrap_results$sampled_bseds, FUN = doi, bsed_b = bootstrap_results$calculated_bsed, FUN.VALUE = 0.5)
+  doi_results = list(focal_doi = focal_doi,
+                     sampled_dois = sampled_dois)
+  return(doi_results)
 }
