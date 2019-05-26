@@ -36,10 +36,21 @@ test_that("uniform size-abundance works", {
   
   communities = load_paper_data()
   
-  test_uniform_bsed = uniform_size_abund_bsed(communities[[1]])
+  calculated_uniform_bsed = calculate_uniform_size_abund_bsed(communities[[1]])
   
-  expect_true(ncol(test_uniform_bsed) == 4)
-  expect_true(min(test_uniform_bsed$size_class) > 0.2)
-  expect_false(anyNA(test_uniform_bsed))
+  expect_true(ncol(calculated_uniform_bsed) == 4)
+  expect_true(min(calculated_uniform_bsed$size_class) > 0.2)
+  expect_false(anyNA(calculated_uniform_bsed))
+  
+  sampled_uniform_bsed = sample_uniform_size_abund_bsed(communities[[1]])
+  expect_true(ncol(sampled_uniform_bsed) == 4)
+  expect_false(anyNA(sampled_uniform_bsed))
+  
+  uniform_bsed_doi = doi(calculated_uniform_bsed, sampled_uniform_bsed)
+  
+  expect_true(mode(uniform_bsed_doi) == "numeric")
+  expect_true(uniform_bsed_doi <= 2)
+  expect_true(uniform_bsed_doi >= 0)
+  
   
 })
