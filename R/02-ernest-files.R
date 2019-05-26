@@ -26,3 +26,44 @@ load_tidy_appendix_b <- function(){
   
   return(appendix_b)
 }
+#' 
+#' #' Compare summary stats from Ernest and current data
+#' #' @param storage_path where the user accessible data is
+#' #' @return data frame of Ernest summary stats and current summary stats
+#' #' @export
+#' #'
+#' compare_summary_stats = function(storage_path = here::here("working-data", "paper", "processed")) {
+#'   communities <- load_paper_data(storage_path = storage_path)
+#'   
+#'   bsds <- lapply(communities, FUN = make_bsd)
+#'   
+#'   
+#'   communities_summary_stats = data.frame(community_name = names(bsds),
+#'                                          new_richness = NA,
+#'                                          new_min_mass = NA,
+#'                                          new_max_mass = NA)
+#'   
+#'   for(i in 1:nrow(communities_summary_stats)) {
+#'     communities_summary_stats$new_richness[i] = nrow(bsds[[i]])
+#'     communities_summary_stats$new_min_mass[i] = min(bsds[[i]]$species_mean_mass)
+#'     communities_summary_stats$new_max_mass[i] = max(bsds[[i]]$species_mean_mass)
+#'   }
+#'   
+#'   communities_summary_stats$new_min_mass[4:9] = min(communities_summary_stats$new_min_mass[4:9])
+#'   communities_summary_stats$new_max_mass[4:9] = max(communities_summary_stats$new_max_mass[4:9])
+#'   
+#'   
+#'   ernest_summary_stats = read.csv(file.path(storagepath, 'ernest_summary_stats.csv'), stringsAsFactors = F)
+#'   
+#'   ernest_key = read.csv(file.path(storagepath, 'ernest_key.csv'), stringsAsFactors = F)
+#'   
+#'   joined_summary_stats = dplyr::left_join(ernest_summary_stats, ernest_key, by = 'site') %>%
+#'     dplyr::left_join(communities_summary_stats, by = 'community_name') %>%
+#'     dplyr::rename(ernest_name = site,
+#'                   new_name = community_name) %>%
+#'     dplyr::select(ernest_name, new_name, ernest_richness, new_richness,
+#'                   ernest_min_mass, new_min_mass,
+#'                   ernest_max_mass, new_max_mass)
+#'   
+#'   return(joined_summary_stats)
+#' }
