@@ -31,4 +31,15 @@ test_that("doi works", {
   expect_true(same_doi < diff_doi)
   
   })
+
+test_that("uniform size-abundance works", {
   
+  communities = load_paper_data()
+  
+  test_uniform_bsed = uniform_size_abund_bsed(communities[[1]])
+  
+  expect_true(ncol(test_uniform_bsed) == 4)
+  expect_true(min(test_uniform_bsed$size_class) > 0.2)
+  expect_false(anyNA(test_uniform_bsed))
+  
+})
