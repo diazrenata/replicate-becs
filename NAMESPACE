@@ -3,6 +3,7 @@
 export("%>%")
 export(add_energy_sizeclass)
 export(compare_summary_stats)
+export(doi)
 export(download_raw_paper_data)
 export(energetic_dominance)
 export(load_paper_data)
