@@ -52,5 +52,15 @@ test_that("uniform size-abundance works", {
   expect_true(uniform_bsed_doi <= 2)
   expect_true(uniform_bsed_doi >= 0)
   
+})
+
+test_that("bootstrap wrapper works", {
+  communities = load_paper_data()
+  nbootstraps = 10
+  bootstraps = draw_bootstrap_samples(raw_community = communities[[1]], nbootstraps = nbootstraps)
+  
+  expect_true(is.list(bootstraps))
+  expect_true(length(bootstraps) == 3)
+  expect_true(length(bootstraps$sampled_bseds) == nbootstraps)
   
 })

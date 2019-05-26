@@ -34,3 +34,29 @@ sample_uniform_size_abund_bsed <- function(raw_community) {
   
   return(sampled_community)  
 }
+
+#' Draw bootstrap samples
+#' @description Wrapper for bootstrap sampling functions
+#' @param raw_community to base samples one
+#' @param assumption sampling condition. 
+#' @param nbootstraps number of samples to draw
+#' @return list of focal bsed, sampled bseds, calculated bseds
+#' @export
+draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abund", nbootstraps = 25) {
+  calculate_function = match.fun(paste0("calculate_", assumption, "_bsed"))
+  sampler_function = match.fun(paste0("sample_", assumption, "_bsed"))
+  
+  focal_bsed = raw_community %>%
+    add_energy_sizeclass() %>%
+    make_bsed()
+  
+  sampled_bseds = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
+  
+  calculated_bsed = calculate_function(raw_community)
+  
+  bootstrap_results = list(focal_bsed = focal_bsed,
+                           sampled_bseds = sampled_bseds,
+                           calculated_bsed = calculated_bsed)
+  
+  return(bootstrap_results)
+}

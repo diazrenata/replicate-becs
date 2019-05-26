@@ -20,4 +20,5 @@ test_that("loading data functions correctly", {
   communities <- load_paper_data()
   expect_true(length(communities) == 9)
   expect_true(names(communities)[[1]] == "andrews")
+  expect_false(anyNA(communities))
 })
