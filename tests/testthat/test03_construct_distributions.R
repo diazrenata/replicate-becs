@@ -17,8 +17,8 @@ test_that("make_bsd works", {
   
   test_bsd = make_bsd(communities[[1]])
   
-  expect_true(nrow(test_community_energy) == 9) 
-  expect_true(ncol(test_community_energy) == 6)
+  expect_true(nrow(test_bsd) == 9) 
+  expect_true(ncol(test_bsd) == 6)
   expect_false(anyNA(test_bsd))
   
 })
