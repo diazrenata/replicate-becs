@@ -15,3 +15,11 @@ test_that("KS value comparison works", {
 
 
 })
+
+test_that("Loading appendix A works", {
+  appendixA <- load_ernest_appendixA()
+  
+  expect_true(is.data.frame(appendixA))
+  expect_true(nrow(appendixA) == 9)
+  
+})
