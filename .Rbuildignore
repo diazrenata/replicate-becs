@@ -21,3 +21,7 @@ revisitbecs.Rproj
 ^working-data/paper/raw/sev/sev-metadata\.html$
 ^working-data/paper/raw/sev/sev\.csv$
 ^working-data$
+
+^report/ernest_2005_replication\.nb\.html$
+^report/ernest_2005_replication\.Rmd$
+^report/ernest2005_fig1\.png$
