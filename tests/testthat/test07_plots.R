@@ -76,3 +76,4 @@ test_that("plotting multiple bootstrapped cross-community BSEDs works", {
   
   expect_silent(plot_bootstrap_pvals(multi_cross_bootstrap_dois))
 })
+
