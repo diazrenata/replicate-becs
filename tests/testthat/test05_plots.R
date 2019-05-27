@@ -43,3 +43,22 @@ test_that("plotting energetic dominance works", {
   expect_silent(plot_e_dom(e_doms))
   
 })
+
+test_that("plotting bootstrapped uniform BSEDs works", {
+  nbootstraps = 10
+  bootstraps = draw_bootstrap_samples(raw_community = communities[[1]], nbootstraps = nbootstraps)
+  bootstrap_dois = calculate_bootstrap_uniform_dois(bootstraps)
+  expect_silent(plot_bsed_bootstrap_results(bootstrap_dois))
+})
+
+test_that("plotting bootstrapped cross-community BSEDs works", {
+  community_pairs = setup_community_combinations(communities)
+  nbootstraps = 10
+  
+  cross_bootstraps = draw_bootstrap_samples(raw_community = community_pairs[[1]],
+                                            assumption = "cross_communities",
+                                            nbootstraps = nbootstraps)
+  
+  cross_bootstrap_dois = calculate_crosscomm_dois(cross_bootstraps)
+  expect_silent(plot_bsed_bootstrap_results(cross_bootstrap_dois))
+})

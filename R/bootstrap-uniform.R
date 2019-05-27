@@ -104,7 +104,8 @@ draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abu
     empirical_bseds = list(bsed_a = bsed_a, bsed_b = bsed_b)
     sampled_bseds = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
     bootstrap_results = list(empirical_bseds = empirical_bseds,
-                             sampled_bseds = sampled_bseds)
+                             sampled_bseds = sampled_bseds,
+                             community_names = raw_community$community_names)
   }
   
   return(bootstrap_results)
@@ -144,7 +145,8 @@ calculate_crosscomm_dois <- function(bootstrap_results) {
   sampled_dois = vapply(bootstrap_results$sampled_bseds, FUN = calculate_paired_dois, FUN.VALUE = 0.5) 
   
   doi_results = list(empirical_doi = empirical_doi,
-                     sampled_dois = sampled_dois)
+                     sampled_dois = sampled_dois,
+                     community_names = bootstrap_results$community_names)
   return(doi_results)
 }
 

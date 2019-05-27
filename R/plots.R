@@ -81,7 +81,7 @@ plot_paper_dists <- function(dists, dist_type){
 
 #' @title Plot energetic dominance
 #' @description Generate histogram of energetic dominance values
-#' @param energetic_dominances either a single data table of $E_D$ or a list of data tables. If a list, will be combined into a single data table.  
+#' @param e_doms either a single data table of $E_D$ or a list of data tables. If a list, will be combined into a single data table.  
 #' @return histogram of $E_D$ values
 #' @export
 plot_e_dom <- function(e_doms) {
@@ -98,5 +98,36 @@ plot_e_dom <- function(e_doms) {
     ggplot2::theme_bw()
   
   return(e_dom_plot)
+  
+}
+
+#' Plot a single BSED bootstrapping result
+#' @param bootstrap_dois list of empirical DOI and sampled DOIs
+#' @param bsed_name community name, optional
+#' @return histogram of bootstrapped DOI values, line for empirical value. 
+#' @export
+plot_bsed_bootstrap_results <- function(bootstrap_dois, bsed_name = NULL){
+  
+  if(is.null(bsed_name)) {
+    if(length(bootstrap_dois) == 3) {
+      bsed_title = paste0('Bootstrapped DOI: ', bootstrap_dois$community_names[1], ' compared to ', bootstrap_dois$community_names[2])
+    } else { 
+      bsed_title = 'BSED bootstrap results'
+    }
+  } else {
+    bsed_title = paste0(bsed_name, " DOI: Bootstrap v. empirical")
+  }
+  
+  sim_values = as.data.frame(bootstrap_dois$sampled_dois)
+  colnames(sim_values) = 'value'
+  empirical_value = bootstrap_dois$empirical_doi
+  
+  sim_plot <- ggplot2::ggplot(data = sim_values, ggplot2::aes(value, xmin = 0, xmax = 2)) +
+    ggplot2::geom_histogram(data = sim_values, stat = 'bin', bins = 100) +
+    ggplot2::geom_vline(data = sim_values, xintercept = empirical_value, color = 'red') + 
+    ggplot2::labs(x = "DOI", y = "Sim frequency", title = bsed_title) +
+    ggplot2::theme_bw()
+  
+  return(sim_plot)
   
 }
