@@ -13,5 +13,5 @@ sample_uniform_size_abund_bsed(raw_community)
 bsed of sampled community
 }
 \description{
-With the same minimum and maximum body size as an empirical or focal community.
+With the same minimum and maximum body size as an empirical community.
 }

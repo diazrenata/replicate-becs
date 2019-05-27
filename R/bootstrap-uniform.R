@@ -16,7 +16,7 @@ calculate_uniform_size_abund_bsed <- function(raw_community) {
 }
 
 #' Draw a sample community with a uniform size-abundance distribution
-#' @description With the same minimum and maximum body size as an empirical or focal community.
+#' @description With the same minimum and maximum body size as an empirical community.
 #' @param raw_community Community to base new community on. 
 #' @return bsed of sampled community
 #' @export
@@ -74,7 +74,7 @@ sample_cross_communities_bsed <- function(community_pair) {
 #' @param raw_community community or communities to base samples on
 #' @param assumption sampling condition. 
 #' @param nbootstraps number of samples to draw
-#' @return list of focal bsed, sampled bseds, calculated bseds
+#' @return list of empirical bsed, sampled bseds, calculated bseds
 #' @export
 draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abund", nbootstraps = 25) {
   sampler_function = match.fun(paste0("sample_", assumption, "_bsed"))
@@ -82,7 +82,7 @@ draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abu
   if(assumption == "uniform_size_abund") {
     calculate_function = match.fun(paste0("calculate_", assumption, "_bsed"))
     
-    focal_bsed = raw_community %>%
+    empirical_bsed = raw_community %>%
       add_energy_sizeclass() %>%
       make_bsed()
     
@@ -90,11 +90,21 @@ draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abu
     
     calculated_bsed = calculate_function(raw_community)
     
-    bootstrap_results = list(focal_bsed = focal_bsed,
+    bootstrap_results = list(empirical_bsed = empirical_bsed,
                              sampled_bseds = sampled_bseds,
                              calculated_bsed = calculated_bsed)
   } else if (assumption == "cross_communities") {
-    bootstrap_results = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
+    bsed_a = raw_community$community_a %>%
+      add_energy_sizeclass() %>%
+      make_bsed
+    bsed_b = raw_community$community_b %>%
+      add_energy_sizeclass() %>%
+      make_bsed
+    
+    empirical_bseds = list(bsed_a = bsed_a, bsed_b = bsed_b)
+    sampled_bseds = replicate(n = nbootstraps, expr = sampler_function(raw_community), simplify = F)
+    bootstrap_results = list(empirical_bseds = empirical_bseds,
+                             sampled_bseds = sampled_bseds)
   }
   
   return(bootstrap_results)
@@ -102,12 +112,38 @@ draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abu
 
 #' Calculate DOIs for bootstrapped BSEDs
 #' @param bootstrap_results output of draw_bootstrap_samples
-#' @return list of focal DOI and sampled DOIs
+#' @return list of empirical DOI and sampled DOIs
 #' @export
 calculate_bootstrap_uniform_dois <- function(bootstrap_results) {
-  focal_doi = doi(bootstrap_results$focal_bsed, bootstrap_results$calculated_bsed)
+  empirical_doi = doi(bootstrap_results$empirical_bsed, bootstrap_results$calculated_bsed)
   sampled_dois = vapply(bootstrap_results$sampled_bseds, FUN = doi, bsed_b = bootstrap_results$calculated_bsed, FUN.VALUE = 0.5)
-  doi_results = list(focal_doi = focal_doi,
+  doi_results = list(empirical_doi = empirical_doi,
+                     sampled_dois = sampled_dois)
+  return(doi_results)
+}
+
+#' @title Calculate DOIs for two community distributions
+#' @description Just a wrapper for doi() for if the arguments are in a list
+#' @param result_pair List of two distributions to compare.
+#' @return doi
+#' @export
+calculate_paired_dois <- function(result_pair){
+  bsed_a = result_pair[[1]]
+  bsed_b = result_pair[[2]]
+  
+  doi_result = doi(bsed_a, bsed_b)
+}
+
+#' @title Calculate DOI for cross community bootstraps
+#' @param bootstrap_results Output of draw_bootstrap_samples
+#' @return list of the empirical DOI and the sampled DOIs
+#' @export
+calculate_crosscomm_dois <- function(bootstrap_results) {
+  empirical_doi = calculate_paired_dois(bootstrap_results$empirical_bseds)
+  
+  sampled_dois = vapply(bootstrap_results$sampled_bseds, FUN = calculate_paired_dois, FUN.VALUE = 0.5) 
+  
+  doi_results = list(empirical_doi = empirical_doi,
                      sampled_dois = sampled_dois)
   return(doi_results)
 }
@@ -120,7 +156,7 @@ calculate_bootstrap_uniform_dois <- function(bootstrap_results) {
 calculate_bootstrap_p <- function(bootstrap_dois) {
   
   sim_ecdf = ecdf(bootstrap_dois$sampled_dois)
-  p = 1- sim_ecdf(bootstrap_dois$focal_doi)
+  p = 1- sim_ecdf(bootstrap_dois$empirical)
   
   return(p)
 }

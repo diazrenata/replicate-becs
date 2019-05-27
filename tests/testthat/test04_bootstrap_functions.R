@@ -65,8 +65,8 @@ test_that("bootstrap wrapper works for uniform", {
   
   bootstrap_dois = calculate_bootstrap_uniform_dois(bootstraps)
   expect_true(is.list(bootstrap_dois))
-  expect_true(bootstrap_dois$focal_doi >= 0)
-  expect_true(bootstrap_dois$focal_doi <= 2)
+  expect_true(bootstrap_dois$empirical_doi >= 0)
+  expect_true(bootstrap_dois$empirical_doi <= 2)
   expect_false(anyNA(bootstrap_dois$sampled_dois))
   expect_true(all(bootstrap_dois$sampled_dois >= 0))
   expect_true(all(bootstrap_dois$sampled_dois <= 2))
@@ -89,7 +89,14 @@ test_that("bootstrap wrapper works for cross communities", {
                                             nbootstraps = nbootstraps)
   
   expect_false(anyNA(cross_bootstraps))
-  expect_true(length(cross_bootstraps) == nbootstraps)
+  expect_true(length(cross_bootstraps$sampled_bseds) == nbootstraps)
   
-  #cross_bootstrap_dois = calculate_bootstrap_dois(cross_bootstraps)
-})
+  cross_bootstrap_dois = calculate_crosscomm_dois(cross_bootstraps)
+  expect_false(anyNA(cross_bootstrap_dois))
+  expect_true(is.numeric(cross_bootstrap_dois$empirical_doi))
+  expect_true(cross_bootstrap_dois$empirical_doi >= 0)
+  expect_true(cross_bootstrap_dois$empirical_doi <= 2)
+  expect_true(all(cross_bootstrap_dois$sampled_dois >= 0))
+  expect_true(all(cross_bootstrap_dois$sampled_dois <= 2))
+  
+  })

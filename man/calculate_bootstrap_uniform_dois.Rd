@@ -10,7 +10,7 @@ calculate_bootstrap_uniform_dois(bootstrap_results)
 \item{bootstrap_results}{output of draw_bootstrap_samples}
 }
 \value{
-list of focal DOI and sampled DOIs
+list of empirical DOI and sampled DOIs
 }
 \description{
 Calculate DOIs for bootstrapped BSEDs

@@ -15,7 +15,7 @@ draw_bootstrap_samples(raw_community, assumption = "uniform_size_abund",
 \item{nbootstraps}{number of samples to draw}
 }
 \value{
-list of focal bsed, sampled bseds, calculated bseds
+list of empirical bsed, sampled bseds, calculated bseds
 }
 \description{
 Wrapper for bootstrap sampling functions
