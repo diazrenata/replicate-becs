@@ -131,3 +131,42 @@ plot_bsed_bootstrap_results <- function(bootstrap_dois, bsed_name = NULL){
   return(sim_plot)
   
 }
+
+#' Plot cross community comparisons in one panel
+#'
+#' @param cross_community_comparisons all comparisons
+#'
+#' @return comparison plots in a single plot
+#' @export
+plot_crosscomm_bseds <- function(cross_community_comparisons) {
+  all_plots = lapply(cross_community_comparisons, FUN = plot_bsed_bootstrap_results)
+  
+  plots_arranged <- gridExtra::grid.arrange(grobs = all_plots, ncol = 3)
+  
+  return(plots_arranged)
+  
+}
+
+#' Plot histogram of p values
+#'
+#' @param bootstrap_dois list of dois for empirical, sampled distributions
+#' @return histogram of p values
+#' @export
+plot_bootstrap_pvals <- function(bootstrap_dois) {
+  
+  all_ps <- lapply(bootstrap_dois, FUN = calculate_bootstrap_p) %>%
+    unlist() %>%
+    as.data.frame() %>%
+    dplyr::rename(pval = ".")
+  
+  pval_hist = ggplot2::ggplot(data = all_ps, ggplot2::aes(pval, xmin = 0, xmax = 1)) +
+    ggplot2::geom_histogram(data = all_ps, stat = 'bin', 
+                            binwidth = 0.05,
+                            show.legend = NA,
+                            inherit.aes = TRUE) +
+    ggplot2::geom_vline(data = all_ps, xintercept = 0.05, color = 'red') + 
+    ggplot2::labs(x = "P values", y = "Frequency", title = "P values for pairwise community compairons") +
+    ggplot2::theme_bw()
+  return(pval_hist)
+  
+}

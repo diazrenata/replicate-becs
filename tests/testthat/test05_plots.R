@@ -62,3 +62,17 @@ test_that("plotting bootstrapped cross-community BSEDs works", {
   cross_bootstrap_dois = calculate_crosscomm_dois(cross_bootstraps)
   expect_silent(plot_bsed_bootstrap_results(cross_bootstrap_dois))
 })
+
+test_that("plotting multiple bootstrapped cross-community BSEDs works", {
+  community_pairs = setup_community_combinations(communities)[1:5]
+  nbootstraps = 10
+  
+  multi_cross_bootstraps = lapply(community_pairs, FUN = draw_bootstrap_samples,
+                                            assumption = "cross_communities",
+                                            nbootstraps = nbootstraps)
+  
+  multi_cross_bootstrap_dois = lapply(multi_cross_bootstraps, calculate_crosscomm_dois)
+  plot_crosscomm_bseds(multi_cross_bootstrap_dois)
+  
+  expect_silent(plot_bootstrap_pvals(multi_cross_bootstrap_dois))
+})

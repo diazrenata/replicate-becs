@@ -7,7 +7,7 @@
 plot_e_dom(e_doms)
 }
 \arguments{
-\item{energetic_dominances}{either a single data table of $E_D$ or a list of data tables. If a list, will be combined into a single data table.}
+\item{e_doms}{either a single data table of $E_D$ or a list of data tables. If a list, will be combined into a single data table.}
 }
 \value{
 histogram of $E_D$ values
