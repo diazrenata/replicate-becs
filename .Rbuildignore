@@ -37,3 +37,4 @@ revisitbecs.Rproj
 ^working-data/paper/processed/sev-rsgrass-processed\.csv$
 ^working-data/paper/processed/sev-rslarrea-processed\.csv$
 ^working-data/paper/processed/sev-two22-processed\.csv$
+^report$
