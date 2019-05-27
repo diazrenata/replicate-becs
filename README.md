@@ -41,7 +41,7 @@ The master branch of this repo should stay stable, but I (Renata) am in the proc
     - track changes in analysis methods & results; understand and resolve conflicting results if they occur. 
 
 ### Analysis
-- For the full analysis, see the [full replication](https://github.com/diazrenata/replicate-becs/blob/master/analysis/ernest2005_replication.md). 
+- For the full analysis, see the [full replication](https://github.com/diazrenata/replicate-becs/blob/master/report/ernest_2005_replication.md). 
 
 ### Overall result
 - Versions of the original datasets have come online, but not all of them correspond perfectly to the summary statistics reported in Ernest (2005) (#2). 
