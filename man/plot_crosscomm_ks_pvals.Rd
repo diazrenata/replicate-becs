@@ -7,7 +7,7 @@
 plot_crosscomm_ks_pvals(results_comparison)
 }
 \arguments{
-\item{crosscomm_result}{result of compare_ernest_ks_values}
+\item{results_comparison}{result of compare_ernest_ks_values}
 }
 \value{
 histogram of Ernest and current p values

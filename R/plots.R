@@ -172,7 +172,7 @@ plot_bootstrap_pvals <- function(bootstrap_dois) {
 }
 
 #' Plot comparison of Ernest vs current KS test p values
-#' @param crosscomm_result result of compare_ernest_ks_values
+#' @param results_comparison result of compare_ernest_ks_values
 #' @return histogram of Ernest and current p values
 #' @export
 plot_crosscomm_ks_pvals <- function(results_comparison) {
