@@ -22,3 +22,16 @@ test_that("plotting a bsd works", {
   expect_silent(bsd_plot <- plot_bsd(bsd))
   
 })
+
+test_that("replicating figure 1 works", {
+  communities_energy = lapply(communities, add_energy_sizeclass)
+  bseds = lapply(communities_energy, make_bsed)
+  
+  expect_silent(bseds_plot <- plot_paper_dists(bseds, dist_type = "bsed"))
+  
+  bsds = lapply(communities_energy, make_bsd)
+  expect_silent(bseds_plot <- plot_paper_dists(bsds, dist_type = "bsd"))
+  
+  
+  })
+  
