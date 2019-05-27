@@ -8,6 +8,13 @@ output: html_notebook
 ```{r setup, include = F}
 library(replicatebecs)
 source_sims = FALSE
+
+if(!dir.exists(here::here("working-data", "sims"))) {
+  dir.create(here::here("working-data", "sims"), recursive = T)
+}
+
+sims_path = here::here("working-data", "sims")
+
 set.seed(352) # GNV area code, for fun
 ```
 
@@ -171,5 +178,250 @@ head(energetic_dom[[1]])
 ```{r plot Ed, echo=FALSE, fig.height=5, fig.width=5}
 e_dom_plot <- plot_e_dom(energetic_dom)
 e_dom_plot
+```
+
+
+## Statistical tests
+
+### Comparing BSEDs to uniform
+
+#### Ernest approach
+
+- Use bootstrap sampling to compare to uniform distributions.
+- For every community, draw 10000 samples (sim communities):
+- Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest ~~body size~~ individual metabolic rate of any individual in that community.
+- For sim communities and the empirical community, calculate a distribution overlap index ($DOI$):
+- $DOI = \sum_k {|y_{ak} - y_{bk}|}$ where $y$ is the value for size class $k$ in communities $a$ and $b$.
+- $DOI$ values will range from 0 (complete overlap) to 2 (no overlap).
+- For the BSED bootstraps, community $a$ is the empirical or sim distribution, and community $b$ is a true uniform distribution ~~(i.e. $y_{bk} = \frac{1}{\max(k)}$ for all $k$)~~
+- "True uniform distribution": There are exactly the same number of individuals of every size.
+- Calculate the $DOI$ for all sim communities and the empirical.
+- Find the quantile value for the empirical $DOI$ compared to the distribution of sim $DOI$s. This is the p-value; i.e. the proportion of sim uniform distributions with DOIs greater than the empirical.
+
+#### Translation to `replicate-becs`
+
+- For a given empirical community, draw 10000 sim communities each with the same number of individuals $n$, with body sizes randomly drawn from a uniform distribution from the minimum to maximum body size in that community.
+- Calculate the $DOI$ of each sim community compared to a true uniform distribution.
+- True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
+
+```{r BSED-uniform size abund bootstrapped DOIs, eval = F}
+
+bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = draw_bootstrap_samples,  assumption = 'bootstrap_unif_size_abund', nbootstraps = 10000)
+
+```
+
+```{r source or draw BSED uniform size abund bootstraps, include = F}
+if(source_sims) {
+  bsed_unif_sizeabund_samples <- loadRDS(file.path(sims_path, "bsed_uniform_sizeabund_samples.Rds"))
+  
+    bsed_unif_sizeabund_dois <- loadRDS(file.path(sims_path, "bsed_unif_sizeabund_dois.Rds"))
+  
+} else {
+
+bsed_unif_sizeabund_samples <- lapply(communities, FUN = draw_bootstrap_samples,  assumption = 'uniform_size_abund', nbootstraps = 10)
+
+bsed_unif_sizeabund_dois <- lapply(bsed_unif_sizeabund_samples, calculate_bootstrap_uniform_dois)
+
+saveRDS(bsed_unif_sizeabund_samples, file = file.path(sims_path, "bsed_uniform_sizeabund_samples.Rds"))
+
+saveRDS(bsed_unif_sizeabund_dois, file = file.path(sims_path, "bsed_uniform_sizeabund_dois.Rds"))
+
+}
+```
+
+
+_See issue #4 on github._
+
+
+```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10}
+
+bsed_uniform_sizeabund_plot <- plot_paper_dists(bsed_unif_sizeabund_dois, dist_type = 'bsed_bootstraps')
+
+invisible(bsed_uniform_sizeabund_plot)
+```
+
+
+### Compare BSEDs among communities
+
+#### Ernest approach
+- For every pair of communities, create a pool of masses of all individuals from both communities.
+- Draw two new communities with the same number of individuals as the empirical communities, pulling masses at random from the pool, with replacement.
+- Calculate the DOI for the BSEDs of the two sample communities.
+- Repeat 10000 for each pair.
+- The P value is the proportion of sample DOIs greater (i.e. less overlap) than the empirical value.
+
+#### Translation to `replicate-becs`
+- For every pair of communities, pool all the masses
+- Resample two communities of the right sizes
+- Construct BSEDs for both communities
+- Calculate the DOI of the two BSEDs
+- Repeat 10000x
+
+```{r pairs for crosscommunity BSED comparisons}
+community_pairs <- setup_community_combinations(communities)
+```
+
+
+```{r cross community BSED comparisons, eval =F}
+
+bsed_crosscomm_samples <- lapply(community_pairs, FUN = draw_bootstrap_samples,  assumption = 'cross_communities', nbootstraps = 10000)
+
+```
+
+
+```{r source or draw cross community BSED, include = F}
+if(source_sims) {
+  bsed_crosscomm_samples <- loadRDS(file.path(sims_path, "bsed_crosscomm_samples.Rds"))
+  
+    bsed_crossscomm_dois <- loadRDS(file.path(sims_path, "bsed_crossscomm_dois.Rds"))
+    } else {
+bsed_crosscomm_samples <- lapply(community_pairs, FUN = draw_bootstrap_samples,  assumption = 'cross_communities', nbootstraps = 10)
+
+bsed_crossscomm_dois <- lapply(bsed_crosscomm_samples, calculate_crosscomm_dois)
+
+saveRDS(bsed_crosscomm_samples, file = file.path(sims_path, "bsed_crosscomm_samples.Rds"))
+
+saveRDS(bsed_crossscomm_dois, file = file.path(sims_path, "bsed_crossscomm_dois.Rds"))
+}
+```
+
+```{r plot cross community comparisons, echo = F, fig.height=30, fig.width=10}
+
+crosscomm_bootstrap_plot = plot_crosscomm_bseds(bsed_crossscomm_dois)
+
+invisible(crosscomm_bootstrap_plot)
+
+```
+
+```{r plot cross community p values, echo = F, fig.height = 5, fig.width = 5}
+pvals_histogram = plot_bootstrap_pvals(bsed_crossscomm_dois)
+
+pvals_histogram
+```
+
+### Testing BSDs for uniformity
+
+#### Ernest approach
+- $\delta$-corrected Kolmogorov-Smirnov test.
+- "The $\delta$-corrected K-S test increases the power of the test when sample sizes are small (n < 25; Zar 1999)"
+- The $\delta$-corrected test is not widely discussed online.
+
+
+```{r ernest d ks test results}
+appendixA <- load_ernest_appendixA()
+print(appendixA)
+```
+
+
+#### Translation to `replicate-becs`:
+
+
+*From Zar (1999) _Biostatistical Analysis_.*
+
+##### Base K-S test
+- Take vector of measurements $X_i$.
+- For each $X_i$ record the observed frequency $f_i$ (number of observations with that value).
+- Determine cumulative observed frequencies $F_i$ and cumulative relative frequencies $\textrm{rel}F_i$:
+- $\textrm{rel}F_i = \frac{F_i}{n}$ where $n$ is the number of measurements taken.
+- $\textrm{rel}F_i$ is the proportion of the sample that is measurements $\leq X_i$.
+- For each $X_i$, determine the cumulative *relative* expected frequency from the comparison distribution, $\textrm{rel}\hat{F_i}$.
+- For a uniform distribution, $\textrm{rel}\hat{F_i} = \frac{X_i - \min(X)}{\max(X) - \min(X)}$
+- Determine $D_i$ and $D'_i$ as:
+- $D_i = |{\textrm{rel}F_i - \textrm{rel}\hat{F_i}}|$
+- $D'_i = |{\textrm{rel}F_{i-1} - \textrm{rel}\hat{F_i}}|$
+- note $F_0 = 0$ so $D'_1 = \textrm{rel}\hat{F_i}$
+- The test statistic $D$ is:
+- $D = \max[(\max(D_i), (\max(D'_i)]$
+- Compare to critical values from appendix.
+
+
+##### $\delta$-corrected KS test
+
+- For small sample sizes (<25) we can obtain increased power using the $\delta$-corrected KS test.
+- For each $i$ determine
+- $\textrm{rel}G_i = \frac{F_i}{n + 1}$
+- $\textrm{rel}G'_i = \frac{F_i - 1}{n - 1}$
+- Then obtain similar $D$s
+- $D_{0, i} = |\textrm{rel}G_i - \textrm{rel}\hat{F_i}|$
+- $D_{1, i} = |\textrm{rel}G'_i - \textrm{rel}\hat{F_i}|$
+- The test statistic is either $\max(D_{0, i})$ or $\max(D_{1, i})$, whichever leads to the highest level of significance/smallest probability. Look up significance in table from appendix. The 1 and 0 are the $\delta$s.
+
+
+Tables of critical values were entered by hand from the appendix to Zar (1999).
+
+```{r bsds deltaks to uniform, echo = F}
+bsd_ks_test_raw = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                         focal_column = 'species_mean_mass',
+                         expected_range = NULL,
+                         n_or_i = 'n')
+
+
+bsd_ks_test_raw_results = data.frame(
+  community_name = as.character(names(bsd_ks_test_raw)),
+  signif = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "signif", FUN.VALUE = TRUE),
+  p_max = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_max", FUN.VALUE = .1),
+  p_min = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_min", FUN.VALUE = .1),
+  d_statistic = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
+  stringsAsFactors = F
+) %>%
+  dplyr::left_join(appendixA, by = 'community_name')
+
+print(bsd_ks_test_raw_results)
+
+```
+
+The $\delta$ corrected KS test does not correspond to the results from Ernest when the species mean body size values are on an untransformed scale.
+
+Using the natural log of the species mean body size value, however...:
+
+```{r bsds deltaks to uniform log, echo =F}
+bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
+                         focal_column = 'ln_mass',
+                         expected_range = NULL,
+                         n_or_i = 'n')
+
+bsd_ks_test_log_results = data.frame(
+  community_name = as.character(names(bsd_ks_test_log)),
+  signif = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "signif", FUN.VALUE = TRUE),
+  p_max = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "p_max", FUN.VALUE = .1),
+  p_min = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "p_min", FUN.VALUE = .1),
+  d_statistic = vapply(bsd_ks_test_log, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
+  stringsAsFactors = F
+) %>%
+  dplyr::left_join(appendixA, by = 'community_name')
+
+print(bsd_ks_test_log_results)
+```
+
+
+With mean mass logged, all the results replicate qualitatively (i.e. not significantly different from uniform) and Niwot, for which the currently-available data most closely matches that reported in Ernest (2005), replicates almost exactly numerically.
+
+### Comparing BSDs among communities
+
+#### Ernest approach
+
+Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every possible combination of community-level BSDs.
+
+
+#### Translation to `replicate-becs`
+
+```{r ks two sample}
+
+# use same community combinations as before
+
+bsd_crosscomm_ks <- lapply(community_pairs, FUN = ks_bsd,
+                          ln_mass_vals = F)
+
+ernest_twosampleks_comparison = compare_ernest_ks_values(bsd_crosscomm_ks)
+
+print(ernest_twosampleks_comparison)
+
+```
+
+
+```{r plot bsd crosscomm pval hist, echo =F, fig.height=5, fig.width=10}
+bsd_pvals_histogram = plot_crosscomm_ks_pvals(ernest_twosampleks_comparison)
+
+invisible(bsd_pvals_histogram)
 ```
 

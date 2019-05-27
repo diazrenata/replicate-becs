@@ -31,3 +31,17 @@ compare_ernest_ks_values <- function(twosample_ks_results){
 
   return(ks_joined2)
 }
+
+
+#' @title Load Ernest appendix A
+#' @description Load results of d-corrected KS test
+#' @return table of results
+#' @export
+load_ernest_appendixA <- function() {
+  ernest_key <- read.csv(file.path(system.file(package= "replicatebecs"), "data", "ernest-2005-files", "ernest_key.csv"), stringsAsFactors = F)
+  
+  ernest_appendixA <- read.csv(file.path(system.file(package= "replicatebecs"), "data", "ernest-2005-files", "ernest_appendixA.csv"), stringsAsFactors = F) %>%
+    dplyr::left_join(ernest_key, by = 'site')
+  
+  return(ernest_appendixA)
+}
