@@ -78,3 +78,25 @@ plot_paper_dists <- function(dists, dist_type){
   return(dists_plot)
   
 }
+
+#' @title Plot energetic dominance
+#' @description Generate histogram of energetic dominance values
+#' @param energetic_dominances either a single data table of $E_D$ or a list of data tables. If a list, will be combined into a single data table.  
+#' @return histogram of $E_D$ values
+#' @export
+plot_e_dom <- function(e_doms) {
+  if(is.list(e_doms)) {
+    e_doms = dplyr::bind_rows(e_doms, .id = "column_label")
+  }
+  
+  e_dom_plot <- ggplot2::ggplot(data = e_doms, ggplot2::aes(e_dominance, xmin = 0, xmax = 1)) +
+    ggplot2::geom_histogram(data = e_doms, stat = "bin", 
+                            binwidth = 0.1,
+                            show.legend = NA,
+                            inherit.aes = TRUE) +
+    ggplot2::labs(x = "Energetic dominance", y = "Number of modes", title = "Energetic Dominance") +
+    ggplot2::theme_bw()
+  
+  return(e_dom_plot)
+  
+}

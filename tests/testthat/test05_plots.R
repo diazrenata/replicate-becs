@@ -35,3 +35,11 @@ test_that("replicating figure 1 works", {
   
   })
   
+test_that("plotting energetic dominance works", {
+  communities_energy = lapply(communities, add_energy_sizeclass)
+  bseds = lapply(communities_energy, make_bsed)
+  e_doms = lapply(communities_energy, energetic_dominance)
+  
+  expect_silent(plot_e_dom(e_doms))
+  
+})
