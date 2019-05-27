@@ -11,3 +11,14 @@ test_that("plotting a bsed works", {
   expect_silent(bsed_plot <- plot_bsed(bsed))
 
 })
+
+
+test_that("plotting a bsd works", {
+  
+  bsd <- communities[[1]] %>%
+    add_energy_sizeclass() %>%
+    make_bsd()
+  
+  expect_silent(bsd_plot <- plot_bsd(bsd))
+  
+})
