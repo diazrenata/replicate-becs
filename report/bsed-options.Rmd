@@ -28,7 +28,10 @@ andrews_bsed <- andrews %>%
 andrews_vars <- list(nind = nrow(andrews),
                     nsp = length(unique(andrews$individual_species_ids)),
                     min_size = min(andrews$individual_sizes),
-                    max_size = max(andrews$individual_sizes))
+                    max_size = max(andrews$individual_sizes),
+                    nsize_classes = nrow(andrews_bsed),
+                    size_classes = andrews_bsed$size_class,
+                    total_energy = sum((andrews$individual_sizes)^(3/4)))
 ```
 
 ## Uniform size-abundance
@@ -74,3 +77,39 @@ invisible(unif_sa_plots)
 
 
 ## Uniform size-energy
+
+For a uniform size-energy distribution, all body size classes have an equal share of the energy use in the community.
+
+This corresponds to a steeply negative relationship between size and abundance because a) larger individuals use more energy per capita and b) the body size classes are binned in log units, so the larger body size classes have the same amount of energy divided across a broader portion of the size spectrum. 
+
+To sample:
+
+```{r uniform size energy sample}
+
+unif_se_bsed <- andrews_bsed %>%
+  dplyr::mutate(total_energy = runif(n = andrews_vars$nsize_classes, min = 0, max = andrews_vars$total_energy)) %>% # the maximum doesn't matter, because we will convert it to proportional
+  dplyr::mutate(total_energy_proportional = total_energy / sum(total_energy))
+
+```
+
+
+To calculate:
+
+```{r uniform size energy calculation}
+unif_se_calculated = andrews_bsed %>%
+  dplyr::mutate(total_energy_proportional = 1/andrews_vars$nsize_classes)
+```
+
+
+```{r plot unif size energy bseds, fig.width = 15, fig.height = 5, echo = F}
+andrews_plot = plot_bsed(andrews_bsed, bsed_name = "Real Andrews")
+
+unif_se_sampled_plot = plot_bsed(unif_se_bsed, bsed_name = "Sampled uniform size-energy")
+
+unif_se_calc_plot = plot_bsed(unif_se_calculated, bsed_name = "'True' uniform size-energy")
+
+unif_se_plots = gridExtra::grid.arrange(andrews_plot, unif_se_sampled_plot, unif_se_calc_plot, nrow = 1)
+
+invisible(unif_se_plots)
+
+```
