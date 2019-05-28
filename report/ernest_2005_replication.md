@@ -23,11 +23,11 @@ Data
 
 #### Ernest data
 
-Ernest drew data from the Andrews LTER, the Sevilleta, Niwot Ridge, and Portal. For details of these field sites, see the *relevant publications cited in Ernest (2005).*
+Ernest drew data from the Andrews LTER in the Willamette National Forest, Oregon, the Sevilleta LTER in the Chihuahuan desert, Niwot Ridge LTER in alpine tundra, and the Portal project in the Chihuahuan desert. For details of these field sites, see the *Ernest (2005).*
 
 #### Translation to `replicate-becs`
 
-The same datasets are available online, *from these sources*.
+The same datasets are available online; see [Citations](#citations), below, for links.
 
 Rather than download them through the host websites, they are included in `replicate-becs`. (To download them from their original hosts, use `from_url = TRUE`.) By default they will be stored in `replicate-becs/working-data/paper/raw`.
 
@@ -77,7 +77,7 @@ head(communities[[1]])
 
 Although the same datasets are now available online, they may have changed somewhat since 2005 (due to error checking, etc). Ernest (2005) may also have taken some cleaning and filtering steps, the details of which could have been omitted from the manuscript due to length restrictions. For example, many studies using data from the Portal Project omit ground squirrels, because although they may be within the "small mammal" size range, they are not target taxa for the sampling method.
 
-Ernest (2005) reported summary statistics of her datasets; here I compare them to the corresponding dataset in the 2019 data.
+Ernest (2005) reported summary statistics of the datasets; here I compare them to the corresponding dataset in the 2019 data.
 
 ``` r
 summary_stats_comparison = compare_summary_stats()
@@ -238,12 +238,12 @@ Statistical tests
 
 -   Use bootstrap sampling to compare to uniform distributions.
 -   For every community, draw 10000 samples (sim communities):
--   Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest ~~body size~~ individual metabolic rate of any individual in that community.
+-   Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest body size of any individual in that community.
 -   For sim communities and the empirical community, calculate a distribution overlap index (*D**O**I*):
 -   *D**O**I* = ∑<sub>*k*</sub>|*y*<sub>*a**k*</sub> − *y*<sub>*b**k*</sub>| where *y* is the value for size class *k* in communities *a* and *b*.
 -   *D**O**I* values will range from 0 (complete overlap) to 2 (no overlap).
--   For the BSED bootstraps, community *a* is the empirical or sim distribution, and community *b* is a true uniform distribution ~~(i.e. $y\_{bk} = \\frac{1}{\\max(k)}$ for all *k*)~~
--   "True uniform distribution": There are exactly the same number of individuals of every size.
+-   For the BSED bootstraps, community *a* is the empirical or sim distribution, and community *b* is a true uniform distribution.
+-   The "true uniform distribution" can be interpreted either as a uniform size-abundance distribution or a uniform size-energy distribution. I explore both possibilities in **A SEPARATE FILE**. Using a uniform size-abundance distribution replicates Ernest's results.
 -   Calculate the *D**O**I* for all sim communities and the empirical.
 -   Find the quantile value for the empirical *D**O**I* compared to the distribution of sim *D**O**I*s. This is the p-value; i.e. the proportion of sim uniform distributions with DOIs greater than the empirical.
 
@@ -502,3 +502,16 @@ print(ernest_twosampleks_comparison)
     ## 36     sev juniper 0.105        1.000
 
 ![](ernest_2005_replication_files/figure-markdown_github/plot%20bsd%20crosscomm%20pval%20hist-1.png)
+
+Citations
+---------
+
+Andrews LTER small mammal data: Garman, S.; McComb, B. 2002. Monitoring small mammal and amphibian abundances on the Willamette National Forest, Oregon (Long-Term Ecosystem Productivity experiment), 1995-1999. Long-Term Ecological Research. Forest Science Data Bank, Corvallis, OR. \[Database\]. Available: <http://andlter.forestry.oregonstate.edu/data/abstract.aspx?dbcode=WE026> (28 May 2019).
+
+Niwot Ridge LTER small mammal data: Halfpenny J. 1994. Small mammal herbivore trapping in alpine tundra. Environmental Data Initiative. <https://doi.org/10.6073/pasta/f39ac94e1db31c8e313efea83d1e3859>. Dataset accessed 5/28/2019.
+
+Sevilleta LTER small mammal data: Newsome S. 2010. Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta National Wildlife Refuge, New Mexico (1989 - present). Environmental Data Initiative. <https://doi.org/10.6073/pasta/cdd8f254ef97d854d6eb2efb7385b801>. Dataset accessed 5/28/2019.
+
+Portal Project data accessed using the `portalr` package: Glenda M. Yenni, Hao Ye, Erica M. Christensen, Juniper L. Simonis, Ellen K. Bledsoe, Renata M. Diaz, Shawn D. Taylor, Ethan P, White and S.K. Morgan Ernest (2019). portalr: Create Useful Summaries of the Portal Data. <https://weecology.github.io/portalr/>, <https://github.com/weecology/portalr>.
+
+Zar, J.H. 1999. Biostatistical analysis. Fourth edition. Prentice Hall, Englewood Cliffs, New Jersey, USA.
