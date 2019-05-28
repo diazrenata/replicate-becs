@@ -1,0 +1,76 @@
+---
+title: "BSED scenarios"
+author: "Renata Diaz"
+date: "5/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(replicatebecs)
+```
+
+This is what BSEDs would look like, and what the results of a bootstrapping analysis would be, under the assumptions of a) a uniform size-abundance distribution ([Uniform size-abundance]) and b) a uniform size-energy ([Uniform size-energy])distribution. 
+
+Using the Andrews LTER small mammal data for demonstration.
+
+Load the Andrews data, generate BSED, and get summary variables:
+```{r load andrews}
+andrews <- load_paper_data()[[1]]
+head(andrews)
+
+andrews_bsed <- andrews %>%
+  add_energy_sizeclass() %>%
+  make_bsed()
+```
+
+```{r andrews descriptor variables}
+andrews_vars <- list(nind = nrow(andrews),
+                    nsp = length(unique(andrews$individual_species_ids)),
+                    min_size = min(andrews$individual_sizes),
+                    max_size = max(andrews$individual_sizes))
+```
+
+## Uniform size-abundance
+
+For a uniform size-abundance distribution, individuals' sizes are uniformly distributed from the minimum to the maximum body size in the community.
+
+For simulation, this translates as:
+
+```{r uniform size abund sampling}
+unif_sa_sample <- runif(n = andrews_vars$nind, min = andrews_vars$min_size, max = andrews_vars$max_size)
+```
+
+We use this vector of masses to generate a BSED for the simulated community:
+
+```{r unif size abund bsed}
+unif_sa_bsed <- andrews %>%
+  dplyr::mutate(individual_sizes = unif_sa_sample) %>% # Change measured masses to simulated masses
+  add_energy_sizeclass() %>%
+  make_bsed()
+
+head(unif_sa_bsed)
+```
+
+To define the "true" form of the distribution, we can define a "community" with exactly one individual of every size from the minimum to the maximum in the community and generate the corresponding BSED. `replicatebecs::calculate_uniform_size_abund_bsed` does this. 
+
+```{r calculate unif size abund bsed}
+unif_sa_calculated <- calculate_uniform_size_abund_bsed(andrews)
+```
+
+
+```{r plot unif size abund bseds, fig.width = 15, fig.height = 5, echo = F}
+andrews_plot = plot_bsed(andrews_bsed, bsed_name = "Real Andrews")
+
+unif_sa_sampled_plot = plot_bsed(unif_sa_bsed, bsed_name = "Sampled uniform size-abundance")
+
+unif_sa_calc_plot = plot_bsed(unif_sa_calculated, bsed_name = "'True' uniform size-abundance")
+
+unif_sa_plots = gridExtra::grid.arrange(andrews_plot, unif_sa_sampled_plot, unif_sa_calc_plot, nrow = 1)
+
+invisible(unif_sa_plots)
+
+```
+
+
+## Uniform size-energy
