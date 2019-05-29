@@ -115,7 +115,7 @@ sample_cross_communities_bsed <- function(community_pair) {
 draw_bootstrap_samples <- function(raw_community, assumption = "uniform_size_abund", nbootstraps = 25) {
   sampler_function = match.fun(paste0("sample_", assumption, "_bsed"))
   
-  if(assumption == "uniform_size_abund") {
+  if(assumption %in% c("uniform_size_abund", "uniform_size_energy")) {
     calculate_function = match.fun(paste0("calculate_", assumption, "_bsed"))
     
     empirical_bsed = raw_community %>%
