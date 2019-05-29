@@ -113,5 +113,3 @@ unif_se_plots = gridExtra::grid.arrange(andrews_plot, unif_se_sampled_plot, unif
 invisible(unif_se_plots)
 
 ```
-
-
