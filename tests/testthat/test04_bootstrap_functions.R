@@ -54,6 +54,35 @@ test_that("uniform size-abundance works", {
   
 })
 
+
+test_that("uniform size energy works", {
+  
+  communities = load_paper_data()
+  
+  calculated_se_bsed = calculate_uniform_size_energy_bsed(communities[[1]])
+  
+  expect_true(ncol(calculated_se_bsed) == 4)
+  expect_true(min(calculated_se_bsed$size_class) > 0.2)
+  expect_false(anyNA(calculated_se_bsed))
+  expect_true(sum(calculated_se_bsed$total_energy_proportional) == 1)
+  expect_true(sd(calculated_se_bsed$total_energy_proportional) == 0)
+  
+  sampled_se_bsed = sample_uniform_size_energy_bsed(communities[[1]])
+  expect_true(ncol(sampled_se_bsed) == 4)
+  expect_false(anyNA(sampled_se_bsed))
+  expect_true(sum(calculated_se_bsed$total_energy_proportional) == 1)
+  
+  uniform_bsed_doi = doi(calculated_se_bsed, sampled_se_bsed)
+  
+  expect_true(mode(uniform_bsed_doi) == "numeric")
+  expect_true(uniform_bsed_doi <= 2)
+  expect_true(uniform_bsed_doi >= 0)
+  
+  
+  
+})
+
+
 test_that("bootstrap wrapper works for uniform", {
   communities = load_paper_data()
   nbootstraps = 10
