@@ -36,6 +36,42 @@ sample_uniform_size_abund_bsed <- function(raw_community) {
   return(sampled_community)  
 }
 
+
+#' Calculate a BSED from a completely uniform size-energy distribution
+#' @description Based on a raw community df. For DOI comparisons.
+#' @param raw_community table of sizes and ids
+#' @return bsed with uniform proportional energy use across size classes
+#' @export
+#'
+calculate_uniform_size_energy_bsed <- function(raw_community) {
+  raw_bsed <- raw_community %>%
+    add_energy_sizeclass() %>%
+    make_bsed 
+  
+  true_uniform_bsed <- raw_bsed %>%
+    dplyr::mutate(total_energy_proportional = 1/nrow(raw_bsed))
+  
+  return(true_uniform_bsed)
+}
+
+#' Draw a sample community with a uniform size-energy distribution
+#' @description Uniform energy distribution across size classes
+#' @param raw_community Community to base new community on. 
+#' @return bsed of sampled community
+#' @export
+#' @importFrom stats runif
+sample_uniform_size_energy_bsed <- function(raw_community) {
+  raw_bsed <- raw_community %>%
+    add_energy_sizeclass() %>%
+    make_bsed()
+
+  sampled_community <- raw_bsed %>% 
+    dplyr::mutate(total_energy = runif(n = nrow(raw_bsed), min = 0, max = sum(raw_bsed$total_energy))) %>% # the maximum doesn't matter, because we will convert it to proportional
+    dplyr::mutate(total_energy_proportional = total_energy / sum(total_energy))
+  
+  return(sampled_community)  
+}
+
 #' @title Bootstrap compare two communities
 #' @description Randomly re-draw communities with masses and nindividuals of original communities.
 #' @param community_pair list of 2 communities to compare

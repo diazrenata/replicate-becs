@@ -2,7 +2,7 @@
 title: "BSED scenarios"
 author: "Renata Diaz"
 date: "5/28/2019"
-output: html_document
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
@@ -113,3 +113,5 @@ unif_se_plots = gridExtra::grid.arrange(andrews_plot, unif_se_sampled_plot, unif
 invisible(unif_se_plots)
 
 ```
+
+
