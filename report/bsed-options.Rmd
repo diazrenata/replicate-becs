@@ -2,7 +2,7 @@
 title: "BSED scenarios"
 author: "Renata Diaz"
 date: "5/28/2019"
-output: html_document
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
@@ -112,4 +112,16 @@ unif_se_plots = gridExtra::grid.arrange(andrews_plot, unif_se_sampled_plot, unif
 
 invisible(unif_se_plots)
 
+```
+
+
+Trying a sampling scheme not on log size energy unit scale:
+```{r true uniform size energy not log}
+
+true_uniform_bsed <- data.frame(individual_sizes = seq(andrews_vars$min_size, andrews_vars$max_size, by = .1), individual_species = "notimpt") %>%
+  add_energy_sizeclass() %>%
+  dplyr::mutate(individual_energy = andrews_vars$total_energy / andrews_vars$nind) %>%
+  make_bsed()
+
+plot_bsed(true_uniform_bsed)
 ```
