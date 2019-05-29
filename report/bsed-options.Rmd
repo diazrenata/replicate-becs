@@ -134,7 +134,7 @@ real_bseds <- lapply(communities_energy, make_bsed)
 
 real_bsed_plots <- lapply(real_bseds, plot_bsed)
 
-unif_sa_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_abund", nbootstraps = 25)
+unif_sa_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_abund", nbootstraps = 10000)
 
 pull_bsed <- function(bootstrap_results, which_one){
   if(which_one == "first") {
@@ -183,7 +183,7 @@ real_bseds <- lapply(communities_energy, make_bsed)
 
 real_bsed_plots <- lapply(real_bseds, plot_bsed)
 
-unif_se_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_energy", nbootstraps = 25)
+unif_se_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_energy", nbootstraps = 10000)
 
 pull_bsed <- function(bootstrap_results, which_one){
   if(which_one == "first") {
