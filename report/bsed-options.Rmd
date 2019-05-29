@@ -34,7 +34,9 @@ andrews_vars <- list(nind = nrow(andrews),
                     total_energy = sum((andrews$individual_sizes)^(3/4)))
 ```
 
-## Uniform size-abundance
+## Illustrating the conditions
+
+### Uniform size-abundance
 
 For a uniform size-abundance distribution, individuals' sizes are uniformly distributed from the minimum to the maximum body size in the community.
 
@@ -76,7 +78,7 @@ invisible(unif_sa_plots)
 ```
 
 
-## Uniform size-energy
+### Uniform size-energy
 
 For a uniform size-energy distribution, all body size classes have an equal share of the energy use in the community.
 
@@ -111,5 +113,111 @@ unif_se_calc_plot = plot_bsed(unif_se_calculated, bsed_name = "'True' uniform si
 unif_se_plots = gridExtra::grid.arrange(andrews_plot, unif_se_sampled_plot, unif_se_calc_plot, nrow = 1)
 
 invisible(unif_se_plots)
+
+```
+
+## Bootstrap analysis
+
+For each community, generate:
+- plot of real BSED, a sample from the USA sims, and the calculated USA 
+- p value that real BSED is similar to samples
+- plot of real BSED, sample from the USE sims, calculated USE
+- p value 
+
+```{r size abundance bootstrap}
+rm(list=ls())
+communities <- load_paper_data()
+
+communities_energy <- lapply(communities, add_energy_sizeclass)
+
+real_bseds <- lapply(communities_energy, make_bsed)
+
+real_bsed_plots <- lapply(real_bseds, plot_bsed)
+
+unif_sa_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_abund", nbootstraps = 25)
+
+pull_bsed <- function(bootstrap_results, which_one){
+  if(which_one == "first") {
+  this_one <- bootstrap_results$sampled_bseds[[1]]
+  } else if (which_one == "calculated") {
+    this_one <- bootstrap_results$calculated_bsed
+  }
+  return(this_one)
+}
+
+unif_sa_samples <- lapply(unif_sa_bootstraps, pull_bsed, which_one = "first")
+
+unif_sa_samples_plots <- lapply(unif_sa_samples, plot_bsed)
+
+unif_sa_calculated <- lapply(unif_sa_bootstraps, pull_bsed, which_one = "calculated")
+
+unif_sa_calculated_plots <- lapply(unif_sa_calculated, plot_bsed)
+
+unif_sa_dois <-  lapply(unif_sa_bootstraps, calculate_bootstrap_uniform_dois)
+
+unif_sa_pvals <- lapply(unif_sa_dois, calculate_bootstrap_p)
+
+```
+
+```{r size abundance plots, fig.width = 15, fig.height = 5}
+sa_plots_list <- list()
+
+for(i in 1:9) {
+sa_plots_list[[i]] <- gridExtra::grid.arrange(real_bsed_plots[[i]], unif_sa_samples_plots[[i]], unif_sa_calculated_plots[[i]], nrow = 1)
+
+print(names(communities)[[i]])
+print(unif_sa_pvals[[i]])
+invisible(sa_plots_list[[i]])
+
+}
+
+```
+
+```{r size energy bootstrap}
+rm(list=ls())
+communities <- load_paper_data()
+
+communities_energy <- lapply(communities, add_energy_sizeclass)
+
+real_bseds <- lapply(communities_energy, make_bsed)
+
+real_bsed_plots <- lapply(real_bseds, plot_bsed)
+
+unif_se_bootstraps <- lapply(communities, draw_bootstrap_samples, assumption = "uniform_size_energy", nbootstraps = 25)
+
+pull_bsed <- function(bootstrap_results, which_one){
+  if(which_one == "first") {
+  this_one <- bootstrap_results$sampled_bseds[[1]]
+  } else if (which_one == "calculated") {
+    this_one <- bootstrap_results$calculated_bsed
+  }
+  return(this_one)
+}
+
+unif_se_samples <- lapply(unif_se_bootstraps, pull_bsed, which_one = "first")
+
+unif_se_samples_plots <- lapply(unif_se_samples, plot_bsed)
+
+unif_se_calculated <- lapply(unif_se_bootstraps, pull_bsed, which_one = "calculated")
+
+unif_se_calculated_plots <- lapply(unif_se_calculated, plot_bsed)
+
+unif_se_dois <-  lapply(unif_se_bootstraps, calculate_bootstrap_uniform_dois)
+
+unif_se_pvals <- lapply(unif_se_dois, calculate_bootstrap_p)
+
+```
+
+```{r size energy plots, fig.width = 15, fig.height = 5}
+se_plots_list <- list()
+
+for(i in 1:9) {
+se_plots_list[[i]] <- gridExtra::grid.arrange(real_bsed_plots[[i]], unif_se_samples_plots[[i]], unif_se_calculated_plots[[i]], nrow = 1)
+
+print(names(communities)[[i]])
+print(unif_se_pvals[[i]])
+invisible(se_plots_list[[i]])
+
+}
 
 ```
