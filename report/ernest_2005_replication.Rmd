@@ -202,8 +202,9 @@ e_dom_plot
 
 - For a given empirical community, draw 10000 sim communities each with the same number of individuals $n$, with body sizes randomly drawn from a uniform distribution from the minimum to maximum body size in that community.
 - Calculate the $DOI$ of each sim community compared to a true uniform distribution.
-- True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
-
+  - True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
+- We can also draw sim communities with uniform *body-size-energy* distributions, and make comparisons to a uniform BSED; see `bsed-options`. The result is the same - empirical DOIs are in all cases significantly higher than the sim DOIs. 
+  
 ```{r BSED-uniform size abund bootstrapped DOIs, eval = F}
 
 bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = draw_bootstrap_samples,  assumption = 'bootstrap_unif_size_abund', nbootstraps = 10000)
@@ -229,8 +230,6 @@ saveRDS(bsed_unif_sizeabund_dois, file = file.path(sims_path, "bsed_uniform_size
 }
 ```
 
-
-_See issue #4 on github._
 
 
 ```{r plot BSED-uniform bootstrap DOIs v empirical,echo=FALSE, fig.height=10, fig.width=10}
@@ -349,30 +348,7 @@ print(appendixA)
 
 Tables of critical values were entered by hand from the appendix to Zar (1999).
 
-```{r bsds deltaks to uniform, echo = F}
-bsd_ks_test_raw = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
-                         focal_column = 'species_mean_mass',
-                         expected_range = NULL,
-                         n_or_i = 'n')
-
-
-bsd_ks_test_raw_results = data.frame(
-  community_name = as.character(names(bsd_ks_test_raw)),
-  signif = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "signif", FUN.VALUE = TRUE),
-  p_max = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_max", FUN.VALUE = .1),
-  p_min = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "p_min", FUN.VALUE = .1),
-  d_statistic = vapply(bsd_ks_test_raw, FUN = extract_values_zarks, val_name = "d", FUN.VALUE = .1),
-  stringsAsFactors = F
-) %>%
-  dplyr::left_join(appendixA, by = 'community_name')
-
-print(bsd_ks_test_raw_results)
-
-```
-
-The $\delta$ corrected KS test does not correspond to the results from Ernest when the species mean body size values are on an untransformed scale.
-
-Using the natural log of the species mean body size value, however...:
+Use the natural log scale (see Thibault 2011 and references therin for a discussion of why the log scale is appropriate for analyses of BSDs)
 
 ```{r bsds deltaks to uniform log, echo =F}
 bsd_ks_test_log = lapply(bsds, FUN = zar_ks_test, delta_correction = T,
@@ -436,6 +412,8 @@ Halfpenny J. 1994. Small mammal herbivore trapping in alpine tundra. Environment
 
 Sevilleta LTER small mammal data:
 Newsome S. 2010. Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta National Wildlife Refuge, New Mexico (1989 - present). Environmental Data Initiative. https://doi.org/10.6073/pasta/cdd8f254ef97d854d6eb2efb7385b801. Dataset accessed 5/28/2019.
+
+Thibault, K. M., White, E. P., Hurlbert, A. H., & Ernest, S. K. M. (2011). Multimodality in the individual size distributions of bird communities. Global Ecology and Biogeography, 20(1), 145–153. https://doi.org/10.1111/j.1466-8238.2010.00576.x
 
 Portal Project data accessed using the `portalr` package:
 Glenda M. Yenni, Hao Ye, Erica M. Christensen, Juniper L. Simonis, Ellen K. Bledsoe, Renata M. Diaz, Shawn D.  Taylor, Ethan P, White and S.K. Morgan Ernest (2019). portalr: Create Useful Summaries of the Portal Data. https://weecology.github.io/portalr/, https://github.com/weecology/portalr.

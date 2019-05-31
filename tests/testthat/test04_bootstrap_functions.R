@@ -54,7 +54,36 @@ test_that("uniform size-abundance works", {
   
 })
 
-test_that("bootstrap wrapper works for uniform", {
+
+test_that("uniform size energy works", {
+  
+  communities = load_paper_data()
+  
+  calculated_se_bsed = calculate_uniform_size_energy_bsed(communities[[1]])
+  
+  expect_true(ncol(calculated_se_bsed) == 4)
+  expect_true(min(calculated_se_bsed$size_class) > 0.2)
+  expect_false(anyNA(calculated_se_bsed))
+  expect_true(sum(calculated_se_bsed$total_energy_proportional) == 1)
+  expect_true(sd(calculated_se_bsed$total_energy_proportional) == 0)
+  
+  sampled_se_bsed = sample_uniform_size_energy_bsed(communities[[1]])
+  expect_true(ncol(sampled_se_bsed) == 4)
+  expect_false(anyNA(sampled_se_bsed))
+  expect_true(sum(calculated_se_bsed$total_energy_proportional) == 1)
+  
+  uniform_bsed_doi = doi(calculated_se_bsed, sampled_se_bsed)
+  
+  expect_true(mode(uniform_bsed_doi) == "numeric")
+  expect_true(uniform_bsed_doi <= 2)
+  expect_true(uniform_bsed_doi >= 0)
+  
+  
+  
+})
+
+
+test_that("bootstrap wrapper works for uniform size abund", {
   communities = load_paper_data()
   nbootstraps = 10
   bootstraps = draw_bootstrap_samples(raw_community = communities[[1]], nbootstraps = nbootstraps)
@@ -78,6 +107,33 @@ test_that("bootstrap wrapper works for uniform", {
   expect_true(bootstrap_pval <= 1)
 
   })
+
+
+test_that("bootstrap wrapper works for uniform size energy", {
+  communities = load_paper_data()
+  nbootstraps = 10
+  bootstraps = draw_bootstrap_samples(raw_community = communities[[1]],assumption = "uniform_size_energy", nbootstraps = nbootstraps)
+  
+  expect_true(is.list(bootstraps))
+  expect_true(length(bootstraps) == 3)
+  expect_true(length(bootstraps$sampled_bseds) == nbootstraps)
+  
+  bootstrap_dois = calculate_bootstrap_uniform_dois(bootstraps)
+  expect_true(is.list(bootstrap_dois))
+  expect_true(bootstrap_dois$empirical_doi >= 0)
+  expect_true(bootstrap_dois$empirical_doi <= 2)
+  expect_false(anyNA(bootstrap_dois$sampled_dois))
+  expect_true(all(bootstrap_dois$sampled_dois >= 0))
+  expect_true(all(bootstrap_dois$sampled_dois <= 2))
+  
+  bootstrap_pval = calculate_bootstrap_p(bootstrap_dois)
+  expect_false(is.na(bootstrap_pval))
+  expect_true(is.numeric(bootstrap_pval))
+  expect_true(bootstrap_pval >= 0)
+  expect_true(bootstrap_pval <= 1)
+  
+})
+
 
 test_that("bootstrap wrapper works for cross communities", {
   communities = load_paper_data()
