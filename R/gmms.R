@@ -39,7 +39,7 @@ plot_isd <- function(isd, isd_name = NULL){
 #' @param isd result of `make_isd`
 #' @return mclust fit
 #' @export
-#' @importFrom mclust Mclust
+#' @importFrom mclust Mclust mclustBIC mclust.options emControl
 fit_gmm <- function(isd){
   this_fit <- mclust::Mclust(isd$ln_size, G = 1:15, modelNames = "V", 
                  prior = NULL, 
