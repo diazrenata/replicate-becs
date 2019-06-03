@@ -18,6 +18,7 @@ Imports:
     gridExtra,
     here,
     magrittr,
+    mclust,
     portalr,
     readr,
     stringr,
