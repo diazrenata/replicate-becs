@@ -23,6 +23,12 @@ test_that("plotting an ISD works", {
   
   expect_silent(isd_plot <- plot_isd(isd))
   
+  communities_energy <- lapply(communities, add_energy_sizeclass)
+  
+  isds <- lapply(communities_energy, make_isd)
+  
+  expect_silent(isd_paper_plot <- plot_paper_dists(dists = isds, dist_type = "isd"))
+  
 })
 
 test_that("fitting a GMM and retrieving results work", {

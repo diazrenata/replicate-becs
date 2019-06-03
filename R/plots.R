@@ -55,7 +55,7 @@ plot_bsd <- function(bsd, bsd_name = NULL){
 #' @title Replicate Figure 1
 #' @description plot all 9 BSEDs or BSDs in the same arrangement as Ernest Figure 1
 #' @param dists list of bseds or bsds, or P values for BSED bootstrap analysis
-#' @param dist_type "bsed", "bsd", or "bsed_bootstraps"
+#' @param dist_type "bsed", "bsd", "isd", or "bsed_bootstraps"
 #' @return 9 panel plot modeled after Ernest 2005 Figure 1
 #' @export
 #'
@@ -65,7 +65,8 @@ plot_paper_dists <- function(dists, dist_type){
   if(dist_type == "bsed") {dist_plot_fun = plot_bsed}
   if(dist_type == "bsd") {dist_plot_fun = plot_bsd}
   if(dist_type == "bsed_bootstraps") {dist_plot_fun = plot_bsed_bootstrap_results}
-  
+  if(dist_type == "isd") {dist_plot_fun = plot_isd}
+
   for(i in 1:length(dists)) {
     dists_plots[[i]] <- dist_plot_fun(dists[[i]], names(dists)[i])
     names(dists_plots)[i] <- names(dists)[i]

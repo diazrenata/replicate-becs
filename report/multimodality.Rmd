@@ -1,0 +1,39 @@
+---
+title: "Multimodality"
+output: html_notebook
+---
+
+```{r setup, include = F}
+library(replicatebecs)
+communities <- load_paper_data()
+communities_energy <- lapply(communities, add_energy_sizeclass)
+isds <- lapply(communities_energy, make_isd)
+```
+
+Exploring the multimodality of rodent ISDs using Gaussian mixture models (after Thibault et al 2011). 
+
+```{r plot isds, echo = F, fig.width=30, fig.height=30}
+isd_plots <- plot_paper_dists(isds, "isd")
+invisible(isd_plots)
+```
+
+```{r fit GMMs} 
+gmms <- lapply(isds, fit_gmm)
+names(gmms) <- names(communities)
+```
+
+```{r GMM plots, echo = F, fig.width = 5, fig.height = 5}
+
+for(i in 1:9) {
+  print(names(gmms)[i])
+  plot_gmm(gmms[[i]])
+}
+```
+
+```{r nmodes}
+
+nmodes <- vapply(gmms, FUN = get_nmodes, FUN.VALUE = 3)
+
+nmodes
+
+```

@@ -74,3 +74,13 @@ get_modemeans <- function(gmm){
 get_bic <- function(gmm){
   return(gmm$BIC)
 }
+
+#' @title Density plot of GMM
+#' @param gmm result of fit_gmm
+#' @param gmm_name not used
+#' @return density plot
+#' @export
+plot_gmm <- function(gmm, gmm_name = NULL){
+  this_plot <- plot(gmm, what = "density")
+  return(this_plot)
+}
