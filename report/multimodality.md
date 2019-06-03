@@ -3,7 +3,7 @@ Multimodality
 
 Exploring the multimodality of rodent ISDs using Gaussian mixture models (after Thibault et al 2011).
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/plot%20isds-1.png)
+![](multimodality_files/figure-markdown_github/plot%20isds-1.png)
 
 ``` r
 gmms <- lapply(isds, fit_gmm)
@@ -340,39 +340,39 @@ names(gmms) <- names(communities)
 
     ## [1] "andrews"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-1.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-1.png)
 
     ## [1] "niwot"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-2.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-2.png)
 
     ## [1] "portal"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-3.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-3.png)
 
     ## [1] "sev-5pgrass"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-4.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-4.png)
 
     ## [1] "sev-5plarrea"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-5.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-5.png)
 
     ## [1] "sev-goatdraw"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-6.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-6.png)
 
     ## [1] "sev-rsgrass"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-7.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-7.png)
 
     ## [1] "sev-rslarrea"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-8.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-8.png)
 
     ## [1] "sev-two22"
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/multimodality_files/figure-markdown_github/GMM%20plots-9.png)
+![](multimodality_files/figure-markdown_github/GMM%20plots-9.png)
 
 ``` r
 nmodes <- vapply(gmms, FUN = get_nmodes, FUN.VALUE = 3)

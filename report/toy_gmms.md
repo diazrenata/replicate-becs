@@ -3,7 +3,31 @@ R Notebook
 
 ``` r
 library(dplyr)
+```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
 library(mclust)
+```
+
+    ##     __  ___________    __  _____________
+    ##    /  |/  / ____/ /   / / / / ___/_  __/
+    ##   / /|_/ / /   / /   / / / /\__ \ / /   
+    ##  / /  / / /___/ /___/ /_/ /___/ // /    
+    ## /_/  /_/\____/_____/\____//____//_/    version 5.4.3
+    ## Type 'citation("mclust")' for citing this R package in publications.
+
+``` r
 library(replicatebecs)
 ```
 
@@ -56,7 +80,7 @@ toy_bsed <- toy_isd %>%
 plot_bsed(toy_bsed)
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/make%20toy%20community-1.png)
+![](toy_gmms_files/figure-markdown_github/make%20toy%20community-1.png)
 
 ``` r
 isd_plot <- ggplot2::ggplot(data = toy_isd, ggplot2::aes(toy_isd$ln_size, xmin = 0, xmax = 1)) +
@@ -78,13 +102,13 @@ ied_plot <- ggplot2::ggplot(data = toy_isd, ggplot2::aes(toy_isd$ln_energy, xmin
 isd_plot
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/make%20toy%20community-2.png)
+![](toy_gmms_files/figure-markdown_github/make%20toy%20community-2.png)
 
 ``` r
 ied_plot
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/make%20toy%20community-3.png)
+![](toy_gmms_files/figure-markdown_github/make%20toy%20community-3.png)
 
 MCLUST on ISD...
 
@@ -184,7 +208,7 @@ gmm_isd$parameters$mean
 print(plot(gmm_isd, what = c("density")))
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/mclust%20on%20isd-1.png)
+![](toy_gmms_files/figure-markdown_github/mclust%20on%20isd-1.png)
 
     ## NULL
 
@@ -207,7 +231,7 @@ andrews_isd_plot <- ggplot2::ggplot(data = andrews, ggplot2::aes(andrews$ln_size
 andrews_isd_plot
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/mclust%20on%20real%20data-1.png)
+![](toy_gmms_files/figure-markdown_github/mclust%20on%20real%20data-1.png)
 
 ``` r
 gmm_andrews <- mclust::Mclust(andrews$ln_size, G = 1:15, modelNames = "V", 
@@ -305,6 +329,6 @@ gmm_andrews$parameters$mean
 print(plot(gmm_andrews, what = c("density")))
 ```
 
-![](/Users/renatadiaz/Documents/GitHub/replicate-becs/report/toy_gmms_files/figure-markdown_github/mclust%20on%20real%20data-2.png)
+![](toy_gmms_files/figure-markdown_github/mclust%20on%20real%20data-2.png)
 
     ## NULL

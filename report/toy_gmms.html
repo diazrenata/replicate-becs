@@ -26,9 +26,25 @@ body {
 <body>
 
 <h1 id="r-notebook">R Notebook</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(mclust)
-<span class="kw">library</span>(replicatebecs)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'dplyr'
+
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mclust)</code></pre></div>
+<pre><code>##     __  ___________    __  _____________
+##    /  |/  / ____/ /   / / / / ___/_  __/
+##   / /|_/ / /   / /   / / / /\__ \ / /   
+##  / /  / / /___/ /___/ /_/ /___/ // /    
+## /_/  /_/\____/_____/\____//____//_/    version 5.4.3
+## Type 'citation(&quot;mclust&quot;)' for citing this R package in publications.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(replicatebecs)</code></pre></div>
 <p>Playing around with Gaussian mixture models in <code>mclust</code>.</p>
 <p>As I understand it, this should run a GMM with <code>1:15</code> modes on a vector of data, allowing for unequal variances (<code>modelNames = &quot;V&quot;</code>; use <code>modelNames = &quot;E&quot;</code> for equal variances) and calculate BIC for each one, allowing for model selection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mclust<span class="op">::</span><span class="kw">Mclust</span>(data, <span class="dt">G =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>), <span class="dt">modelNames =</span> <span class="st">&quot;V&quot;</span>, 
