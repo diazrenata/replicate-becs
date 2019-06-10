@@ -22,6 +22,7 @@ Imports:
     portalr,
     readr,
     stringr,
+    spatialEco,
     testthat,
     tibble,
     tidyr,

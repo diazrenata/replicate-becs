@@ -41,8 +41,12 @@ test_that("fitting a GMM and retrieving results work", {
   
   expect_true(is.list(isd_gmm))
   
-  expect_type(get_nmodes(isd_gmm), type = "integer")
-  expect_type(get_modemeans(isd_gmm), type = "double")
-  expect_length(get_modemeans(isd_gmm), get_nmodes(isd_gmm))
+  expect_type(get_ngaussians(isd_gmm), type = "integer")
+  expect_type(get_gaussianmeans(isd_gmm), type = "double")
+  expect_length(get_gaussianmeans(isd_gmm), get_ngaussians(isd_gmm))
+  
+  isd_pdf <- get_pdf(isd_gmm)
+  
+  expect_type(get_modes(isd_pdf), "double")
   expect_type(get_bic(isd_gmm), "double")
   })

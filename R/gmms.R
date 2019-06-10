@@ -39,9 +39,9 @@ plot_isd <- function(isd, isd_name = NULL){
 #' @param isd result of `make_isd`
 #' @return mclust fit
 #' @export
-#' @importFrom mclust Mclust mclustBIC mclust.options emControl
+#' @importFrom mclust Mclust mclustBIC mclust.options emControl densityMclust
 fit_gmm <- function(isd){
-  this_fit <- mclust::Mclust(isd$ln_size, G = 1:15, modelNames = "V", 
+  this_fit <- mclust::densityMclust(isd$ln_size, G = 1:15, modelNames = "V", 
                  prior = NULL, 
                  control = emControl(), 
                  initialization = NULL, 
@@ -51,19 +51,45 @@ fit_gmm <- function(isd){
   return(this_fit)
 }
 
-#' Get number of modes
+#' Get number of gaussians
 #' @param gmm result of fit_gmm
-#' @return nmodes
+#' @return ngaussians
 #' @export
-get_nmodes <- function(gmm) {
+get_ngaussians <- function(gmm) {
   return(gmm$G)
 }
 
-#' Get means of modes
-#' @param gmm result of fit_gmm
-#' @return means of modes
+
+#' Get modes of PDF
+#' @param pdf result of get_pdf
+#' @importFrom spatialEco local.min.max
+#' @importFrom dplyr filter
+#' @importFrom graphics plot
 #' @export
-get_modemeans <- function(gmm){
+get_modes <- function(pdf) {
+  mode_ps <- spatialEco::local.min.max(pdf$density, plot = F)$maxima 
+  modes <- dplyr::filter(pdf, density %in% mode_ps)
+  modes <- modes$sizes
+  return(modes)
+}
+
+#' Get PDF from fitted gmm
+#' @param gmm result of fit_gmm
+#' @return pdf vector
+#' @importFrom stats predict
+#' @export
+get_pdf <- function(gmm) {
+  sizes <- seq(0, 8, by = 0.1)
+  gmm_pdf <- predict(gmm, newdata = sizes, what = "dens", logarithm = F)
+  pdf <- data.frame(sizes = sizes, density = gmm_pdf)
+  return(pdf)
+}
+
+#' Get means of gaussians
+#' @param gmm result of fit_gmm
+#' @return means of gaussians
+#' @export
+get_gaussianmeans <- function(gmm){
   return(gmm$parameters$mean)
 }
 
@@ -73,14 +99,4 @@ get_modemeans <- function(gmm){
 #' @export
 get_bic <- function(gmm){
   return(gmm$BIC)
-}
-
-#' @title Density plot of GMM
-#' @param gmm result of fit_gmm
-#' @param gmm_name not used
-#' @return density plot
-#' @export
-plot_gmm <- function(gmm, gmm_name = NULL){
-  this_plot <- plot(gmm, what = "density")
-  return(this_plot)
 }
