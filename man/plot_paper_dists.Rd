@@ -9,7 +9,7 @@ plot_paper_dists(dists, dist_type)
 \arguments{
 \item{dists}{list of bseds or bsds, or P values for BSED bootstrap analysis}
 
-\item{dist_type}{"bsed", "bsd", "isd", or "bsed_bootstraps"}
+\item{dist_type}{"bsed", "bsd", or "bsed_bootstraps"}
 }
 \value{
 9 panel plot modeled after Ernest 2005 Figure 1
