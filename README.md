@@ -46,24 +46,11 @@ The master branch of this repo should stay stable, but I (Renata) am in the proc
 ### Overall result
 - Versions of the original datasets have come online, but not all of them correspond perfectly to the summary statistics reported in Ernest (2005) (#2). 
 - All of the results can be replicated qualitatively, given particular assumptions. The p-values and test statistics do not align perfectly, but the statistical significance (or lack thereof) holds up.
-- Some of these assumptions warrant further investigation. This would not have been practical in 2005, but is tractable given modern computing technology.
 
 ### Specific assumptions and next steps
 
 - 'Uniform' baselines for BSEDs
-  - See #4. 
-  - To replicate Ernest 2005, we take a *uniform size-abundance relationship* as the null hypothesis/baseline distribution. This is not the same as a uniform size-energy relationship.
-  - Given newer tools, it is relatively straightforward to compare the results under the following assumptions:
-    - uniform size-abundance relationship
-    - uniform size-energy relationship
+  - To replicate Ernest 2005, we take a uniform size-abundance relationship at the linear (not log transformed) scale as the null hypothesis/baseline distribution.
 - 'Uniform' comparison for BSDs (delta-corrrected KS tests)
-  - To replicate the comparison of BSDs to uniform, we must compare the *log of the species mean mass* to a uniform distribution. This is not the same as a uniform species-body size relationship; it is a distribution with fewer large species than small ones. Both the log mass and mass on a linear scale are standard in studies of BSDs, but they describe substantially different distributions!
+  - To replicate the comparison of BSDs to uniform, we must compare the *log of the species mean mass* to a uniform distribution. This is not the same as a uniform species-body size relationship; it is a distribution with fewer large species than small ones. Both the log mass and mass on a linear scale are standard in studies of BSDs. 
   - Also, the K-S test as documented in Zar (1999) is somewhat ambiguously defined. (#5)
-  - Given newer tools, we can:
-    - Use bootstrapping instead of the K-S test to explore alternative hypotheses
-    - Compare the results using:
-        - uniform species-body size relationship at the log scale
-        - uniform species-body size relationship
-  - It may also be possible to test for multimodality using Gaussian mixture models (see method in Thibault et al 2011). 
-- We can also use bootstrapping to compare BSDs to each other, instead of Kolmogorov-Smirnov tests.
-- When making multiple comparisons between communities, we are more interested in how often communities are similar or distinguishable from each other than in whether a specific comparison has a p value of .05. It would be appropriate to use a false discovery rate correction to account for making many pairwise comparisons. 
