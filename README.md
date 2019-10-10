@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/diazrenata/replicate-becs.svg?branch=master)](https://travis-ci.com/diazrenata/replicate-becs)
+[![Build Status](https://travis-ci.com/diazrenata/replicate-becs.svg?branch=master)](https://travis-ci.com/diazrenata/replicate-becs) [![codecov](https://codecov.io/gh/diazrenata/replicate-becs/branch/master/graph/badge.svg)](https://codecov.io/gh/diazrenata/replicate-becs)
 
 ## replicate-becs
 
