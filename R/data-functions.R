@@ -149,7 +149,7 @@ process_niwot_data <- function(storage_path = here::here("working-data", "paper"
   species_means <- niwot %>%
     dplyr::select(species, weight) %>%
     dplyr::group_by(species) %>%
-    dplyr::summarize(mean.weight = mean(weight), n.captures = n()) %>%
+    dplyr::summarize(mean.weight = mean(weight), n.captures = dplyr::n()) %>%
     dplyr::ungroup()
   
   big_species <- species_means %>%
