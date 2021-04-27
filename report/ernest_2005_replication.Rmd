@@ -2,7 +2,7 @@
 title: "Narrative of original analysis"
 author: "Renata Diaz"
 date: "5/27/2019"
-output: html_notebook
+output: github_document
 ---
 
 ```{r setup, include = F}

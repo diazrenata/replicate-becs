@@ -16,15 +16,17 @@ download_raw_paper_data <- function(from_url = FALSE, storage_path = here::here(
   }
   
   if(from_url) {
-  
-  if(!dir.exists(file.path(storage_path, "andrews-lter"))) {
-    dir.create(file.path(storage_path, "andrews-lter"))
-  }
-  
-  download.file("http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv", file.path(storage_path, "raw","andrews-lter", "andrews.csv"))
-  download.file("http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026", file.path(storage_path,"andrews-lter","andrews-metadata.pdf"))
-  download.file("http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv", file.path(storage_path, "andrews-lter", "andrews-specieslist.csv"))
-  
+    
+    # As of 2021, accessing data from the Andrews LTER requires registration. The raw data file are provided with this package (in accordance with the data use agreement), but I do not feel comfortable writing this function to get around their registration portal. Therefore, download_raw_paper_data will no longer get the Andrews data automatically.
+    # 
+    # if(!dir.exists(file.path(storage_path, "andrews-lter"))) {
+    #   dir.create(file.path(storage_path, "andrews-lter"))
+    # }
+    # 
+    # download.file("http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=WE02601_v1.csv", file.path(storage_path, "raw","andrews-lter", "andrews.csv"))
+    # download.file("http://andlter.forestry.oregonstate.edu/mdaccess/metadownload.aspx?dbcode=WE026", file.path(storage_path,"andrews-lter","andrews-metadata.pdf"))
+    # download.file("http://andlter.forestry.oregonstate.edu/ltermeta/ltersearch/dataaccess.aspx?docid=SA00501_v2.csv", file.path(storage_path, "andrews-lter", "andrews-specieslist.csv"))
+    # 
   
   if(!dir.exists(file.path(storage_path, "niwot"))) {
     dir.create(file.path(storage_path, "niwot"))
