@@ -3,33 +3,52 @@ Narrative of original analysis
 Renata Diaz
 5/27/2019
 
-A walkthrough of Ernest (2005)'s original analytical approach, from close reading of the paper.
+A walkthrough of Ernest (2005)’s original analytical approach, from
+close reading of the paper.
 
-Questions
----------
+## Questions
 
-1.  Is energy use across body size categories (regardless of species) uniform or multimodal?
+1.  Is energy use across body size categories (regardless of species)
+    uniform or multimodal?
 
--   uniform would correspond generally to energetic equivalence/Damuth's rule.
--   multimodal might suggest different resource availability for different body sizes.
+<!-- end list -->
 
-1.  If energy use is not uniform across body size categories, does the species level body size distribution correspond to modes of energy use?
+  - uniform would correspond generally to energetic equivalence/Damuth’s
+    rule.
+  - multimodal might suggest different resource availability for
+    different body sizes.
 
--   i.e. are there more species with mean body sizes around the modes of the body size-energy use distribution?
--   if so, maybe it's good to be certain sizes, and species accumulate at those optima.
+<!-- end list -->
 
-Data
-----
+2.  If energy use is not uniform across body size categories, does the
+    species level body size distribution correspond to modes of energy
+    use?
+
+<!-- end list -->
+
+  - i.e. are there more species with mean body sizes around the modes of
+    the body size-energy use distribution?
+  - if so, maybe it’s good to be certain sizes, and species accumulate
+    at those optima.
+
+## Data
 
 #### Ernest data
 
-Ernest drew data from the Andrews LTER in the Willamette National Forest, Oregon, the Sevilleta LTER in the Chihuahuan desert, Niwot Ridge LTER in alpine tundra, and the Portal project in the Chihuahuan desert. For details of these field sites, see the *Ernest (2005).*
+Ernest drew data from the Andrews LTER in the Willamette National
+Forest, Oregon, the Sevilleta LTER in the Chihuahuan desert, Niwot Ridge
+LTER in alpine tundra, and the Portal project in the Chihuahuan desert.
+For details of these field sites, see the *Ernest (2005).*
 
 #### Translation to `replicate-becs`
 
-The same datasets are available online; see [Citations](#citations), below, for links.
+The same datasets are available online; see [Citations](#citations),
+below, for links.
 
-Rather than download them through the host websites, they are included in `replicate-becs`. (To download them from their original hosts, use `from_url = TRUE`.) By default they will be stored in `replicate-becs/working-data/paper/raw`.
+Rather than download them through the host websites, they are included
+in `replicate-becs`. (To download them from their original hosts, use
+`from_url = TRUE`.) By default they will be stored in
+`replicate-becs/working-data/paper/raw`.
 
 ``` r
 download_raw_paper_data(from_url = FALSE)
@@ -37,13 +56,16 @@ download_raw_paper_data(from_url = FALSE)
 
     ## [1] TRUE
 
-Process raw data into the appropriate format. This is a data table with a record for each individual and columns for `species` and `weight` in grams. By default these tables will be stored in subdirectores of `replicate-becs/working-data/paper/processed`.
+Process raw data into the appropriate format. This is a data table with
+a record for each individual and columns for `species` and `weight` in
+grams. By default these tables will be stored in subdirectores of
+`replicate-becs/working-data/paper/processed`.
 
 ``` r
 process_raw_data()
 ```
 
-    ## Loading in data version 1.107.0
+    ## Loading in data version 2.96.0
 
     ## [1] TRUE
 
@@ -53,7 +75,8 @@ Load data tables for each community.
 communities <- load_paper_data()
 ```
 
-Each community is a named data table with columns for species and size for each individual, for example:
+Each community is a named data table with columns for species and size
+for each individual, for example:
 
 ``` r
 names(communities)[[1]]
@@ -75,9 +98,17 @@ head(communities[[1]])
 
 #### Comparing data from 2005 to data available in 2019
 
-Although the same datasets are now available online, they may have changed somewhat since 2005 (due to error checking, etc). Ernest (2005) may also have taken some cleaning and filtering steps, the details of which could have been omitted from the manuscript due to length restrictions. For example, many studies using data from the Portal Project omit ground squirrels, because although they may be within the "small mammal" size range, they are not target taxa for the sampling method.
+Although the same datasets are now available online, they may have
+changed somewhat since 2005 (due to error checking, etc). Ernest (2005)
+may also have taken some cleaning and filtering steps, the details of
+which could have been omitted from the manuscript due to length
+restrictions. For example, many studies using data from the Portal
+Project omit ground squirrels, because although they may be within the
+“small mammal” size range, they are not target taxa for the sampling
+method.
 
-Ernest (2005) reported summary statistics of the datasets; here I compare them to the corresponding dataset in the 2019 data.
+Ernest (2005) reported summary statistics of the datasets; here I
+compare them to the corresponding dataset in the 2019 data.
 
 ``` r
 summary_stats_comparison = compare_summary_stats()
@@ -85,44 +116,48 @@ summary_stats_comparison = compare_summary_stats()
 print(summary_stats_comparison)
 ```
 
-    ##          ernest_name     new_name ernest_richness new_richness
-    ## 1            andrews      andrews               9            9
-    ## 2              niwot        niwot              11           11
-    ## 3             portal       portal              21           19
-    ## 4          sev grass  sev-5pgrass              18           15
-    ## 5    sev grass shrub  sev-rsgrass              20           18
-    ## 6        sev juniper    sev-two22              21           18
-    ## 7 sev pinyon juniper sev-goatdraw              12           12
-    ## 8          sev shrub sev-5plarrea              18           15
-    ## 9        sev shrub 2 sev-rslarrea              20           20
-    ##   ernest_min_mass new_min_mass ernest_max_mass new_max_mass
-    ## 1            4.46     4.482840             140     140.0000
-    ## 2            4.00     4.000000             194     194.5000
-    ## 3            7.70     6.000000             157     155.4813
-    ## 4            7.37     7.267399             152     177.6000
-    ## 5            7.37     7.267399             152     177.6000
-    ## 6            7.37     7.267399             152     177.6000
-    ## 7            7.37     7.267399             152     177.6000
-    ## 8            7.37     7.267399             152     177.6000
-    ## 9            7.37     7.267399             152     177.6000
+    ##          ernest_name     new_name ernest_richness new_richness ernest_min_mass
+    ## 1            andrews      andrews               9            9            4.46
+    ## 2              niwot        niwot              11           11            4.00
+    ## 3             portal       portal              21           19            7.70
+    ## 4          sev grass  sev-5pgrass              18           15            7.37
+    ## 5    sev grass shrub  sev-rsgrass              20           18            7.37
+    ## 6        sev juniper    sev-two22              21           18            7.37
+    ## 7 sev pinyon juniper sev-goatdraw              12           12            7.37
+    ## 8          sev shrub sev-5plarrea              18           15            7.37
+    ## 9        sev shrub 2 sev-rslarrea              20           20            7.37
+    ##   new_min_mass ernest_max_mass new_max_mass
+    ## 1     4.482840             140     140.0000
+    ## 2     4.000000             194     194.5000
+    ## 3     6.000000             157     155.4813
+    ## 4     7.267399             152     177.6000
+    ## 5     7.267399             152     177.6000
+    ## 6     7.267399             152     177.6000
+    ## 7     7.267399             152     177.6000
+    ## 8     7.267399             152     177.6000
+    ## 9     7.267399             152     177.6000
 
-Constructing distributions/metrics
-----------------------------------
+## Constructing distributions/metrics
 
 ### Body size-energy use distributions (BSED)
 
 #### Ernest method
 
--   Per individual, calculate metabolic rate as metabolic rate $B \\propto M^\\frac{3}{4}$ where *M* is mass in grams.
--   Sum energy use of all individuals in body size classes of .2 natural log units.
--   Also try classes of .1 and .3 natural log units
--   Convert raw energy use values for each body size class into the proportion of all the energy used in that community used by that body size class. This allows for comparisons between communities.
+  - Per individual, calculate metabolic rate as metabolic rate
+    \(B \propto M^\frac{3}{4}\) where \(M\) is mass in grams.
+  - Sum energy use of all individuals in body size classes of .2 natural
+    log units.
+  - Also try classes of .1 and .3 natural log units
+  - Convert raw energy use values for each body size class into the
+    proportion of all the energy used in that community used by that
+    body size class. This allows for comparisons between communities.
 
 ![Ernest 2005 Fig 1](ernest2005_fig1.png)
 
 #### Translation to `replicate-becs`
 
-For every individual, calculate metabolic rate and assign to a size class.
+For every individual, calculate metabolic rate and assign to a size
+class.
 
 ``` r
 communities_energy <- lapply(communities, FUN = add_energy_sizeclass, ln_units = 0.2)
@@ -145,7 +180,8 @@ head(communities_energy[[1]])
     ## 5    13.463738
     ## 6   121.510418
 
-For each community, sum total energy use for each size class, and convert to the proportion of total energy use for that community.
+For each community, sum total energy use for each size class, and
+convert to the proportion of total energy use for that community.
 
 ``` r
 bseds <- lapply(communities_energy, FUN = make_bsed)
@@ -163,18 +199,95 @@ head(bseds[[1]])
     ## 5        1.6         4.95       195.                    0.0246  
     ## 6        1.8         6.05        21.1                   0.00265
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20bseds-1.png)
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+    ## Warning: Use of `bsed$size_class` is discouraged. Use `size_class` instead.
+
+    ## Warning: Use of `bsed$total_energy_proportional` is discouraged. Use
+    ## `total_energy_proportional` instead.
+
+![](ernest_2005_replication_files/figure-gfm/plot%20bseds-1.png)<!-- -->
 
 ### Species-level body size distributions (BSD)
 
 #### Ernest method
 
--   Frequency distributions of mean mass of each species in a community.
--   For plotting (but not statistics), smoothed using kernel density estimation.
--   Gaussian kernel to mimic the actual body size distribution in log space
--   avg. std dev of the mean of the logged masses = smoothing parameter *h*
--   align sampling points with the midpoint of each size class in the BSED
--   after Manly 1996, "Are there clumps in body-size distributions?", *Ecology*
+  - Frequency distributions of mean mass of each species in a community.
+  - For plotting (but not statistics), smoothed using kernel density
+    estimation.
+  - Gaussian kernel to mimic the actual body size distribution in log
+    space
+  - avg. std dev of the mean of the logged masses = smoothing parameter
+    \(h\)
+  - align sampling points with the midpoint of each size class in the
+    BSED
+  - after Manly 1996, “Are there clumps in body-size distributions?”,
+    *Ecology*
 
 #### Translation to `replicate-becs`
 
@@ -187,30 +300,67 @@ head(bsds[[1]])
 ```
 
     ## # A tibble: 6 x 6
-    ##   individual_specie… species_mean_ma… ln_mass size_class size_class_g stdev
-    ##   <chr>                         <dbl>   <dbl>      <dbl>        <dbl> <dbl>
-    ## 1 CLCA                           17.9    2.88        2.8        16.4   1.19
-    ## 2 GLSA                          117.     4.76        4.6        99.5   1.19
-    ## 3 MIOR                           14.9    2.70        2.6        13.5   1.19
-    ## 4 NEGI                            6.5    1.87        1.8         6.05  1.19
-    ## 5 PEMA                           14.9    2.70        2.6        13.5   1.19
-    ## 6 SCOR                           54.4    4.00        3.8        44.7   1.19
+    ##   individual_species_ids species_mean_mass ln_mass size_class size_class_g stdev
+    ##   <chr>                              <dbl>   <dbl>      <dbl>        <dbl> <dbl>
+    ## 1 CLCA                                17.9    2.88        2.8        16.4   1.19
+    ## 2 GLSA                               117.     4.76        4.6        99.5   1.19
+    ## 3 MIOR                                14.9    2.70        2.6        13.5   1.19
+    ## 4 NEGI                                 6.5    1.87        1.8         6.05  1.19
+    ## 5 PEMA                                14.9    2.70        2.6        13.5   1.19
+    ## 6 SCOR                                54.4    4.00        3.8        44.7   1.19
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20bsds-1.png)
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+    
+    ## Warning: Continuous limits supplied to discrete scale.
+    ## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
 
-### Energetic dominance (*D*<sub>*E*</sub>)
+![](ernest_2005_replication_files/figure-gfm/plot%20bsds-1.png)<!-- -->
 
--   Define "energy use modes" as contiguous body size classes where the energy use of each size class &gt; 5% of the community total.
--   i.e. a little bit more than the expectation if energy use is uniform across all body sizes
--   Calculate the total energy use for each species in the mode.
--   Calculate the "dominance" of the species with the highest energy use in that mode as *D*<sub>*E*</sub> = *p*<sub>*m**a**x*</sub>, where *p*<sub>*m**a**x*</sub> is the maximum proportion of energy use by any one species in a mode.
--   "a modification of the Berger-Parker dominance index (Berger and Parker 1970)"
+### Energetic dominance (\(D_E\))
+
+  - Define “energy use modes” as contiguous body size classes where the
+    energy use of each size class \> 5% of the community total.
+  - i.e. a little bit more than the expectation if energy use is uniform
+    across all body sizes
+  - Calculate the total energy use for each species in the mode.
+  - Calculate the “dominance” of the species with the highest energy use
+    in that mode as \(D_E = p_{max}\), where \(p_{max}\) is the maximum
+    proportion of energy use by any one species in a mode.
+  - “a modification of the Berger-Parker dominance index (Berger and
+    Parker 1970)”
 
 #### Translation to `replicate-becs`
 
--   Find contiguous size classes where each class has &gt;5% of total energy use
--   Calculate the total energy use for each species, and the proportion held by the species with the highest energy use (*p*<sub>*m**a**x*</sub>)
--   Return *p*<sub>*m**a**x*</sub> for every mode, along with the min and max size classes in that mode for each community
+  - Find contiguous size classes where each class has \>5% of total
+    energy use
+  - Calculate the total energy use for each species, and the proportion
+    held by the species with the highest energy use (\(p_{max}\))
+  - Return \(p_{max}\) for every mode, along with the min and max size
+    classes in that mode for each community
+
+<!-- end list -->
 
 ``` r
 energetic_dom <- lapply(communities_energy, FUN = energetic_dominance)
@@ -225,59 +375,106 @@ head(energetic_dom[[1]])
     ## 2       2       1                4.4            4.4
     ## 3       3       0.979            4.8            5
 
--   To plot, combine all modes from all communities and plot a histogram of *D*<sub>*E*</sub> values.
+  - To plot, combine all modes from all communities and plot a histogram
+    of \(D_E\) values.
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20Ed-1.png)
+![](ernest_2005_replication_files/figure-gfm/plot%20Ed-1.png)<!-- -->
 
-Statistical tests
------------------
+## Statistical tests
 
 ### Comparing BSEDs to uniform
 
 #### Ernest approach
 
--   Use bootstrap sampling to compare to uniform distributions.
--   For every community, draw 10000 samples (sim communities):
--   Same number of individuals as the empirical community, drawn from a uniform distribution ranging from the smallest to largest body size of any individual in that community.
--   For sim communities and the empirical community, calculate a distribution overlap index (*D**O**I*):
--   *D**O**I* = ∑<sub>*k*</sub>|*y*<sub>*a**k*</sub> − *y*<sub>*b**k*</sub>| where *y* is the value for size class *k* in communities *a* and *b*.
--   *D**O**I* values will range from 0 (complete overlap) to 2 (no overlap).
--   For the BSED bootstraps, community *a* is the empirical or sim distribution, and community *b* is a true uniform distribution.
--   The "true uniform distribution" can be interpreted either as a uniform size-abundance distribution or a uniform size-energy distribution. I explore both possibilities in **A SEPARATE FILE**. Using a uniform size-abundance distribution replicates Ernest's results.
--   Calculate the *D**O**I* for all sim communities and the empirical.
--   Find the quantile value for the empirical *D**O**I* compared to the distribution of sim *D**O**I*s. This is the p-value; i.e. the proportion of sim uniform distributions with DOIs greater than the empirical.
+  - Use bootstrap sampling to compare to uniform distributions.
+  - For every community, draw 10000 samples (sim communities):
+  - Same number of individuals as the empirical community, drawn from a
+    uniform distribution ranging from the smallest to largest body size
+    of any individual in that community.
+  - For sim communities and the empirical community, calculate a
+    distribution overlap index (\(DOI\)):
+  - \(DOI = \sum_k {|y_{ak} - y_{bk}|}\) where \(y\) is the value for
+    size class \(k\) in communities \(a\) and \(b\).
+  - \(DOI\) values will range from 0 (complete overlap) to 2 (no
+    overlap).
+  - For the BSED bootstraps, community \(a\) is the empirical or sim
+    distribution, and community \(b\) is a true uniform distribution.
+      - The “true uniform distribution” can be interpreted either as a
+        uniform size-abundance distribution or a uniform size-energy
+        distribution. I explore both possibilities in **A SEPARATE
+        FILE**. Using a uniform size-abundance distribution replicates
+        Ernest’s results.
+  - Calculate the \(DOI\) for all sim communities and the empirical.
+  - Find the quantile value for the empirical \(DOI\) compared to the
+    distribution of sim \(DOI\)s. This is the p-value; i.e. the
+    proportion of sim uniform distributions with DOIs greater than the
+    empirical.
 
 #### Translation to `replicate-becs`
 
--   For a given empirical community, draw 10000 sim communities each with the same number of individuals *n*, with body sizes randomly drawn from a uniform distribution from the minimum to maximum body size in that community.
--   Calculate the *D**O**I* of each sim community compared to a true uniform distribution.
--   True uniform distribution = every size from the minimum to the maximum size in the community (by .1g) has exactly one individual.
+  - For a given empirical community, draw 10000 sim communities each
+    with the same number of individuals \(n\), with body sizes randomly
+    drawn from a uniform distribution from the minimum to maximum body
+    size in that community.
+  - Calculate the \(DOI\) of each sim community compared to a true
+    uniform distribution.
+      - True uniform distribution = every size from the minimum to the
+        maximum size in the community (by .1g) has exactly one
+        individual.
+  - We can also draw sim communities with uniform *body-size-energy*
+    distributions, and make comparisons to a uniform BSED; see
+    `bsed-options`. The result is the same - empirical DOIs are in all
+    cases significantly higher than the sim DOIs.
+
+<!-- end list -->
 
 ``` r
 bsed_unif_sizeabund_bootstraps <- lapply(communities, FUN = draw_bootstrap_samples,  assumption = 'bootstrap_unif_size_abund', nbootstraps = 10000)
 ```
 
-*See issue \#4 on github.*
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20BSED-uniform%20bootstrap%20DOIs%20v%20empirical-1.png)
+![](ernest_2005_replication_files/figure-gfm/plot%20BSED-uniform%20bootstrap%20DOIs%20v%20empirical-1.png)<!-- -->
 
 ### Compare BSEDs among communities
 
 #### Ernest approach
 
--   For every pair of communities, create a pool of masses of all individuals from both communities.
--   Draw two new communities with the same number of individuals as the empirical communities, pulling masses at random from the pool, with replacement.
--   Calculate the DOI for the BSEDs of the two sample communities.
--   Repeat 10000 for each pair.
--   The P value is the proportion of sample DOIs greater (i.e. less overlap) than the empirical value.
+  - For every pair of communities, create a pool of masses of all
+    individuals from both communities.
+  - Draw two new communities with the same number of individuals as the
+    empirical communities, pulling masses at random from the pool, with
+    replacement.
+  - Calculate the DOI for the BSEDs of the two sample communities.
+  - Repeat 10000 for each pair.
+  - The P value is the proportion of sample DOIs greater (i.e. less
+    overlap) than the empirical value.
 
 #### Translation to `replicate-becs`
 
--   For every pair of communities, pool all the masses
--   Resample two communities of the right sizes
--   Construct BSEDs for both communities
--   Calculate the DOI of the two BSEDs
--   Repeat 10000x
+  - For every pair of communities, pool all the masses
+  - Resample two communities of the right sizes
+  - Construct BSEDs for both communities
+  - Calculate the DOI of the two BSEDs
+  - Repeat 10000x
+
+<!-- end list -->
 
 ``` r
 community_pairs <- setup_community_combinations(communities)
@@ -287,43 +484,110 @@ community_pairs <- setup_community_combinations(communities)
 bsed_crosscomm_samples <- lapply(community_pairs, FUN = draw_bootstrap_samples,  assumption = 'cross_communities', nbootstraps = 10000)
 ```
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20cross%20community%20comparisons-1.png)
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20cross%20community%20p%20values-1.png)
+![](ernest_2005_replication_files/figure-gfm/plot%20cross%20community%20comparisons-1.png)<!-- -->
+
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+
+![](ernest_2005_replication_files/figure-gfm/plot%20cross%20community%20p%20values-1.png)<!-- -->
 
 ### Testing BSDs for uniformity
 
 #### Ernest approach
 
--   *δ*-corrected Kolmogorov-Smirnov test.
--   "The *δ*-corrected K-S test increases the power of the test when sample sizes are small (n &lt; 25; Zar 1999)"
--   The *δ*-corrected test is not widely discussed online.
+  - \(\delta\)-corrected Kolmogorov-Smirnov test.
+  - “The \(\delta\)-corrected K-S test increases the power of the test
+    when sample sizes are small (n \< 25; Zar 1999)”
+  - The \(\delta\)-corrected test is not widely discussed online.
+
+<!-- end list -->
 
 ``` r
 appendixA <- load_ernest_appendixA()
 print(appendixA)
 ```
 
-    ##                 site sample.size     d delta p_min p_max signif
-    ## 1            andrews           9 0.210     1   0.5   1.0  FALSE
-    ## 2              niwot          11 0.290     1   0.1   0.2  FALSE
-    ## 3             portal          21 0.090     1   0.5   1.0  FALSE
-    ## 4          sev grass          18 0.175     0   0.2   0.5  FALSE
-    ## 5    sev grass shrub          20 0.102     0   0.5   1.0  FALSE
-    ## 6        sev juniper          21 0.115     0   0.5   1.0  FALSE
-    ## 7 sev pinyon juniper          12 0.120     0   0.5   1.0  FALSE
-    ## 8          sev shrub          18 0.189     0   0.2   0.5  FALSE
-    ## 9        sev shrub 2          20 0.137     0   0.5   1.0  FALSE
-    ##   community_name
-    ## 1        andrews
-    ## 2          niwot
-    ## 3         portal
-    ## 4    sev-5pgrass
-    ## 5    sev-rsgrass
-    ## 6      sev-two22
-    ## 7   sev-goatdraw
-    ## 8   sev-5plarrea
-    ## 9   sev-rslarrea
+    ##                 site sample.size     d delta p_min p_max signif community_name
+    ## 1            andrews           9 0.210     1   0.5   1.0  FALSE        andrews
+    ## 2              niwot          11 0.290     1   0.1   0.2  FALSE          niwot
+    ## 3             portal          21 0.090     1   0.5   1.0  FALSE         portal
+    ## 4          sev grass          18 0.175     0   0.2   0.5  FALSE    sev-5pgrass
+    ## 5    sev grass shrub          20 0.102     0   0.5   1.0  FALSE    sev-rsgrass
+    ## 6        sev juniper          21 0.115     0   0.5   1.0  FALSE      sev-two22
+    ## 7 sev pinyon juniper          12 0.120     0   0.5   1.0  FALSE   sev-goatdraw
+    ## 8          sev shrub          18 0.189     0   0.2   0.5  FALSE   sev-5plarrea
+    ## 9        sev shrub 2          20 0.137     0   0.5   1.0  FALSE   sev-rslarrea
 
 #### Translation to `replicate-becs`:
 
@@ -331,58 +595,48 @@ print(appendixA)
 
 ##### Base K-S test
 
--   Take vector of measurements *X*<sub>*i*</sub>.
--   For each *X*<sub>*i*</sub> record the observed frequency *f*<sub>*i*</sub> (number of observations with that value).
--   Determine cumulative observed frequencies *F*<sub>*i*</sub> and cumulative relative frequencies rel*F*<sub>*i*</sub>:
--   $\\textrm{rel}F\_i = \\frac{F\_i}{n}$ where *n* is the number of measurements taken.
--   rel*F*<sub>*i*</sub> is the proportion of the sample that is measurements ≤*X*<sub>*i*</sub>.
--   For each *X*<sub>*i*</sub>, determine the cumulative *relative* expected frequency from the comparison distribution, $\\textrm{rel}\\hat{F\_i}$.
--   For a uniform distribution, $\\textrm{rel}\\hat{F\_i} = \\frac{X\_i - \\min(X)}{\\max(X) - \\min(X)}$
--   Determine *D*<sub>*i*</sub> and *D*′<sub>*i*</sub> as:
--   $D\_i = |{\\textrm{rel}F\_i - \\textrm{rel}\\hat{F\_i}}|$
--   $D'\_i = |{\\textrm{rel}F\_{i-1} - \\textrm{rel}\\hat{F\_i}}|$
--   note *F*<sub>0</sub> = 0 so $D'\_1 = \\textrm{rel}\\hat{F\_i}$
--   The test statistic *D* is:
--   *D* = max\[(max(*D*<sub>*i*</sub>),(max(*D*′<sub>*i*</sub>)\]
--   Compare to critical values from appendix.
+  - Take vector of measurements \(X_i\).
+  - For each \(X_i\) record the observed frequency \(f_i\) (number of
+    observations with that value).
+  - Determine cumulative observed frequencies \(F_i\) and cumulative
+    relative frequencies \(\textrm{rel}F_i\):
+  - \(\textrm{rel}F_i = \frac{F_i}{n}\) where \(n\) is the number of
+    measurements taken.
+  - \(\textrm{rel}F_i\) is the proportion of the sample that is
+    measurements \(\leq X_i\).
+  - For each \(X_i\), determine the cumulative *relative* expected
+    frequency from the comparison distribution,
+    \(\textrm{rel}\hat{F_i}\).
+  - For a uniform distribution,
+    \(\textrm{rel}\hat{F_i} = \frac{X_i - \min(X)}{\max(X) - \min(X)}\)
+  - Determine \(D_i\) and \(D'_i\) as:
+  - \(D_i = |{\textrm{rel}F_i - \textrm{rel}\hat{F_i}}|\)
+  - \(D'_i = |{\textrm{rel}F_{i-1} - \textrm{rel}\hat{F_i}}|\)
+  - note \(F_0 = 0\) so \(D'_1 = \textrm{rel}\hat{F_i}\)
+  - The test statistic \(D\) is:
+  - \(D = \max[(\max(D_i), (\max(D'_i)]\)
+  - Compare to critical values from appendix.
 
-##### *δ*-corrected KS test
+##### \(\delta\)-corrected KS test
 
--   For small sample sizes (&lt;25) we can obtain increased power using the *δ*-corrected KS test.
--   For each *i* determine
--   $\\textrm{rel}G\_i = \\frac{F\_i}{n + 1}$
--   $\\textrm{rel}G'\_i = \\frac{F\_i - 1}{n - 1}$
--   Then obtain similar *D*s
--   $D\_{0, i} = |\\textrm{rel}G\_i - \\textrm{rel}\\hat{F\_i}|$
--   $D\_{1, i} = |\\textrm{rel}G'\_i - \\textrm{rel}\\hat{F\_i}|$
--   The test statistic is either max(*D*<sub>0, *i*</sub>) or max(*D*<sub>1, *i*</sub>), whichever leads to the highest level of significance/smallest probability. Look up significance in table from appendix. The 1 and 0 are the *δ*s.
+  - For small sample sizes (\<25) we can obtain increased power using
+    the \(\delta\)-corrected KS test.
+  - For each \(i\) determine
+  - \(\textrm{rel}G_i = \frac{F_i}{n + 1}\)
+  - \(\textrm{rel}G'_i = \frac{F_i - 1}{n - 1}\)
+  - Then obtain similar \(D\)s
+  - \(D_{0, i} = |\textrm{rel}G_i - \textrm{rel}\hat{F_i}|\)
+  - \(D_{1, i} = |\textrm{rel}G'_i - \textrm{rel}\hat{F_i}|\)
+  - The test statistic is either \(\max(D_{0, i})\) or
+    \(\max(D_{1, i})\), whichever leads to the highest level of
+    significance/smallest probability. Look up significance in table
+    from appendix. The 1 and 0 are the \(\delta\)s.
 
-Tables of critical values were entered by hand from the appendix to Zar (1999).
+Tables of critical values were entered by hand from the appendix to Zar
+(1999).
 
-    ##   community_name signif.x p_max.x p_min.x d_statistic               site
-    ## 1        andrews     TRUE    0.02       0   0.4824239            andrews
-    ## 2          niwot     TRUE    0.02       0   0.6140682              niwot
-    ## 3         portal     TRUE    0.02       0   0.4946621             portal
-    ## 4    sev-5pgrass     TRUE    0.02       0   0.3893173          sev grass
-    ## 5   sev-5plarrea     TRUE    0.02       0   0.4624160          sev shrub
-    ## 6   sev-goatdraw     TRUE    0.02       0   0.3881576 sev pinyon juniper
-    ## 7    sev-rsgrass     TRUE    0.02       0   0.4672033    sev grass shrub
-    ## 8   sev-rslarrea     TRUE    0.02       0   0.4343417        sev shrub 2
-    ## 9      sev-two22     TRUE    0.02       0   0.5084637        sev juniper
-    ##   sample.size     d delta p_min.y p_max.y signif.y
-    ## 1           9 0.210     1     0.5     1.0    FALSE
-    ## 2          11 0.290     1     0.1     0.2    FALSE
-    ## 3          21 0.090     1     0.5     1.0    FALSE
-    ## 4          18 0.175     0     0.2     0.5    FALSE
-    ## 5          18 0.189     0     0.2     0.5    FALSE
-    ## 6          12 0.120     0     0.5     1.0    FALSE
-    ## 7          20 0.102     0     0.5     1.0    FALSE
-    ## 8          20 0.137     0     0.5     1.0    FALSE
-    ## 9          21 0.115     0     0.5     1.0    FALSE
-
-The *δ* corrected KS test does not correspond to the results from Ernest when the species mean body size values are on an untransformed scale.
-
-Using the natural log of the species mean body size value, however...:
+Use the natural log scale (see Thibault 2011 and references therin for a
+discussion of why the log scale is appropriate for analyses of BSDs)
 
     ##   community_name signif.x p_max.x p_min.x d_statistic               site
     ## 1        andrews    FALSE     1.0     0.5   0.1398433            andrews
@@ -405,13 +659,17 @@ Using the natural log of the species mean body size value, however...:
     ## 8          20 0.137     0     0.5     1.0    FALSE
     ## 9          21 0.115     0     0.5     1.0    FALSE
 
-With mean mass logged, all the results replicate qualitatively (i.e. not significantly different from uniform) and Niwot, for which the currently-available data most closely matches that reported in Ernest (2005), replicates almost exactly numerically.
+With mean mass logged, all the results replicate qualitatively (i.e. not
+significantly different from uniform) and Niwot, for which the
+currently-available data most closely matches that reported in Ernest
+(2005), replicates almost exactly numerically.
 
 ### Comparing BSDs among communities
 
 #### Ernest approach
 
-Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every possible combination of community-level BSDs.
+Ernest (2005) used a two-sample Kolmogorov-Smirnov test to compare every
+possible combination of community-level BSDs.
 
 #### Translation to `replicate-becs`
 
@@ -501,17 +759,45 @@ print(ernest_twosampleks_comparison)
     ## 35     sev juniper 0.112        1.000
     ## 36     sev juniper 0.105        1.000
 
-![](ernest_2005_replication_files/figure-markdown_github/plot%20bsd%20crosscomm%20pval%20hist-1.png)
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
+    
+    ## Warning: geom_vline(): Ignoring `data` because `xintercept` was provided.
 
-Citations
----------
+![](ernest_2005_replication_files/figure-gfm/plot%20bsd%20crosscomm%20pval%20hist-1.png)<!-- -->
 
-Andrews LTER small mammal data: Garman, S.; McComb, B. 2002. Monitoring small mammal and amphibian abundances on the Willamette National Forest, Oregon (Long-Term Ecosystem Productivity experiment), 1995-1999. Long-Term Ecological Research. Forest Science Data Bank, Corvallis, OR. \[Database\]. Available: <http://andlter.forestry.oregonstate.edu/data/abstract.aspx?dbcode=WE026> (28 May 2019).
+## Citations
 
-Niwot Ridge LTER small mammal data: Halfpenny J. 1994. Small mammal herbivore trapping in alpine tundra. Environmental Data Initiative. <https://doi.org/10.6073/pasta/f39ac94e1db31c8e313efea83d1e3859>. Dataset accessed 5/28/2019.
+Andrews LTER small mammal data: Garman, S.; McComb, B. 2002. Monitoring
+small mammal and amphibian abundances on the Willamette National Forest,
+Oregon (Long-Term Ecosystem Productivity experiment), 1995-1999.
+Long-Term Ecological Research. Forest Science Data Bank, Corvallis, OR.
+\[Database\]. Available:
+<http://andlter.forestry.oregonstate.edu/data/abstract.aspx?dbcode=WE026>
+(28 May 2019).
 
-Sevilleta LTER small mammal data: Newsome S. 2010. Small Mammal Mark-Recapture Population Dynamics at Core Research Sites at the Sevilleta National Wildlife Refuge, New Mexico (1989 - present). Environmental Data Initiative. <https://doi.org/10.6073/pasta/cdd8f254ef97d854d6eb2efb7385b801>. Dataset accessed 5/28/2019.
+Niwot Ridge LTER small mammal data: Halfpenny J. 1994. Small mammal
+herbivore trapping in alpine tundra. Environmental Data Initiative.
+<https://doi.org/10.6073/pasta/f39ac94e1db31c8e313efea83d1e3859>.
+Dataset accessed 5/28/2019.
 
-Portal Project data accessed using the `portalr` package: Glenda M. Yenni, Hao Ye, Erica M. Christensen, Juniper L. Simonis, Ellen K. Bledsoe, Renata M. Diaz, Shawn D. Taylor, Ethan P, White and S.K. Morgan Ernest (2019). portalr: Create Useful Summaries of the Portal Data. <https://weecology.github.io/portalr/>, <https://github.com/weecology/portalr>.
+Sevilleta LTER small mammal data: Newsome S. 2010. Small Mammal
+Mark-Recapture Population Dynamics at Core Research Sites at the
+Sevilleta National Wildlife Refuge, New Mexico (1989 - present).
+Environmental Data Initiative.
+<https://doi.org/10.6073/pasta/cdd8f254ef97d854d6eb2efb7385b801>.
+Dataset accessed 5/28/2019.
 
-Zar, J.H. 1999. Biostatistical analysis. Fourth edition. Prentice Hall, Englewood Cliffs, New Jersey, USA.
+Thibault, K. M., White, E. P., Hurlbert, A. H., & Ernest, S. K. M.
+(2011). Multimodality in the individual size distributions of bird
+communities. Global Ecology and Biogeography, 20(1), 145–153.
+<https://doi.org/10.1111/j.1466-8238.2010.00576.x>
+
+Portal Project data accessed using the `portalr` package: Glenda M.
+Yenni, Hao Ye, Erica M. Christensen, Juniper L. Simonis, Ellen K.
+Bledsoe, Renata M. Diaz, Shawn D. Taylor, Ethan P, White and S.K. Morgan
+Ernest (2019). portalr: Create Useful Summaries of the Portal Data.
+<https://weecology.github.io/portalr/>,
+<https://github.com/weecology/portalr>.
+
+Zar, J.H. 1999. Biostatistical analysis. Fourth edition. Prentice Hall,
+Englewood Cliffs, New Jersey, USA.

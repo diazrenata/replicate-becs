@@ -106,8 +106,7 @@ process_andrews_data <- function(storage_path = here::here("working-data", "pape
     dplyr::group_by(species) %>%
     dplyr::summarize(meanweight = mean(weight), nind = dplyr::n()) %>%
     dplyr::left_join(andrews_rod, by = "species") %>%
-    dplyr::filter(!is.na(tax_order)) %>%
-    dplyr::filter(meanweight <= 400)
+    dplyr::filter(!is.na(tax_order)) 
   
   andrews <- andrews %>%
     dplyr::filter(species %in% andrews_means$species) %>%
@@ -146,6 +145,9 @@ process_niwot_data <- function(storage_path = here::here("working-data", "paper"
     dplyr::filter(species != "?PIKAS") %>%
     dplyr::filter(species != "CHIPSP") %>%
     dplyr::filter(species != "VOLESP") %>%
+    dplyr::filter(species != "SOREXS")  %>%
+    dplyr::filter(species != "MARFLA") %>%
+    dplyr::filter(species != "THOTAL") %>%
     dplyr::select(collector, date, species, weight, condition, habitat)
   
   species_means <- niwot %>%
@@ -153,18 +155,6 @@ process_niwot_data <- function(storage_path = here::here("working-data", "paper"
     dplyr::group_by(species) %>%
     dplyr::summarize(mean.weight = mean(weight), n.captures = dplyr::n()) %>%
     dplyr::ungroup()
-  
-  big_species <- species_means %>%
-    dplyr::filter(mean.weight > 400) %>%
-    dplyr::select(species)
-  
-  niwot <- niwot %>%
-    dplyr::filter(!(species %in% big_species$species))
-  
-  # Still 1 too many species, based on paper.
-  # Removing pocket gophers because they were only trapped for the first two years?
-  niwot <- niwot %>%
-    dplyr::filter(species != "THOTAL")
   
   niwot <- niwot %>%
     dplyr::select(species, weight)
